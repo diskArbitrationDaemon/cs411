@@ -1,3 +1,22 @@
+<script>
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+          if (pair[0] == variable) {
+                return pair[1];
+          }
+  } 
+}
+function addRow(tableID) {
+    var table = document.getElementById(tableID);
+    var row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    cell1.innerHTML = "Please enter the correct username and password";
+}
+</script>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -16,7 +35,8 @@
         <tr>
             <td>
                 <form name="login" action="login.php" method="post">
-                    <table width="100%" border="0">
+                    <table id="loginInfoTable" width="100%" border="0">
+                        
                         <tr>
                             <td width=300>
                             </td>
@@ -47,6 +67,12 @@
                             </td>
                         </tr>
                     </table>
+
+                        <script>
+                            if(getQueryVariable("fail") == "1"){
+                                addRow("loginInfoTable");
+                            }
+                        </script>
                 </form>
             </td>
         </tr>
