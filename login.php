@@ -35,11 +35,11 @@
         $login_row = mysql_fetch_array($login_result);
         $userType = $login_row['UserType'];
     
-        //different users will have different redirect pagesi
+        //different users will have different redirect pages
         if ($userType == ADMINISTRATOR){
             $url = ADMIN_PHP;
         } else if ($userType == INSTRUCTOR){
-            $url = INSTRUCTOR_PHPi;
+            $url = INSTRUCTOR_PHP;
         } else if ($userType == STUDENT){
             $url = STUDENT_PHP;
         } else {
