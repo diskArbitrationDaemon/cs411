@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2011 at 06:12 PM
+-- Generation Time: Oct 21, 2011 at 06:30 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.4
 
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `Assignment` (
   `AvgMark` double DEFAULT NULL,
   `MedianMark` double DEFAULT NULL,
   `CourseID` varchar(10) DEFAULT NULL,
+  `DueTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`AssnID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -71,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `Course` (
 -- Table structure for table `Group`
 --
 
-CREATE TABLE `Group` (
+CREATE TABLE IF NOT EXISTS `Group` (
   `GroupName` varchar(100) NOT NULL,
   `CourseID` int(10) NOT NULL,
   `AssnID` int(30) NOT NULL,
@@ -99,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `Instructor` (
 -- Table structure for table `MemberOf`
 --
 
-CREATE TABLE `MemberOf` (
+CREATE TABLE IF NOT EXISTS `MemberOf` (
   `GroupName` varchar(20) NOT NULL,
   `StudentID` varchar(20) NOT NULL,
   `AssnID` int(30) NOT NULL,
