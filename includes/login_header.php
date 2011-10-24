@@ -4,6 +4,6 @@
     define("STUDENT", 3);
 
     define("ADMIN_PHP", "admin.php");
-    define("INSTRUCTOR_PHP", "instructor.php");
+    define("INSTRUCTOR_PHP", "instructor.html");
     define("STUDENT_PHP", "student.php");
 ?>

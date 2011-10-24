@@ -31,6 +31,7 @@
         //send user back to login page
         print("<meta http-equiv=\"REFRESH\" content=\"". $redirect_pauseTime . ";url=login.html?fail=1\">");
     } else {
+        session_start();
         $_SESSION['username'] = $username;
         $login_row = mysql_fetch_array($login_result);
         $userType = $login_row['UserType'];

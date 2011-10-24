@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript">
+        function getAssessmentDue (){
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest();
+            }
+            xmlhttp.onreadystatechange=function()
+            {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                    document.getElementById("AssessmentDetails").innerHTML=xmlhttp.responseText;
+                }
+            }
+            xmlhttp.open("GET", "instructor.php?q=GetAssessments", true);
+            xmlhttp.send();
+        }
+    </script>
+    <head>
+        <title>Illinois CS Submission System</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    </head>
+        
+    <body>
+        This is instructor!
+        <div id="AssessmentDetails">
+
+            Assessment Details!
+            <script>
+                getAssessmentDue();
+            </script>
+        </div>
+    </body>
+
+</html>

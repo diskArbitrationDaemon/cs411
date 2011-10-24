@@ -1,12 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Illinois CS Submission System</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-    </head>
-
-    <body>
-        This is instructor!        
-    </body>
-
-</html>
+<?php
+    include ('includes/mysqlInstrLogin.php');
+    session_start();
+    $loginDb = "assignments_uiuc";
+    mysql_select_db($loginDb) or die("Can not connect to login table." . mysql_error());
+    $coursesForThisInstructorQuery = "SELECT CourseName FROM Course As c, Teaches As t WHERE c.CourseID = t.Course AND t.Instructor = '". $_SESSION['username'] . "'";
+    $result = mysql_query($coursesForThisInstructorQuery);
+    $resultsInArray = mysql_fetch_assoc($result);
+    print_r($resultsInArray); 
+    //print("Username:" . $_SESSION['username']);
+    
+    
+?>
