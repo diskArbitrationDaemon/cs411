@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2011 at 11:34 PM
+-- Generation Time: Oct 26, 2011 at 12:08 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.4
 
@@ -31,7 +31,6 @@ CREATE TABLE IF NOT EXISTS `Submission` (
   `Student` varchar(20) NOT NULL,
   `Files` varchar(200) NOT NULL COMMENT 'The directory where the submission files are locatedt',
   `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `AssnMark` int(3) NOT NULL,
   PRIMARY KEY (`AssnID`,`Student`),
   KEY `Student` (`Student`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -44,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `Submission` (
 -- Constraints for table `Submission`
 --
 ALTER TABLE `Submission`
-  ADD CONSTRAINT `submission_ibfk_1` FOREIGN KEY (`Student`) REFERENCES `Student` (`StudentID`);
+  ADD CONSTRAINT `submission_ibfk_2` FOREIGN KEY (`AssnID`) REFERENCES `Assignment` (`AssnID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `submission_ibfk_3` FOREIGN KEY (`Student`) REFERENCES `Student` (`StudentID`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
