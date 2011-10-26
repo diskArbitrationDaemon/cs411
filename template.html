@@ -1,5 +1,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+
+<script type="text/javascript">
+        function getAssessmentAndCourses (){
+            if(window.XMLHttpRequest){
+                xmlhttpAssn = new XMLHttpRequest();
+                xmlhttpCourse = new XMLHttpRequest();
+            }
+            xmlhttpAssn.onreadystatechange=function()
+            {
+                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                    document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
+                }
+            }
+
+            xmlhttpCourse.onreadystatechange=function()
+            {
+                if(xmlhttpCourse.readyState == 4 && xmlhttpCourse.status == 200){
+                    document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
+                }
+            }
+            xmlhttpAssn.open("GET", ".php?q=GetAssessments", true);
+            xmlhttpAssn.send();
+            xmlhttpCourse.open("GET", ".php?q=GetCourses", true);
+            xmlhttpCourse.send();
+        }
+    </script>
+    
 <head>
 
 <title>Illinois CS Submission system</title>
@@ -15,8 +42,7 @@
         </tr>
         <tr>
             <td>
-                <form name="login" action="login.php" method="post">
-                    <table id="loginInfoTable" width="100%" border="0">
+                    <table width="100%" border="0">
 
                         <tr>
                             <td width=300>
@@ -46,7 +72,6 @@
 
                         <script>
                        </script>
-                </form>
             </td>
         </tr>
     </table>

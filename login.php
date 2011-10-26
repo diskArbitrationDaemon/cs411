@@ -1,14 +1,9 @@
 <?php
     include 'includes/login_header.php';
+    include 'includes/common.php';
     print("<html> <head></head><body>");
     
-    $mySqlHost = "localhost";
-    $mySqlUser = "login_auth";
-    $mySqlPass = "hello123";
-    $redirect_pauseTime = 3;
-
-    $mysqlConnection = mysql_connect($mySqlHost, $mySqlUser, $mySqlPass) or die("Can not connect to DB. " . mysql_error());
-    
+   
     $username = mysql_real_escape_string($_POST["username"]);
     $password = mysql_real_escape_string($_POST["password"]);
     //encrypt the password using md5 to match database
@@ -17,7 +12,7 @@
     $loginDb = "assignments_users_uiuc";
     $loginTable = "users";
 
-    mysql_select_db($loginDb) or die("Can not connect to login table.");
+    mysql_select_db($loginDb) or die("Can not connect to login table." . mysql_error());
    
     $login_query = "SELECT * FROM " . $loginTable . " WHERE Username='$username' AND Password='$encryptedPassword'";
     //print($login_query);

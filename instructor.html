@@ -1,18 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
     <script type="text/javascript">
-        function getAssessmentDue (){
+        function getAssessmentAndCourses (){
             if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest();
+                xmlhttpAssn = new XMLHttpRequest();
+                xmlhttpCourse = new XMLHttpRequest();
             }
-            xmlhttp.onreadystatechange=function()
+            xmlhttpAssn.onreadystatechange=function()
             {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                    document.getElementById("AssessmentDetails").innerHTML=xmlhttp.responseText;
+                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                    document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
                 }
             }
-            xmlhttp.open("GET", "instructor.php?q=GetAssessments", true);
-            xmlhttp.send();
+
+            xmlhttpCourse.onreadystatechange=function()
+            {
+                if(xmlhttpCourse.readyState == 4 && xmlhttpCourse.status == 200){
+                    document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
+                }
+            }
+            xmlhttpAssn.open("GET", "instructor.php?q=GetAssessments", true);
+            xmlhttpAssn.send();
+            xmlhttpCourse.open("GET", "instructor.php?q=GetCourses", true);
+            xmlhttpCourse.send();
         }
     </script>
     <head>
@@ -21,14 +31,51 @@
     </head>
         
     <body>
-        This is instructor!
-        <div id="AssessmentDetails">
 
-            Assessment Details!
-            <script>
-                getAssessmentDue();
-            </script>
-        </div>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form name="login" action="login.php" method="post">
+                    <table id="loginInfoTable" width="100%" border="0">
+
+                        <tr>
+                            <td width=300>
+                            </td>
+                            <td align="left">
+                                <div id="AssessmentDetails">
+                                
+                                </div>    
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td height=30>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width=300>
+                            </td>
+                            <td align="left">
+                                <div id="CourseDetails">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                        <script>
+                           getAssessmentAndCourses(); 
+                        </script>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
     </body>
 
 </html>
