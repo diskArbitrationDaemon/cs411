@@ -2,28 +2,19 @@
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
 <script type="text/javascript">
-        function getAssessmentAndCourses (){
+        function ajaxfn (){//TODO: rename this to something descriptive or useful. NOW!
             if(window.XMLHttpRequest){
-                xmlhttpAssn = new XMLHttpRequest();
-                xmlhttpCourse = new XMLHttpRequest();
+                xmlhttpAssn = new XMLHttpRequest(); //TODO: need one per AJAX request
             }
-            xmlhttpAssn.onreadystatechange=function()
+            xmlhttpAssn.onreadystatechange=function()//TODO need a copy of this for each request
             {
                 if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
-                    document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
+                    document.getElementById("DivName").innerHTML=xmlhttpAssn.responseText;
                 }
             }
 
-            xmlhttpCourse.onreadystatechange=function()
-            {
-                if(xmlhttpCourse.readyState == 4 && xmlhttpCourse.status == 200){
-                    document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
-                }
-            }
-            xmlhttpAssn.open("GET", ".php?q=GetAssessments", true);
+            xmlhttpAssn.open("GET", ".php?q=", true); //TODO: fill in php filename and any arguments 
             xmlhttpAssn.send();
-            xmlhttpCourse.open("GET", ".php?q=GetCourses", true);
-            xmlhttpCourse.send();
         }
     </script>
     
@@ -31,7 +22,7 @@
 
 <title>Illinois CS Submission system</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-
+<!TODO Remember to call the javascript function somewhere>
 </head>
 <body>
     <table width="100%" border="0">
@@ -46,32 +37,16 @@
 
                         <tr>
                             <td width=300>
-                            </td>
-                            <td width=100 align="right">
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width=300>
-                            </td>
-                            <td align="right">
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width=300 height=40>
-                            </td>
-                            <td>
+                                <h2>Menu Here</h2>
                             </td>
                             <td align="left">
+                                <h2>Contents go here</h2>
                             </td>
                         </tr>
                     </table>
 
-                        <script>
-                       </script>
+                    <script>
+                   </script>
             </td>
         </tr>
     </table>
