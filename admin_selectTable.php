@@ -40,8 +40,10 @@ $result = mysql_query($query);
 if ($table == "assignment")
 { 
 	?>
-	<button type="insertAssnButton" onclick="showInsert('assignment')">Insert New Assignment</button>
 	
+	<button type="insertAssnButton" onclick="showInsert('assignment')">Insert New Assignment</button>
+	<br />
+	<br />	
 	
 	<?php
 

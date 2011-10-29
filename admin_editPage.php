@@ -255,9 +255,9 @@ if ($table == "assignment")
 		</tr>
 		</table>
 		
-		
-		
-		<input type="button" name="submitEditAssnButton" value="Confirm Changes" onclick="submitAssignment(this.form, '<?php print($rowID) ?>', 'edit');" />
+		<br />
+		<script src="admin_functions.js"></script>
+		<input type="button" name="submitEditAssnButton" value="Confirm Changes" onclick="submitAssignment(this.form, '<?php print($rowID) ?>', 'edit');" />		
 
 	</form>
 	
@@ -267,6 +267,7 @@ if ($table == "assignment")
 	<?php
 }
 
-
-
 ?>
+
+	<br />
+	<div id="errorSpot"> </div>

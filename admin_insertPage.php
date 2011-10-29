@@ -171,19 +171,19 @@ if ($table == "assignment")
 		</tr>
 		</table>
 		
-		
-		
+		<br />
+		<script src="admin_functions.js"></script>
 		<input type="button" name="submitAssnButton" value="Insert New Assignment" onclick="submitAssignment(this.form, '<?php print($newID) ?>', 'insert');" />
 
 	</form>
 	
-	<br />
-		
+	
 	
 	<?php
 	
 }
 
-
-
 ?>
+	<br />
+	<div id="errorSpot"> </div>
+

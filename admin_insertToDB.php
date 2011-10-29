@@ -43,8 +43,10 @@ if ($table == "assignment")
 		die ('Error: ' . mysql_error());
 	}
 	
-	echo "1 record added";
-	mysql_close($mysqlConnection);	
+	?>
+	<font color="green"><b>1 record added</b></font>
+	<?php
+	mysql_close($mysqlConnection);
 }
 
 

@@ -11,7 +11,6 @@ mysql_select_db($uiucDB) or die("Cannot connect to uiucDB.");
 
 $table=$_GET["table"];
 
-
 if ($table == "assignment")
 {
 	$assnID=$_GET["assnID"];
@@ -43,7 +42,9 @@ if ($table == "assignment")
 		die ('Error: ' . mysql_error());
 	}
 	
-	echo "1 record changed";
+	?>
+	<font color="green"><b>1 record changed</b></font>
+	<?php
 	mysql_close($mysqlConnection);	
 }
 

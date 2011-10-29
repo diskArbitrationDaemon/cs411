@@ -21,8 +21,10 @@ if ($table == "assignment")
 		die ('Error: ' . mysql_error());
 	}
 	
-	echo "1 record deleted";
-	mysql_close($mysqlConnection);	
+	?>
+	<font color="red"><b>1 record deleted</b></font>
+	<?php
+	mysql_close($mysqlConnection);
 }
 
 
