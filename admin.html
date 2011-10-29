@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+
+<script type="text/javascript">
+		// Function for showing the appropriate table
+        function showTable (str){
+			document.getElementById('area2').innerHTML="";
+
+		
+            if(window.XMLHttpRequest){
+                xmlhttpAssn = new XMLHttpRequest();
+            }
+            xmlhttpAssn.onreadystatechange=function()
+            {
+                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                    document.getElementById("area1").innerHTML=xmlhttpAssn.responseText;
+                }
+            }
+			
+            xmlhttpAssn.open("GET", "admin_selectTable.php?table="+str, true);
+            xmlhttpAssn.send();
+        }
+		
+		// Function for showing the insert page
+		function showInsert (str){
+			document.getElementById('area2').innerHTML="";
+
+		
+            if(window.XMLHttpRequest){
+                xmlhttpAssn = new XMLHttpRequest();
+            }
+            xmlhttpAssn.onreadystatechange=function()
+            {
+                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                    document.getElementById("area1").innerHTML=xmlhttpAssn.responseText;
+                }
+            }
+			
+            xmlhttpAssn.open("GET", "admin_insertPage.php?table="+str, true);
+            xmlhttpAssn.send();
+        }
+		
+		
+		// Reads form input from insertAssignment
+		function submitAssignment (form, assnID){ 
+			var assnName = form.assnName.value;
+			var groupWork = form.groupWork.options[form.groupWork.selectedIndex].value;
+			var maxMark = form.maxMark.value;
+			var avgMark = form.avgMark.value;
+			var medianMark = form.medianMark.value;
+			var courseName = form.courseName.options[form.courseName.selectedIndex].value;
+			var month = form.monthName.options[form.monthName.selectedIndex].value;
+			var day = form.dayName.options[form.dayName.selectedIndex].value;
+			var year = form.year.options[form.year.selectedIndex].value;
+			var hour = form.hour.options[form.hour.selectedIndex].value;
+			var minute = form.minute.options[form.minute.selectedIndex].value;
+			var second = form.second.options[form.second.selectedIndex].value;
+
+			if (assnName == "")
+			{
+				document.getElementById('area2').innerHTML="<font color=red>* You must enter an 'Assignment Name'</font>";
+			}
+			
+			else
+			{
+				document.getElementById('area2').innerHTML="";
+				
+				if(window.XMLHttpRequest)
+				{
+					xmlhttpAssn = new XMLHttpRequest();
+				}
+					xmlhttpAssn.onreadystatechange=function()
+					{
+						if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+							document.getElementById("area2").innerHTML=xmlhttpAssn.responseText;
+						}
+					}
+			
+				xmlhttpAssn.open("GET", "admin_insertToDB.php?table="+"assignment"+
+								"&assnID="+assnID+
+								"&assnName="+assnName+
+								"&groupWork="+groupWork+
+								"&maxMark="+maxMark+
+								"&avgMark="+avgMark+
+								"&medianMark="+medianMark+
+								"&courseName="+courseName+
+								"&month="+month+
+								"&day="+day+
+								"&year="+year+
+								"&hour="+hour+
+								"&minute="+minute+
+								"&second="+second, true);
+				xmlhttpAssn.send();
+			}
+			
+			//var date = new Date(year, month, day, hour, minute, second, 0);
+			
+			//var dateum = Date.parse(date);
+			//alert(toTimestamp('02/13/2009 23:31:30'));
+			
+			
+			//var unix = new Date;
+			
+			//alert("You typed: " + groupWork);
+			//document.getElementById('area2').innerHTML="<strong>new text</strong>";
+
+        }
+		
+    </script>
+    
+<head>
+
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<!TODO Remember to call the javascript function somewhere>
+</head>
+<body>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <table width="100%" border="6">
+                        <tr>
+                            <td width=300>
+                                <h2>Menu Here</h2>
+                            </td>
+                            <td align="left">
+							
+								<!--The Admin Content table-->
+								<table width="100%" border="1">
+								<tr>
+									<td width=500>
+										<h2>Admin Page</h2>
+										
+										<b>Select table:</b>
+										<form>
+										<select myTable="tableName" onchange="showTable(this.value)">
+										<option value=""> </option>
+										<option value="assignment">Assignment</option>
+										<option value="course">Course</option>
+										</select>
+										</form>
+										<br />
+										<div id="area1"><b>Table will be shown here.</b></div>
+										<br />
+										<div id="area2"> </div>
+										
+									</td>
+								</tr>
+								</table>
+								<!--Admin Content table ends here-->
+								
+                            </td>
+                        </tr>
+                    </table>
+
+                    <script>
+                   </script>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
