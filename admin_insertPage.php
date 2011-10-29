@@ -120,7 +120,7 @@ if ($table == "assignment")
 			<select name="year">
 			<?php
 			$year = 2011;
-			while ($year <= 2099)
+			while ($year <= 2037)
 			{
 				?> <option value="<?php print($year); ?>"><?php print($year); ?></option><?php
 				$year++;
@@ -173,7 +173,7 @@ if ($table == "assignment")
 		
 		
 		
-		<input type="button" name="submitAssnButton" value="Insert New Assignment" onclick="submitAssignment(this.form, '<?php print($newID) ?>');" />
+		<input type="button" name="submitAssnButton" value="Insert New Assignment" onclick="submitAssignment(this.form, '<?php print($newID) ?>', 'insert');" />
 
 	</form>
 	

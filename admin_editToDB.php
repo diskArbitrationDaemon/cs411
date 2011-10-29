@@ -36,14 +36,14 @@ if ($table == "assignment")
 	$course_row = mysql_fetch_array($result);
 	$courseID = $course_row['CourseID'];
 	
-	$query = "INSERT INTO assignment (AssnID, AssnName, GroupWork, MaxMark, AvgMark, MedianMark, CourseID, DueTime) VALUES ('$assnID', '$assnName', '$groupWork', '$maxMark', '$avgMark', '$medianMark', '$courseID', FROM_UNIXTIME('$dueTime'))";
+	$query = "UPDATE assignment SET AssnName='$assnName', GroupWork='$groupWork', MaxMark='$maxMark', AvgMark='$avgMark', MedianMark='$medianMark', CourseID='$courseID', DueTime=FROM_UNIXTIME('$dueTime') WHERE AssnID='$assnID'";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{
 		die ('Error: ' . mysql_error());
 	}
 	
-	echo "1 record added";
+	echo "1 record changed";
 	mysql_close($mysqlConnection);	
 }
 

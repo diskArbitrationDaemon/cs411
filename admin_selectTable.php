@@ -68,6 +68,19 @@ if ($table == "assignment")
 	  echo "<td>" . $row['MedianMark'] . "</td>";
 	  echo "<td>" . $row['CourseID'] . "</td>";
 	  echo "<td>" . $row['DueTime'] . "</td>";
+	  
+	  ?>
+	  <td>
+		<button type="editButton" onclick="showEdit('assignment', <?php print($row['AssnID']); ?> )">Edit</button>
+	  </td>	
+
+	  <td>
+		<button type="deleteButton" onclick="showDelete('assignment', <?php print($row['AssnID']); ?> )">Delete</button>
+	  </td>
+	  <?php
+	  
+	  
+	  
 	  echo "</tr>";
 	}
 
@@ -83,14 +96,14 @@ else if ($table == "course")
 	<th>NumStudents</th>
 	<th>SemesterName</th>
 	</tr>";
-
+	
 	while ($row = mysql_fetch_array($result))
 	{
 	  echo "<tr>";
 	  echo "<td>" . $row['CourseID'] . "</td>";
 	  echo "<td>" . $row['CourseName'] . "</td>";
 	  echo "<td>" . $row['NumStudents'] . "</td>";
-	  echo "<td>" . $row['SemesterName'] . "</td>";
+	  echo "<td>" . $row['SemesterName'] . "</td>";	  
 	  echo "</tr>";
 	}
 
