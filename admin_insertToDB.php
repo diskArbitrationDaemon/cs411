@@ -1,13 +1,5 @@
 <?php
-$mySqlHost = "localhost";
-$mySqlUser = "admin";
-$mySqlPass = "admin";
-				
-$mysqlConnection = mysql_connect($mySqlHost, $mySqlUser, $mySqlPass) or die("Can not connect to DB. " . mysql_error());
-				
-$uiucDB = "assignments_uiuc";
-		
-mysql_select_db($uiucDB) or die("Cannot connect to uiucDB.");
+include 'includes/mysqlAdminLoginAssignment.php';
 
 $table=$_GET["table"];
 
@@ -43,10 +35,12 @@ if ($table == "assignment")
 		die ('Error: ' . mysql_error());
 	}
 	
-	?>
-	<font color="green"><b>1 record added</b></font>
-	<?php
 	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=1">
+	<?php
 }
 
 

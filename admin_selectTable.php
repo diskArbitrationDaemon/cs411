@@ -1,41 +1,14 @@
 <?php
 
-$table=$_GET["table"];
+include 'includes/mysqlAdminLoginAssignment.php';
 
-$mySqlHost = "localhost";
-$mySqlUser = "admin";
-$mySqlPass = "admin";
-				
-$mysqlConnection = mysql_connect($mySqlHost, $mySqlUser, $mySqlPass) or die("Can not connect to DB. " . mysql_error());
-				
-$uiucDB = "assignments_uiuc";
-		
-mysql_select_db($uiucDB) or die("Cannot connect to uiucDB.");
+$table=$_GET["table"];
 
 $query = "SELECT * FROM " . $table;
 
 $result = mysql_query($query);
 
-?>
 
-<!--  FILTER BUTTONS
-
-<form method="POST">
-<div class="sur_box"><span></span><spanr><input name="a" type="checkbox" class="styled" id="a" value="1" /></spanr></div>
-<div class="sur_box"><span>2</span><spanr><input name="b" type="checkbox" class="styled" id="b" value="2" /></spanr></div>
-<div class="sur_box"><span>3</span><spanr><input name="c" type="checkbox" class="styled" id="c" value="3" /></spanr></div>
-<div class="sur_box"><span>4</span><spanr><input name="d" type="checkbox" class="styled" id="d" value="4" /></spanr></div>
-<div class="sur_box"><span>5</span><spanr><input name="e" type="checkbox" class="styled" id="e" value="5" /></spanr></div>
-<div class="sur_box"><span>6</span><spanr><input name="f" type="checkbox" class="styled" id="f" value="6" /></spanr></div>
-<div class="sur_box"><span>7</span><spanr><input name="g" type="checkbox" class="styled" id="g" value="7" /></spanr></div>
-<div id="poll_ajax">
-<input name="search" type="button" onclick="ajaxPoll();" class="submit" value="SEND" id="search" />
-</div>
-</form>
-
--->
-	
-<?php
 
 if ($table == "assignment")
 { 

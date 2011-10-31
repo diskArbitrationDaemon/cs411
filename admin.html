@@ -30,12 +30,12 @@
 								<!--The Admin Content table-->
 								<table width="100%" border="1">
 								<tr>
-									<td width=500>
+									<td width=500 align="center">
 										<h2>Admin Page</h2>
 										
 										<b>Select table:</b>
 										<form>
-										<select myTable="tableName" onchange="showTable(this.value)">
+										<select name="tableName" onchange="showTable(this.value)">
 										<option value=""> </option>
 										<option value="assignment">Assignment</option>
 										<option value="course">Course</option>
@@ -46,6 +46,13 @@
 										<br />
 										<div id="area2"> </div>
 										
+										<script>
+										if (getQueryVariable("displayTable") == 1)
+										{									
+											showTable('assignment');
+										}
+										
+										</script>
 										
 										
 									</td>

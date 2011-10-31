@@ -1,23 +1,14 @@
 <?php
-$mySqlHost = "localhost";
-$mySqlUser = "admin";
-$mySqlPass = "admin";
-				
-$mysqlConnection = mysql_connect($mySqlHost, $mySqlUser, $mySqlPass) or die("Can not connect to DB. " . mysql_error());
-				
-$uiucDB = "assignments_uiuc";
-		
-mysql_select_db($uiucDB) or die("Cannot connect to uiucDB.");
-
-
+include 'includes/mysqlAdminLoginAssignment.php';
 
 
 $table=$_GET["table"];
 
 if ($table == "assignment")
 {
-	Echo("INSERT NEW ASSIGNMENT INTO 'assignment' TABLE:");
-	
+	?>
+	<h3><u>INSERT NEW ROW INTO 'assignment' TABLE</h3></u>
+	<?php
 	// Get largest assnID
 	$query = "SELECT MAX(assnID) FROM assignment";
     $result = mysql_query($query);
@@ -29,23 +20,22 @@ if ($table == "assignment")
     }
 	
 	?>
-	<br />
 	
 	<form name="insertAssnForm" id="insertAssnFormId" action="" method="GET">
-		<table>
+		<table border="2">
 		<tr>
-			<td><label for="assnIDLabel">Assignment ID:</label></td>
-			<td><label for="assnID"><?php print($newID); ?></label></td>  
-			<td><label for="assnIDType">int(30)</label></td>
+			<td align="center"><label for="assnIDLabel"><b>Assignment ID:</b></label></td>
+			<td align="center"><label for="assnID"><?php print($newID); ?></label></td>  
+			<td align="center"><label for="assnIDType">int(30)</label></td>
 		</tr>
 		<tr>
-			<td><label for="assNameLabel">* Assignment Name:</label></td>
-			<td><input type="text" name="assnName" id="assnNameId" size="30" maxlength="30" /></td>
-			<td><label for="assnNameType">varchar(30)</label></td>
+			<td align="center"><label for="assNameLabel"><b>* Assignment Name:</b></label></td>
+			<td align="center"><input type="text" name="assnName" id="assnNameId" size="30" maxlength="30" /></td>
+			<td align="center"><label for="assnNameType">varchar(30)</label></td>
 		</tr>
 		<tr>
-			<td><label for="groupWorkLabel">Number of Group Members Allowed:</label></td>
-			<td>
+			<td align="center"><label for="groupWorkLabel"><b>Number of Group Members Allowed:</b></label></td>
+			<td align="center">
 			<select name="groupWork">
 			<?php
 			$group = 0;
@@ -57,27 +47,27 @@ if ($table == "assignment")
 			?>
 			</select>
 			</td>
-			<td><label for="groupWorkType">tinyint(1)</label></td>
+			<td align="center"><label for="groupWorkType">tinyint(1)</label></td>
 		</tr>
 		
 		
 		<tr>
-			<td><label for="maxMarkLabel">Max Mark:</label></td>
-			<td><input type="text" name="maxMark" size="3" maxlength="3" /></td>
-			<td><label for="maxMarkType">int(3)</label></td>
+			<td align="center"><label for="maxMarkLabel"><b>Max Mark:</b></label></td>
+			<td align="center"><input type="text" name="maxMark" size="3" maxlength="3" /></td>
+			<td align="center"><label for="maxMarkType">int(3)</label></td>
 		</tr>
 		<tr>
-			<td><label for="avgMarkLabel">Average Mark:</label></td>
-			<td><input type="text" name="avgMark" size="30" maxlength="30"/></td>
-			<td><label for="avgMarkType">double</label></td>
+			<td align="center"><label for="avgMarkLabel"><b>Average Mark:<b></label></td>
+			<td align="center"><input type="text" name="avgMark" size="30" maxlength="30"/></td>
+			<td align="center"><label for="avgMarkType">double</label></td>
 		</tr>
 		<tr>
-			<td><label for="medianMarkLabel">Median Mark:</label></td>
-			<td><input type="text" name="medianMark" size="30" maxlength="30"/></td>
-			<td><label for="medianMarkType">double</label></td>
+			<td align="center"><label for="medianMarkLabel"><b>Median Mark:</b></label></td>
+			<td align="center"><input type="text" name="medianMark" size="30" maxlength="30"/></td>
+			<td align="center"><label for="medianMarkType">double</label></td>
 		</tr>
-		<td><label for="courseNameLabel">Distributing Course:</label></td>
-		<td>	
+		<td align="center"><label for="courseNameLabel"><b>Distributing Course:</b></label></td>
+		<td align="center">	
 			<select name="courseName">
 			<?php
 			$query = "SELECT courseName FROM course";
@@ -91,8 +81,8 @@ if ($table == "assignment")
 			</select>
 		</td>
 		</tr>
-		<td><label for="dateLabel">Date Due:</label></td>
-		<td><label for="monthNameLabel">Month:</label>
+		<td align="center"><label for="dateLabel"><b>Date Due:</b></label></td>
+		<td align="center"><label for="monthNameLabel"><b>Month:</b></label>
 			<select name="monthName">
 			<?php
 			$month = 1;
@@ -104,7 +94,7 @@ if ($table == "assignment")
 			?>
 			</select>
 			
-			<label for="dayNameLabel">Day:</label>
+			<label for="dayNameLabel"><b>Day:</b></label>
 			<select name="dayName">
 			<?php
 			$day = 1;
@@ -116,7 +106,7 @@ if ($table == "assignment")
 			?>
 			</select>
 			
-			<label for="yearLabel">Year:</label>
+			<label for="yearLabel"><b>Year:</b></label>
 			<select name="year">
 			<?php
 			$year = 2011;
@@ -130,8 +120,8 @@ if ($table == "assignment")
 			</select>
 		</td>
 		</tr>
-		<td><label for="timeLabel">Time Due:</label></td>
-		<td><label for="hourLabel">Hour:</label>
+		<td align="center"><label for="timeLabel"><b>Time Due:</b></label></td>
+		<td><label for="hourLabel"><b>Hour:</b></label>
 		<select name="hour">
 		<?php
 		$hour = 0;
@@ -143,7 +133,7 @@ if ($table == "assignment")
 		?>
 		</select>
 		
-		<label for="minuteLabel">Minute:</label>
+		<label for="minuteLabel"><b>Minute:</b></label>
 		<select name="minute">
 		<?php
 		$minute = 0;
@@ -155,7 +145,7 @@ if ($table == "assignment")
 		?>
 		</select>
 	
-		<label for="secondLabel">Second:</label>
+		<label for="secondLabel"><b>Second:</b></label>
 		<select name="second">
 		<?php
 		$second = 0;
