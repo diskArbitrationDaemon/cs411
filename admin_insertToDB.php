@@ -12,7 +12,7 @@ if ($table == "assignment")
 	$maxMark=$_GET["maxMark"];
 	$avgMark=$_GET["avgMark"];
 	$medianMark=$_GET["medianMark"];
-	$courseName=$_GET["courseName"];
+	$courseID=$_GET["courseID"];
 	$month=$_GET["month"];
 	$day=$_GET["day"];
 	$year=$_GET["year"];
@@ -22,11 +22,6 @@ if ($table == "assignment")
 	
 	$dueTime = mktime($hour, $minute, $second, $month, $day, $year, -1);
 	
-	//Get courseID for assignment's course
-	$query = "SELECT CourseID FROM course WHERE CourseName = '$courseName'";
-	$result = mysql_query($query);
-	$course_row = mysql_fetch_array($result);
-	$courseID = $course_row['CourseID'];
 	
 	$query = "INSERT INTO assignment (AssnID, AssnName, GroupWork, MaxMark, AvgMark, MedianMark, CourseID, DueTime) VALUES ('$assnID', '$assnName', '$groupWork', '$maxMark', '$avgMark', '$medianMark', '$courseID', FROM_UNIXTIME('$dueTime'))";
 	
@@ -44,5 +39,263 @@ if ($table == "assignment")
 }
 
 
+if ($table == "automarking")
+{
+	$automarkID=$_GET["AutomarkID"];
+	$sampleSoln=$_GET["SampleSoln"];
+	$configs=$_GET["Configs"];
+	$assnID=$_GET["AssnID"];
+		
+	$query = "INSERT INTO automarking (AutomarkID, SampleSoln, Configs, AssnID) VALUES ('$automarkID', '$sampleSoln', '$configs', '$assnID')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=2">
+	<?php
+	
+}
+
+
+if ($table == "course")
+{
+	$courseID=$_GET["CourseID"];
+	$courseName=$_GET["CourseName"];
+	$numStudents=$_GET["NumStudents"];
+	$semesterName=$_GET["SemesterName"];		
+		
+	$query = "INSERT INTO course (CourseID, CourseName, NumStudents, SemesterName) VALUES ('$courseID', '$courseName', '$numStudents', '$semesterName')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=3">
+	<?php
+	
+}
+
+
+if ($table == "group")
+{
+	$groupName=$_GET["GroupName"];
+	$assnID=$_GET["AssnID"];
+		
+		
+	$query = "INSERT INTO `group` (GroupName, AssnID) VALUES ('$groupName', '$assnID')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=4">
+	<?php
+	
+}
+
+
+if ($table == "instructor")
+{
+	$instructorID=$_GET["InstructorID"];
+	$firstName=$_GET["FirstName"];
+	$lastName=$_GET["LastName"];
+	$phoneNumber=$_GET["PhoneNumber"];
+	$officeLocation=$_GET["OfficeLocation"];
+	$email=$_GET["Email"];
+		
+	
+	$query = "INSERT INTO `instructor` (InstructorID, FirstName, LastName, PhoneNumber, OfficeLocation, Email) VALUES ('$instructorID', '$firstName', '$lastName', '$phoneNumber', '$officeLocation', '$email')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=5">
+	<?php
+	
+}
+
+
+
+if ($table == "memberof")
+{
+	$groupName=$_GET["GroupName"];
+	$studentID=$_GET["StudentID"];
+	$assnID=$_GET["AssnID"];
+	
+	
+	
+	$query = "INSERT INTO memberof (GroupName, StudentID, AssnID) VALUES ('$groupName', '$studentID', '$assnID')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=6">
+	<?php
+}
+
+
+if ($table == "questions")
+{
+	$questionID=$_GET["QuestionID"];
+	$questionName=$_GET["QuestionName"];
+	$fullMark=$_GET["FullMark"];
+	$assnID=$_GET["AssnID"];
+	
+	$query = "INSERT INTO questions (QuestionID, QuestionName, FullMark, AssnID) VALUES ('$questionID', '$questionName', '$fullMark', '$assnID')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=7">
+	<?php
+}
+
+
+if ($table == "student")
+{
+	$studentID=$_GET["StudentID"];
+	$major=$_GET["Major"];
+	$lastName=$_GET["LastName"];
+	$firstName=$_GET["FirstName"];
+	
+	$query = "INSERT INTO student (StudentID, Major, LastName, FirstName) VALUES ('$studentID', '$major', '$lastName', '$firstName')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=8">
+	<?php
+}
+
+
+if ($table == "takes")
+{
+	$studentID=$_GET["StudentID"];
+	$courseID=$_GET["CourseID"];
+	$finalMark=$_GET["FinalMark"];
+				
+	if ($finalMark == "Aplus")
+		$finalMark = "A+";
+	else if ($finalMark == "Bplus")
+		$finalMark = "B+";
+	else if ($finalMark == "Cplus")
+		$finalMark = "C+";
+	else if ($finalMark == "Dplus")
+		$finalMark = "D+";
+		
+		
+	$query = "INSERT INTO `takes` (StudentID, CourseID, FinalMark) VALUES ('$studentID', '$courseID', '$finalMark')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=10">
+	<?php
+	
+}
+
+
+if ($table == "teaches")
+{
+	$instructorID=$_GET["InstructorID"];
+	$courseID=$_GET["CourseID"];
+		
+		
+	$query = "INSERT INTO `teaches` (InstructorID, CourseID) VALUES ('$instructorID', '$courseID')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=11">
+	<?php
+	
+}
+
+
+if ($table == "users")
+{
+	// Change database
+	$users_uiucDB = "assignments_users_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+	
+	$username=$_GET["Username"];
+	$password=$_GET["Password"];
+	$userType=$_GET["UserType"];
+	
+	if ($userType == "administrator")
+		$userType=1;
+	else if ($userType == "instructor")
+		$userType=2;
+	else
+		$userType=3;
+		
+	$encryptedPassword = md5($password);	
+	
+	$query = "INSERT INTO `users` (Username, Password, UserType) VALUES ('$username', '$encryptedPassword', '$userType')";
+	
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+	
+	mysql_close($mysqlConnection);
+	?>
+	<script src="admin_functions.js"></script>
+	
+	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=12"> 
+	<?php
+}
 
 ?>
