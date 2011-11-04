@@ -17,6 +17,7 @@
     $login_query = "SELECT * FROM " . $loginTable . " WHERE Username='$username' AND Password='$encryptedPassword'";
     //print($login_query);
     $login_result = mysql_query($login_query);
+    if (mysql_errno()) print(mysql_error());
     $rows = mysql_num_rows($login_result);
     $referrer = $_SERVER["HTTP_REFERER"];
     //remove any GET values

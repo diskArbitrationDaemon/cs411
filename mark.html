@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+
+ <script src="getQueryVar.js">
+ </script>
+ <script type="text/javascript">
+        function getQuestions (){//TODO: rename this to something descriptive or useful. NOW!
+            if(window.XMLHttpRequest){
+                xmlhttpQn = new XMLHttpRequest(); //TODO: need one per AJAX request
+            }
+            xmlhttpQn.onreadystatechange=function()//TODO need a copy of this for each request
+            {
+                if (xmlhttpQn.readyState == 4 && xmlhttpQn.status == 200){
+                    document.getElementById("Questions").innerHTML=xmlhttpQn.responseText;
+                }
+            }
+
+            xmlhttpQn.open("GET", "mark.php?&AssnID="+getQueryVariable("AssnID") + "&StudentID="+getQueryVariable("StudentID"), true); //TODO: fill in php filename and any arguments
+            xmlhttpQn.send();
+        }
+        
+    function submitMarks(form){
+        var studentID = form.student.value;
+        var numQuestions = form.numQuestions.value;
+        var i = 0;
+        var questions = new Array();
+        var marks = new Array();
+        var assnID = form.AssnID.value;
+        var params = "stage=1&StudentID=" + studentID + "&AssnID=" + assnID;
+        for (i = 0; i < numQuestions; i++){
+            //get all the question fields
+            questions[i] = form.elements["Question"+i].value;
+            marks[i] = form.elements["Q" + questions[i]].value;
+            params += "&Question[" + questions[i] + "]="+marks[i];
+            //alert("questions[" + i + "] = " + questions[i] + "\n" + "marks[" + i + "] = " + marks[i]);
+        }
+
+
+        var url = "mark.php";
+        var http = new XMLHttpRequest();
+        alert(params);
+        http.open("POST", url, true);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-length", params.length);
+        http.setRequestHeader("Connection", "close");
+        http.onreadystatechange = function() {//Call a function when the state changes.
+            if(http.readyState == 4 && http.status == 200) {
+            
+                    document.getElementById("Questions").innerHTML=http.responseText;
+            }
+        }
+        http.send(params);
+       
+	}
+</script>
+    
+<head>
+
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<script type"text/javascript">getQuestions();</script>
+</head>
+<body>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <table width="100%" border="0">
+
+                        <tr>
+                            <td width=300>
+                                <h2>Menu Here</h2>
+                            </td>
+                            <td align="left">
+                                <div id="Questions">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <script>
+                   </script>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
