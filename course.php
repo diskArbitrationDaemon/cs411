@@ -9,7 +9,7 @@
 
     //check to see if this instructor actually teaches this course. If not, error is displayed.
 
-    $query = "SELECT * FROM Teaches as t, Instructor as i WHERE t.NetID = i.NetID AND t.NetID='".$_SESSION['username'] ."' AND t.CourseID='$courseID'";
+    $query = "SELECT * FROM Teaches as t, Instructor as i WHERE t.InstructorID = i.InstructorID AND t.InstructorID='".$_SESSION['username'] ."' AND t.CourseID='$courseID'";
     $result = mysql_query($query);
 
     $row = mysql_fetch_array($result);
@@ -43,7 +43,7 @@
         } else if (htmlspecialchars($_GET['q'] == "GetInstructors")){
             $query = "SELECT * FROM `Teaches`, Instructor WHERE 
             Teaches.CourseID=1 AND
-            Teaches.NetID=Instructor.NetID";
+            Teaches.InstructorID=Instructor.InstructorID";
             $result = mysql_query($query);
             print("<table border=0 width=800>\n");
             while ($row = mysql_fetch_array($result)){

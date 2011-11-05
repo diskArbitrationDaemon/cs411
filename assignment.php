@@ -4,8 +4,8 @@
     session_start();
 
     $query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
-    i.NetID='$_SESSION[username]' AND
-    t.NetID=i.NetID AND
+    i.InstructorID='$_SESSION[username]' AND
+    t.InstructorID=i.InstructorID AND
     a.CourseID=c.courseID AND
     t.courseID=c.courseID";
     $result = mysql_query($query);
