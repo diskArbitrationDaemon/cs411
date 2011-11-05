@@ -30,15 +30,25 @@
 								<!--The Admin Content table-->
 								<table width="100%" border="1">
 								<tr>
-									<td width=500>
+									<td width=500 align="center">
 										<h2>Admin Page</h2>
 										
 										<b>Select table:</b>
 										<form>
-										<select myTable="tableName" onchange="showTable(this.value)">
-										<option value=""> </option>
-										<option value="assignment">Assignment</option>
-										<option value="course">Course</option>
+										<select name="tableName" onchange="showTable(this.value)">
+											<option value=""> </option>
+											<option value="assignment">assignment</option>
+											<option value="automarking">automarking</option>
+											<option value="course">course</option>
+											<option value="group">group</option>
+											<option value="instructor">instructor</option>
+											<option value="memberof">memberof</option>
+											<option value="questions">questions</option>
+											<option value="student">student</option>
+											<option value="submission">submission</option>
+											<option value="takes">takes</option>
+											<option value="teaches">teaches</option>
+											<option value="users">users</option>
 										</select>
 										</form>
 										<br />
@@ -46,6 +56,61 @@
 										<br />
 										<div id="area2"> </div>
 										
+										<script>
+										if (getQueryVariable("displayTable") == 1)
+										{									
+											showTable('assignment');
+										}
+										if (getQueryVariable("displayTable") == 2)
+										{									
+											showTable('automarking');
+										}
+										if (getQueryVariable("displayTable") == 3)
+										{									
+											showTable('course');
+										}
+										if (getQueryVariable("displayTable") == 4)
+										{									
+											showTable('group');
+										}
+										if (getQueryVariable("displayTable") == 5)
+										{									
+											showTable('instructor');
+										}
+										if (getQueryVariable("displayTable") == 6)
+										{									
+											showTable('memberof');
+										}
+										if (getQueryVariable("displayTable") == 6)
+										{									
+											showTable('memberof');
+										}
+										if (getQueryVariable("displayTable") == 7)
+										{									
+											showTable('questions');
+										}
+										if (getQueryVariable("displayTable") == 8)
+										{									
+											showTable('student');
+										}
+										if (getQueryVariable("displayTable") == 9)
+										{									
+											showTable('submission');
+										}
+										if (getQueryVariable("displayTable") == 10)
+										{									
+											showTable('takes');
+										}
+										if (getQueryVariable("displayTable") == 11)
+										{									
+											showTable('teaches');
+										}
+										if (getQueryVariable("displayTable") == 12)
+										{									
+											showTable('users');
+										}
+										
+										</script>
 										
 										
 									</td>
