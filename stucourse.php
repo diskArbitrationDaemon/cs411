@@ -53,9 +53,7 @@
   		}
 		echo "</table>";
     	print("<br><br>");
-    	while ($row = mysql_fetch_array($result)){
-        print($row['CourseName'] . "<br>");
-        }
+    	
     }
    //print("Username:" . $_SESSION['username']);
 ?>
