@@ -22,10 +22,10 @@
         $result = mysql_query($query);
         if (mysql_errno() > 0) print("Mysql error: " . mysql_error());
         
-        print("Submissions for <a href=\"assignment.html?AssnID=$assnID\">$assnName</a><br><br>");
+        print("Submissions for <a href=\"instr_assignment.html?AssnID=$assnID\">$assnName</a><br><br>");
         while($row = mysql_fetch_array($result)){
 
-            print "<a href=\"mark.html?AssnID=$_GET[AssnID]&StudentID=$row[StudentID]\">$row[StudentID]</a><br>";
+            print "<a href=\"instr_mark.html?AssnID=$_GET[AssnID]&StudentID=$row[StudentID]\">$row[StudentID]</a><br>";
             print("\n<br>\n");
         }
     } else {

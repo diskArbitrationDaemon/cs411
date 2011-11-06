@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
-	<script src="getQueryVar.js">
+	<script src="instr_getQueryVar.js">
 	</script>
     <script type="text/javascript">
         
@@ -32,9 +32,9 @@
                     document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
                 }
             }
-            xmlhttpAssn.open("GET", "assignment.php?q=GetAssessments&AssnID=" + getQueryVariable("AssnID"), true);
+            xmlhttpAssn.open("GET", "instr_assignment.php?q=GetAssessments&AssnID=" + getQueryVariable("AssnID"), true);
             xmlhttpAssn.send();
-            xmlhttpQuestion.open("GET", "assignment.php?q=GetQuestions&AssnID=" + getQueryVariable("AssnID"), true);
+            xmlhttpQuestion.open("GET", "instr_assignment.php?q=GetQuestions&AssnID=" + getQueryVariable("AssnID"), true);
             xmlhttpQuestion.send();
         }
 

@@ -37,7 +37,7 @@
                     print("<tr><td height=30 width=150>Maximum Mark:</td><td>$row[MaxMark]</td></tr>");
                     print("<tr><td height=30 width=150>Median Mark: </td><td>$row[MedianMark]</td></tr>");
                     print("<tr><td height=30 width=150>Average Mark: </td><td>$row[AvgMark]</td></tr>");
-                    print("<tr><td height=30 width=150><a href=\"viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a></td><td></td></tr>");
+                    print("<tr><td height=30 width=150><a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a></td><td></td></tr>");
                 print("</table>");
             print("</td></tr>");
             print("</table>");

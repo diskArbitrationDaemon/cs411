@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
-<script src="getQueryVar.js"></script>
+<script src="instr_getQueryVar.js"></script>
 <script type="text/javascript">
         function viewSubmissions (){//TODO: rename this to something descriptive or useful. NOW!
             if(window.XMLHttpRequest){
@@ -13,7 +13,7 @@
                 }
             }
 
-            xmlhttpSubmission.open("GET", "viewSubmissions.php?AssnID=" + getQueryVariable("AssnID"), true); //TODO: fill in php filename and any arguments 
+            xmlhttpSubmission.open("GET", "instr_viewSubmissions.php?AssnID=" + getQueryVariable("AssnID"), true); //TODO: fill in php filename and any arguments 
             xmlhttpSubmission.send();
         }
     </script>

@@ -1,4 +1,4 @@
-<script src="getQueryVar.js">
+<script src="instr_getQueryVar.js">
 </script>
 <script type="text/javascript">
 
@@ -26,11 +26,11 @@
                 document.getElementById("Instructors").innerHTML=xmlhttpInstr.responseText;
             }                                                                       
         }    
-        xmlhttpAssn.open("GET", "course.php?q=GetAssignments&CourseID=" + getQueryVariable("CourseID"), true);
+        xmlhttpAssn.open("GET", "instr_course.php?q=GetAssignments&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpAssn.send();                                 
-        xmlhttpCourse.open("GET", "course.php?q=GetCourses&CourseID=" + getQueryVariable("CourseID"), true);
+        xmlhttpCourse.open("GET", "instr_course.php?q=GetCourses&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpCourse.send();
-    	xmlhttpInstr.open("GET", "course.php?q=GetInstructors&CourseID=" + getQueryVariable("CourseID"), true);
+    	xmlhttpInstr.open("GET", "instr_course.php?q=GetInstructors&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpInstr.send();   
     }                                                       
 </script>     	

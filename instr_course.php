@@ -34,7 +34,7 @@
             print("<table border=0 width=800>\n");
             while ($row = mysql_fetch_array($result)){
                 print("<tr><td width=50%>\n");
-                print("<a href=\"assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>");
+                print("<a href=\"instr_assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>");
                 print("</td><td width=50%>");
                 print("$row[DueTime]");
                 print("</td></tr>");

@@ -24,7 +24,7 @@
             print("<br><br>\n");
      
             while ($row = mysql_fetch_array($result)){
-                print("<a href=\"assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>". "<br>");
+                print("<a href=\"instr_assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>". "<br>");
             }
         } else if (htmlspecialchars($_GET["q"]) == "GetCourses"){
             $coursesQuery = "SELECT CourseName, t.CourseID FROM Course As c, Teaches As t WHERE c.CourseID = t.CourseID AND t.InstructorID = '". $_SESSION['username'] . "'";
@@ -32,7 +32,7 @@
             print("Courses you administer\n");
             print("<br><br>");       
             while ($row = mysql_fetch_array($result)){
-                print("<a href=\"course.html?CourseID=$row[CourseID]\">$row[CourseName]</a>" . "<br>");
+                print("<a href=\"instr_course.html?CourseID=$row[CourseID]\">$row[CourseName]</a>" . "<br>");
             }
       
         }

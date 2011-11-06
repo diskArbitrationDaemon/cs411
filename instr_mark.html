@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
- <script src="getQueryVar.js">
+ <script src="instr_getQueryVar.js">
  </script>
  <script type="text/javascript">
         function getQuestions (){//TODO: rename this to something descriptive or useful. NOW!
@@ -15,7 +15,7 @@
                 }
             }
 
-            xmlhttpQn.open("GET", "mark.php?&AssnID="+getQueryVariable("AssnID") + "&StudentID="+getQueryVariable("StudentID"), true); //TODO: fill in php filename and any arguments
+            xmlhttpQn.open("GET", "instr_mark.php?&AssnID="+getQueryVariable("AssnID") + "&StudentID="+getQueryVariable("StudentID"), true); //TODO: fill in php filename and any arguments
             xmlhttpQn.send();
         }
         
@@ -36,7 +36,7 @@
         }
 
 
-        var url = "mark.php";
+        var url = "instr_mark.php";
         var http = new XMLHttpRequest();
         alert(params);
         http.open("POST", url, true);

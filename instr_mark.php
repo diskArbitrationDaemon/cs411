@@ -31,7 +31,7 @@ if (empty($stage)){
         if (mysql_num_rows($result) == 0){
             die ("this assignment/student combination does not exist");
         } else {
-            print("<form name=form action=mark.html  method=\"post\">\n");
+            print("<form name=form action=instr_mark.html  method=\"post\">\n");
             print("<table border=0 width=400>\n");
             $i = 0;
             while ($row = mysql_fetch_array($result)){
@@ -61,6 +61,6 @@ if (empty($stage)){
         ON DUPLICATE KEY UPDATE mark='$value'");
         if (mysql_errno() > 0) print("error: " . mysql_error() . "<br> Query: " . $query);
     }
-    print("<meta http-equiv=\"REFRESH\" content=\"0;url=viewSubmissions.html?AssnID=$assnID\">");
+    print("<meta http-equiv=\"REFRESH\" content=\"0;url=instr_viewSubmissions.html?AssnID=$assnID\">");
 }
 ?>
