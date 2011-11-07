@@ -4,21 +4,7 @@ include 'includes/mysqlAdminLoginAssignment.php';
 
 $table=$_GET["table"];
 
-<<<<<<< HEAD
-$mySqlHost = "localhost";
-$mySqlUser = "admin";
-$mySqlPass = "admin";
-				
-$mysqlConnection = mysql_connect($mySqlHost, $mySqlUser, $mySqlPass) or die("Can not connect to DB. " . mysql_error());
-				
-$uiucDB = "assignments_uiuc";
-		
-mysql_select_db($uiucDB) or die("Cannot connect to uiucDB." . mysql_error());
- 
 $query = "SELECT * FROM " . $table;
-=======
-
->>>>>>> 371f2a0089403dda37f760aa178b20d35e4735cc
 
 
 /*

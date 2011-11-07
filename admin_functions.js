@@ -331,7 +331,7 @@
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter an 'Email'</font>";
 			}
 			
-			if (user == "")
+			else if (user == "")
 			{
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'Username'</font>";
 			}
@@ -519,7 +519,7 @@
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'First Name'</font>";
 			}
 			
-			if (user == "")
+			else if (user == "")
 			{
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'Username'</font>";
 			}

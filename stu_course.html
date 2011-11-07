@@ -42,7 +42,7 @@
         xmlhttpResult.open("GET", "stu_course.php?q=GetResults&CourseID=" + getQueryVariable("CourseID"), true);
     	xmlhttpResult.send();
     }                                                       
-</script>     	
+</script>     
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
@@ -61,59 +61,63 @@
         </tr>
         <tr>
             <td>
-                <table width= 100% border="0">
-                                        <tr>
-                        <td width=300> 
-                        </td>
-
-                        <td>
-                            <div id="CourseDetails">
-                            </div>
-                        </td>
-                <table id="Courses" width="100%" border="0">
+                <table width="100%" border="0">
 
                     <tr>
-                        <td height=30>
-                        </td>
-                    </tr>
-                    <tr>
                         <td width=300>
-                        </td>
-                        <td  align="left">
-                            <h3>Assignments</h3>
-                            <div id="Assignments">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height=60>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width=300>
-                        </td>
-                        <td  align="left">
-                           <h4>Grades</h4>
-                            <div id="Results">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height=90>
-                        </td>
-                    <tr>
-                        <td width=300>
+                            <h2>Menu Here</h2>
                         </td>
                         <td align="left">
-                            <h5>Instructors</h5>
-                            <div id="Instructors">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            <table width= 100% border="0">
+                                <tr>
+                                    <td>
+                                        <div id="CourseDetails">
+                                        </div>
+                                        <table id="Courses" width="100%" border="0">
 
-                    <script>
-                   </script>
+                                            <tr>
+                                                <td height=30>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                
+                                                <td  align="left">
+                                                    <h3>Assignments</h3>
+                                                    <div id="Assignments">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                	            <td height=60>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                
+                                                <td  align="left">
+                                  		          	<h4>Grades</h4>
+                            						<div id="Results">
+                            						</div>
+                                                </td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td height=90>
+                                                </td>
+                                            <tr>
+
+                                                <td align="left">
+                                                    <h5>Instructors</h5>
+                                                    <div id="Instructors">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
             </td>
         </tr>
     </table>
