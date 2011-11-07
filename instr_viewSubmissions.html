@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<script src="instr_getQueryVar.js"></script>
+<script type="text/javascript">
+        function viewSubmissions (){//TODO: rename this to something descriptive or useful. NOW!
+            if(window.XMLHttpRequest){
+                xmlhttpSubmission = new XMLHttpRequest(); //TODO: need one per AJAX request
+            }
+            xmlhttpSubmission.onreadystatechange=function()//TODO need a copy of this for each request
+            {
+                if (xmlhttpSubmission.readyState == 4 && xmlhttpSubmission.status == 200){
+                    document.getElementById("submission").innerHTML=xmlhttpSubmission.responseText;
+                }
+            }
+
+            xmlhttpSubmission.open("GET", "instr_viewSubmissions.php?AssnID=" + getQueryVariable("AssnID"), true); //TODO: fill in php filename and any arguments 
+            xmlhttpSubmission.send();
+        }
+    </script>
+    
+<head>
+<script> viewSubmissions();</script>
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<!TODO Remember to call the javascript function somewherie
+</head>
+<body>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <table width="100%" border="0">
+
+                        <tr>
+                            <td width=300>
+                                <h2>Menu Here</h2>
+                            </td>
+                            <td align="left">
+                                <div id="submission">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <script>
+                   </script>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <?php
 include 'includes/mysqlAdminLoginAssignment.php';
 		
-mysql_select_db($uiucDB) or die("Cannot connect to uiucDB.");
+mysql_select_db($uiucDB) or die("Cannot connect to uiucDB." . mysql_error());
 
 
 $table=$_GET["table"];

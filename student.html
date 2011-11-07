@@ -19,9 +19,9 @@
                     document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
                 }
             }
-            xmlhttpAssn.open("GET", "instructor.php?q=GetAssessments", true);
+            xmlhttpAssn.open("GET", "student.php?q=GetAssessments", true);
             xmlhttpAssn.send();
-            xmlhttpCourse.open("GET", "instructor.php?q=GetCourses", true);
+            xmlhttpCourse.open("GET", "student.php?q=GetCourses", true);
             xmlhttpCourse.send();
         }
     </script>
@@ -47,7 +47,7 @@
                                 <h2>Menu Here</h2>
                             </td>
                             <td align="left">
-								
+
 								<table id="loginInfoTable" width="100%" border="0">
 
                         			<tr>

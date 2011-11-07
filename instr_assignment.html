@@ -1,10 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+
+	<script src="instr_getQueryVar.js">
+	</script>
     <script type="text/javascript">
-        function getAssessmentAndCourses (){
+        
+
+        function getAssessment (){
             if(window.XMLHttpRequest){
                 xmlhttpAssn = new XMLHttpRequest();
                 xmlhttpCourse = new XMLHttpRequest();
+                xmlhttpQuestion = new XMLHttpRequest();
             }
             xmlhttpAssn.onreadystatechange=function()
             {
@@ -12,6 +18,13 @@
                     document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
                 }
             }
+            xmlhttpQuestion.onreadystatechange=function()
+            {
+                if (xmlhttpQuestion.readyState == 4 && xmlhttpQuestion.status == 200){
+                    document.getElementById("QuestionDetails").innerHTML=xmlhttpQuestion.responseText;
+                }
+            }
+
 
             xmlhttpCourse.onreadystatechange=function()
             {
@@ -19,12 +32,14 @@
                     document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
                 }
             }
-            xmlhttpAssn.open("GET", "instructor.php?q=GetAssessments", true);
+            xmlhttpAssn.open("GET", "instr_assignment.php?q=GetAssessments&AssnID=" + getQueryVariable("AssnID"), true);
             xmlhttpAssn.send();
-            xmlhttpCourse.open("GET", "instructor.php?q=GetCourses", true);
-            xmlhttpCourse.send();
+            xmlhttpQuestion.open("GET", "instr_assignment.php?q=GetQuestions&AssnID=" + getQueryVariable("AssnID"), true);
+            xmlhttpQuestion.send();
         }
+
     </script>
+    
 <head>
 
 <title>Illinois CS Submission system</title>
@@ -47,37 +62,28 @@
                                 <h2>Menu Here</h2>
                             </td>
                             <td align="left">
-								
-								<table id="loginInfoTable" width="100%" border="0">
-
+                                <table width="100%" border="0">
                         			<tr>
-                            
                             			<td align="left">
-                                			<div id="AssessmentDetails">
-                                
-                                			</div>    
-                            			</td>
-                            
-                        			</tr>
-                        			<tr>
-                           			 	<td height=30>
-                            			</td>
-                        			</tr>
-                        			<tr>
-                            
-                            			<td align="left">
-                                			<div id="CourseDetails">
+                                			<div id=AssessmentDetails>
                                 			</div>
                             			</td>
                         			</tr>
+                        			
+                        			<tr>
+                            			<td align="left">
+                                			<div id=QuestionDetails>
+                                			</div>
+                            			</td>
+                        			</tr>
+                         			
                     			</table>
-
                             </td>
                         </tr>
                     </table>
 
                     <script>
-                        getAssessmentAndCourses(); 
+                        getAssessment ();
                    </script>
             </td>
         </tr>

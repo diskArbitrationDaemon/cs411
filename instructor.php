@@ -15,24 +15,24 @@
                 Assignment.CourseID = Course.CourseID AND
                 Course.CourseID = ANY (
                 SELECT CourseID FROM Teaches, Instructor WHERE 
-                    Instructor.NetID = '" . $_SESSION['username'] . "' AND
-                    Teaches.NetID = Instructor.NetID) AND
+                    Instructor.InstructorID = '" . $_SESSION['username'] . "' AND
+                    Teaches.InstructorID = Instructor.InstructorID) AND
                 DueTime < DATE_ADD( NOW( ) , INTERVAL 7 DAY)";
             $result = mysql_query($assignmentsQuery);
+            if (mysql_errno()) print(mysql_error());
             print("Assignments Due this week:\n");
             print("<br><br>\n");
      
-     
             while ($row = mysql_fetch_array($result)){
-                print($row['AssnName'] . "<br>");
+                print("<a href=\"instr_assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>". "<br>");
             }
         } else if (htmlspecialchars($_GET["q"]) == "GetCourses"){
-            $coursesQuery = "SELECT CourseName FROM Course As c, Teaches As t WHERE c.CourseID = t.CourseID AND t.NetID = '". $_SESSION['username'] . "'";
+            $coursesQuery = "SELECT CourseName, t.CourseID FROM Course As c, Teaches As t WHERE c.CourseID = t.CourseID AND t.InstructorID = '". $_SESSION['username'] . "'";
             $result = mysql_query($coursesQuery);
             print("Courses you administer\n");
             print("<br><br>");       
             while ($row = mysql_fetch_array($result)){
-                print($row['CourseName'] . "<br>");
+                print("<a href=\"instr_course.html?CourseID=$row[CourseID]\">$row[CourseName]</a>" . "<br>");
             }
       
         }

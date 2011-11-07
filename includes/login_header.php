@@ -5,5 +5,5 @@
 
     define("ADMIN_PHP", "admin.html");
     define("INSTRUCTOR_PHP", "instructor.html");
-    define("STUDENT_PHP", "student.php");
+    define("STUDENT_PHP", "student.html");
 ?>

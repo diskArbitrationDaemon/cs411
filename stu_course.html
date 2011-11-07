@@ -1,0 +1,121 @@
+<script src="stu_getQueryVar.js">
+</script>
+<script type="text/javascript">
+
+    function getCourseDetails(){                             
+        if(window.XMLHttpRequest){
+            xmlhttpAssn = new XMLHttpRequest();
+            xmlhttpCourse = new XMLHttpRequest();
+            xmlhttpInstr = new XMLHttpRequest();
+            xmlhttpResult = new XMLHttpRequest();
+        } 
+        xmlhttpAssn.onreadystatechange=function()
+        {
+            if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                document.getElementById("Assignments").innerHTML=xmlhttpAssn.responseText;
+            }
+        }
+        xmlhttpCourse.onreadystatechange=function()
+        {
+            if(xmlhttpCourse.readyState == 4 && xmlhttpCourse.status == 200){
+                document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
+            }                                                                       
+        }
+        xmlhttpInstr.onreadystatechange=function()
+        {
+            if(xmlhttpInstr.readyState == 4 && xmlhttpInstr.status == 200){
+                document.getElementById("Instructors").innerHTML=xmlhttpInstr.responseText;
+            }                                                                       
+        } 
+        xmlhttpResult.onreadystatechange=function()
+        {
+            if(xmlhttpResult.readyState == 4 && xmlhttpCourse.status == 200){
+                document.getElementById("Results").innerHTML=xmlhttpResult.responseText;
+             }
+    	}
+        xmlhttpAssn.open("GET", "stu_course.php?q=GetAssignments&CourseID=" + getQueryVariable("CourseID"), true);
+        xmlhttpAssn.send();                                 
+        xmlhttpCourse.open("GET", "stu_course.php?q=GetCourses&CourseID=" + getQueryVariable("CourseID"), true);
+        xmlhttpCourse.send();
+    	xmlhttpInstr.open("GET", "stu_course.php?q=GetInstructors&CourseID=" + getQueryVariable("CourseID"), true);
+        xmlhttpInstr.send();  
+        xmlhttpResult.open("GET", "stu_course.php?q=GetResults&CourseID=" + getQueryVariable("CourseID"), true);
+    	xmlhttpResult.send();
+    }                                                       
+</script>     	
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<script type="text/javascript"> getCourseDetails(); </script>
+</head>
+<body>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width= 100% border="0">
+                                        <tr>
+                        <td width=300> 
+                        </td>
+
+                        <td>
+                            <div id="CourseDetails">
+                            </div>
+                        </td>
+                <table id="Courses" width="100%" border="0">
+
+                    <tr>
+                        <td height=30>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width=300>
+                        </td>
+                        <td  align="left">
+                            <h3>Assignments</h3>
+                            <div id="Assignments">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height=60>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width=300>
+                        </td>
+                        <td  align="left">
+                           <h4>Grades</h4>
+                            <div id="Results">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height=90>
+                        </td>
+                    <tr>
+                        <td width=300>
+                        </td>
+                        <td align="left">
+                            <h5>Instructors</h5>
+                            <div id="Instructors">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                    <script>
+                   </script>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
