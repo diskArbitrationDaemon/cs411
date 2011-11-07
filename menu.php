@@ -24,7 +24,7 @@
     if ($userType | INSTRUCTOR){
         print("<tr>");
         print("<td>");
-        print("<a href=\"instr_viewCourses.html\">View Courses</a>");
+        print("<a href=\"instr_viewCourses.html\" target=\"_parent\">View Courses</a>");
         print("</td>");
         print("</tr>");
         
