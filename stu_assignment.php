@@ -35,8 +35,6 @@
             print("<tr><td>");
                 print("<table border=0>");
                     print("<tr><td height=30 width=150>Maximum Mark:</td><td>$row[MaxMark]</td></tr>");
-                    print("<tr><td height=30 width=150>Median Mark: </td><td>$row[MedianMark]</td></tr>");
-                    print("<tr><td height=30 width=150>Average Mark: </td><td>$row[AvgMark]</td></tr>");
                 print("</table>");
             print("</td></tr>");
             print("</table>");
