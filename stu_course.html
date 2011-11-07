@@ -7,6 +7,7 @@
             xmlhttpAssn = new XMLHttpRequest();
             xmlhttpCourse = new XMLHttpRequest();
             xmlhttpInstr = new XMLHttpRequest();
+            xmlhttpResult = new XMLHttpRequest();
         } 
         xmlhttpAssn.onreadystatechange=function()
         {
@@ -25,13 +26,21 @@
             if(xmlhttpInstr.readyState == 4 && xmlhttpInstr.status == 200){
                 document.getElementById("Instructors").innerHTML=xmlhttpInstr.responseText;
             }                                                                       
-        }    
+        } 
+        xmlhttpResult.onreadystatechange=function()
+        {
+            if(xmlhttpResult.readyState == 4 && xmlhttpCourse.status == 200){
+                document.getElementById("Results").innerHTML=xmlhttpResult.responseText;
+             }
+    	}
         xmlhttpAssn.open("GET", "stu_course.php?q=GetAssignments&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpAssn.send();                                 
         xmlhttpCourse.open("GET", "stu_course.php?q=GetCourses&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpCourse.send();
     	xmlhttpInstr.open("GET", "stu_course.php?q=GetInstructors&CourseID=" + getQueryVariable("CourseID"), true);
-        xmlhttpInstr.send();   
+        xmlhttpInstr.send();  
+        xmlhttpResult.open("GET", "stu_course.php?q=GetResults&CourseID=" + getQueryVariable("CourseID"), true);
+    	xmlhttpResult.send();
     }                                                       
 </script>     	
 
@@ -79,19 +88,26 @@
                     <tr>
                         <td height=60>
                         </td>
+                    </tr>
                     <tr>
                         <td width=300>
                         </td>
-                        <td align="left">
-                            <h4>Instructors</h4>
-                            <div id="Instructors">
+                        <td  align="left">
+                           <h4>Grades</h4>
+                            <div id="Results">
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td width=300 height=40>
+                        <td height=90>
+                        </td>
+                    <tr>
+                        <td width=300>
                         </td>
                         <td align="left">
+                            <h5>Instructors</h5>
+                            <div id="Instructors">
+                            </div>
                         </td>
                     </tr>
                 </table>

@@ -53,9 +53,7 @@
             }
 
             print("</table>");
-        } else {
-            print("OHSHIT");
-        }
+        } 
     } else {
 
         if (htmlspecialchars($_GET['q'] == "GetAssessments")){

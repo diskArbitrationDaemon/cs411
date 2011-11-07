@@ -47,19 +47,44 @@
             $result = mysql_query($query);
             print("<table border=0 width=800>\n");
             while ($row = mysql_fetch_array($result)){
-                print("<tr><td width=20%>");
+                print("<tr><td width=30%>");
+                print("Name : ");
                 print("$row[FirstName] ");
                 print("$row[LastName]");
                 print("</td><td width=20%>");
+                print("Phone Number : ");
                 print("$row[PhoneNumber]");
-                print("</td><td width=40%>");
+                print("</td><td width=20%>");
+                print("email : ");
                 print("$row[Email]");
+                print("</td>");
+            }
+            print("</table>");
+        } else if (htmlspecialchars($_GET["q"] == "GetResults")){
+    
+            $query = "SELECT QuestionName, FullMark, Mark FROM questions As q, results As r WHERE r.StudentID = (SELECT t.StudentID FROM takes As t WHERE 
+                    t.StudentID = '" . $_SESSION['username'] . "' AND t.CourseID=$courseID) 
+                    AND q.QuestionID = r.QuestionID ";
+                      
+            $result = mysql_query($query);
+            print("<table border=0 width=800>\n");
+            while ($row = mysql_fetch_array($result)){
+                print("<tr><td width=40%>");
+                print("QuestionName : ");
+                print("$row[QuestionName] ");
+                print("</td><td width=20%>");
+                print("FullMark : ");
+                print("$row[FullMark]");
+                print("</td><td width=20%>");
+                print("YourMark : ");
+                print("$row[Mark]");
                 print("</td>");
             }
             print("</table>");
 
 
-        }
+        } 
+        
     } else {
         
         if (htmlspecialchars($_GET['q'] == "GetCourses")){
