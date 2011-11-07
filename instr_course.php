@@ -42,7 +42,7 @@
             print("</table>");
         } else if (htmlspecialchars($_GET['q'] == "GetInstructors")){
             $query = "SELECT * FROM `Teaches`, Instructor WHERE 
-            Teaches.CourseID=1 AND
+            Teaches.CourseID=$courseID AND
             Teaches.InstructorID=Instructor.InstructorID";
             $result = mysql_query($query);
             print("<table border=0 width=800>\n");
