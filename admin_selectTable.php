@@ -268,7 +268,7 @@ if ($table == "instructor")
 	
 	<button type="insertInstructorButton" onclick="showInsert('instructor')">Insert New Instructor</button>
 	<br />
-	<br />	
+	<br />
 	
 	<?php
 

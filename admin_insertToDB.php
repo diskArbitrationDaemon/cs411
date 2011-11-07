@@ -118,22 +118,42 @@ if ($table == "instructor")
 	$phoneNumber=$_GET["PhoneNumber"];
 	$officeLocation=$_GET["OfficeLocation"];
 	$email=$_GET["Email"];
-		
-	
+	$user=$_GET["Username"];
+			
 	$query = "INSERT INTO `instructor` (InstructorID, FirstName, LastName, PhoneNumber, OfficeLocation, Email) VALUES ('$instructorID', '$firstName', '$lastName', '$phoneNumber', '$officeLocation', '$email')";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{
 		die ('Error: ' . mysql_error());
 	}
+
+	// Update userType in users table
+	$users_uiucDB = "assignments_users_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+		
+	$query = "SELECT * FROM `users` WHERE Username = '$user'";
+	$result = mysql_query($query);
+	while($row = mysql_fetch_array($result))
+	{
+		$usertype = $row['UserType'];	
+	}
+		
+	$query = "UPDATE `users` SET UserType=('$usertype' | 2) WHERE Username='$user'";
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+		
+	$users_uiucDB = "assignments_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
 	
+
 	mysql_close($mysqlConnection);
 	?>
 	<script src="admin_functions.js"></script>
 	
 	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=5">
 	<?php
-	
 }
 
 
@@ -191,6 +211,7 @@ if ($table == "student")
 	$major=$_GET["Major"];
 	$lastName=$_GET["LastName"];
 	$firstName=$_GET["FirstName"];
+	$user=$_GET["Username"];
 	
 	$query = "INSERT INTO student (StudentID, Major, LastName, FirstName) VALUES ('$studentID', '$major', '$lastName', '$firstName')";
 	
@@ -198,6 +219,26 @@ if ($table == "student")
 	{
 		die ('Error: ' . mysql_error());
 	}
+	
+	// Update userType in users table
+	$users_uiucDB = "assignments_users_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+		
+	$query = "SELECT * FROM `users` WHERE Username = '$user'";
+	$result = mysql_query($query);
+	while($row = mysql_fetch_array($result))
+	{
+		$usertype = $row['UserType'];	
+	}
+		
+	$query = "UPDATE `users` SET UserType=('$usertype' | 4) WHERE Username='$user'";
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+		
+	$users_uiucDB = "assignments_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
 	
 	mysql_close($mysqlConnection);
 	?>
@@ -272,18 +313,16 @@ if ($table == "users")
 	
 	$username=$_GET["Username"];
 	$password=$_GET["Password"];
-	$userType=$_GET["UserType"];
+	$adminPerm=$_GET["AdminPerm"];
 	
-	if ($userType == "administrator")
-		$userType=1;
-	else if ($userType == "instructor")
-		$userType=2;
-	else
-		$userType=3;
+	if ($adminPerm == "no")
+		$adminPerm=0;
+	else if ($adminPerm == "yes")
+		$adminPerm=1;
 		
 	$encryptedPassword = md5($password);	
 	
-	$query = "INSERT INTO `users` (Username, Password, UserType) VALUES ('$username', '$encryptedPassword', '$userType')";
+	$query = "INSERT INTO `users` (Username, Password, UserType) VALUES ('$username', '$encryptedPassword', '$adminPerm')";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{

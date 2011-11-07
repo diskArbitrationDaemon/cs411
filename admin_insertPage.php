@@ -402,6 +402,33 @@ if ($table == "instructor")
 			<td align="center"><input type="text" name="email" size="50" maxlength="100"/></td>
 			<td align="center"><label for="avgMarkType">varchar(100)</label></td>
 		</tr>
+		<tr>
+		<td align="center"><label for="assnIDLabel"><b>* Username:</b></label></td>
+		<td align="center">	
+			<select name="user">
+			<?php
+			$users_uiucDB = "assignments_users_uiuc";	
+			mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+			
+			$query = "SELECT Username FROM `users`";
+			$result = mysql_query($query);
+	
+			?> <option value=""></option><?php
+	
+			while($row = mysql_fetch_array($result))
+			{
+			   ?> <option value="<?php print($row['Username']); ?>"><?php print($row['Username']); ?></option><?php
+			}
+			
+			$users_uiucDB = "assignments_uiuc";	
+			mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+			
+			?>
+			</select>			
+		</td>
+
+		</tr>
+		
 		
 		</table>
 		
@@ -597,6 +624,32 @@ if ($table == "student")
 			<td align="center"><input type="text" name="firstName" id="sampleSolnId" size="50" maxlength="100" /></td>
 			<td align="center"><label for="sampleSolnType">varchar(100)</label></td>
 		</tr>
+		<tr>
+		<td align="center"><label for="assnIDLabel"><b>* Username:</b></label></td>
+		<td align="center">	
+			<select name="user">
+			<?php
+			$users_uiucDB = "assignments_users_uiuc";	
+			mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+			
+			$query = "SELECT Username FROM `users`";
+			$result = mysql_query($query);
+	
+			?> <option value=""></option><?php
+	
+			while($row = mysql_fetch_array($result))
+			{
+			   ?> <option value="<?php print($row['Username']); ?>"><?php print($row['Username']); ?></option><?php
+			}
+			
+			$users_uiucDB = "assignments_uiuc";	
+			mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+			
+			?>
+			</select>			
+		</td>
+
+		</tr>
 		</table>
 		
 		<br />
@@ -767,13 +820,11 @@ if ($table == "users")
 			<td align="center"><label for="sampleSolnType">varchar(50)</label></td>
 		</tr>
 		<tr>
-			<td align="center"><label for="sampleSolnLabel"><b>* User Type:</b></label></td>
+			<td align="center"><label for="sampleSolnLabel"><b>Grant Admin Permission:</b></label></td>
 			<td align="center">
-				<select name="userType">
-				<option value=""></option>
-				<option value="student">Student</option>
-				<option value="instructor">Instructor</option>
-				<option value="administrator">Administrator</option>
+				<select name="adminPerm">
+				<option value="no">No</option>
+				<option value="yes">Yes</option>
 				</select>
 			</td>
 		</tr>

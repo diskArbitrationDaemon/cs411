@@ -275,9 +275,13 @@
 		
 		// Reads form input from insertGroup
 		// Parameter type: 'insert', 'edit'
-		function submitInstructor (form, oldInstructorID, type){ 				
+		function submitInstructor (form, id, type){ 				
 		
-			var instructorID = form.instructorID.value;
+			if (type == "insert")
+				var instructorID = form.instructorID.value;
+			else
+				var instructorID = id;
+				
 			var firstName = form.firstName.value;
 			var lastName = form.lastName.value;
 			var phone1 = form.phone1.value;
@@ -285,14 +289,18 @@
 			var phone3 = form.phone3.value;
 			var officeLocation = form.officeLocation.value;
 			var email = form.email.value;
+			if (type == "insert")
+				var user = form.user.options[form.user.selectedIndex].value;
+			else
+				var user = id;
+			
 			var phoneNumber = phone1+phone2+phone3;
-
 			
 			if (instructorID == "")
 			{
-				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter an 'InstructorID'</font>";
+				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter an 'Instructor ID'</font>";
 			}
-			
+	
 			else if (firstName == "")
 			{
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'First Name'</font>";
@@ -323,6 +331,15 @@
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter an 'Email'</font>";
 			}
 			
+			if (user == "")
+			{
+				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'Username'</font>";
+			}
+			
+			else if (user != instructorID)
+			{
+				document.getElementById("errorSpot").innerHTML="<font color=red>* Instructor ID and Username MUST match.  May need to add user first.</font>";
+			}
 			
 			else
 			{
@@ -350,12 +367,12 @@
 				}
 				
 				xmlhttpAssn.open("GET", url+"?table="+"instructor"+
-								"&OldInstructorID="+oldInstructorID+
 								"&InstructorID="+instructorID+
 								"&FirstName="+firstName+
 								"&LastName="+lastName+
 								"&PhoneNumber="+phoneNumber+
 								"&OfficeLocation="+officeLocation+
+								"&Username="+user+
 								"&Email="+email, true);
 				xmlhttpAssn.send();
 			}
@@ -366,8 +383,6 @@
 		// Reads form input from insertMemberof
 		// Parameter type: 'insert', 'edit'
 		function submitMemberof (form, oldGroup, oldStudentID, oldAssnID, type){ 
-			
-			
 			
 			var groupName = form.groupName.options[form.groupName.selectedIndex].value;
 			var studentID = form.studentID.options[form.studentID.selectedIndex].value;
@@ -469,13 +484,21 @@
 		
 		// Reads form input from insertStudent
 		// Parameter type: 'insert', 'edit'
-		function submitStudent (form, oldStudentID, type){ 
+		function submitStudent (form, id, type){ 
 			
-			var studentID = form.studentID.value;
+			if (type == "insert")
+				var studentID = form.studentID.value;
+			else
+				var studentID = id;
+				
 			var major = form.major.value;
 			var lastName = form.lastName.value;
 			var firstName = form.firstName.value;
-			
+			if (type == "insert")
+				var user = form.user.options[form.user.selectedIndex].value;
+			else
+				var user = id;
+				
 			if (studentID == "")
 			{
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'Student ID'</font>";
@@ -494,6 +517,16 @@
 			else if (firstName == "")
 			{
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'First Name'</font>";
+			}
+			
+			if (user == "")
+			{
+				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'Username'</font>";
+			}
+			
+			else if (user != studentID)
+			{
+				document.getElementById("errorSpot").innerHTML="<font color=red>* Instructor ID and Username MUST match.  May need to add user first.</font>";
 			}
 			
 			else
@@ -522,10 +555,10 @@
 				}
 				
 				xmlhttpAssn.open("GET", url+"?table="+"student"+
-								"&OldStudentID="+oldStudentID+
 								"&StudentID="+studentID+
 								"&Major="+major+
 								"&LastName="+lastName+
+								"&Username="+user+
 								"&FirstName="+firstName, true);
 				xmlhttpAssn.send();
 			}
@@ -619,12 +652,16 @@
 		
 		// Reads form input from insertUser
 		// Parameter type: 'insert', 'edit'
-		function submitUser (form, oldUsername, type, passwordChange){ 
+		function submitUser (form, id, type, passwordChange){ 
 			
-			var username = form.username.value;
+			if (type == "insert")
+				var username = form.username.value;
+			else
+				var username = id;
+				
 			var password1 = form.password1.value;
 			var password2 = form.password2.value;
-			var userType = form.userType.options[form.userType.selectedIndex].value;
+			var adminPerm = form.adminPerm.options[form.adminPerm.selectedIndex].value;
 			
 			if (passwordChange != password1)
 				passwordChange = "";
@@ -647,11 +684,6 @@
 			else if (password1 != password2)
 			{
 				document.getElementById("errorSpot").innerHTML="<font color=red>* Passwords do not match!</font>";
-			}
-			
-			else if (userType == "")
-			{
-				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter the 'User Type'</font>";
 			}
 			
 			else
@@ -680,10 +712,9 @@
 				}
 				
 				xmlhttpAssn.open("GET", url+"?table="+"users"+
-								"&OldUsername="+oldUsername+
 								"&Username="+username+
 								"&Password="+password1+
-								"&UserType="+userType+
+								"&AdminPerm="+adminPerm+
 								"&PasswordChange="+passwordChange, true);
 				xmlhttpAssn.send();
 			}
