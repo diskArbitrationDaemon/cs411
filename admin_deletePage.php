@@ -96,6 +96,28 @@ if ($table == "instructor")
 		die ('Error: ' . mysql_error());
 	}
 	
+	// Update userType in users table
+	$users_uiucDB = "assignments_users_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+		
+	$query = "SELECT * FROM `users` WHERE Username = '$rowID'";
+	$result = mysql_query($query);
+	while($row = mysql_fetch_array($result))
+	{
+		$usertype = $row['UserType'];	
+	}
+		
+	$query = "UPDATE `users` SET UserType=('$usertype' ^ 2) WHERE Username='$rowID'";
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+		
+	$users_uiucDB = "assignments_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+	
+	
+	
 	mysql_close($mysqlConnection);
 	
 	?>
@@ -157,6 +179,26 @@ if ($table == "student")
 	{
 		die ('Error: ' . mysql_error());
 	}
+	
+	// Update userType in users table
+	$users_uiucDB = "assignments_users_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+		
+	$query = "SELECT * FROM `users` WHERE Username = '$rowID'";
+	$result = mysql_query($query);
+	while($row = mysql_fetch_array($result))
+	{
+		$usertype = $row['UserType'];	
+	}
+		
+	$query = "UPDATE `users` SET UserType=('$usertype' ^ 4) WHERE Username='$rowID'";
+	if (!mysql_query($query, $mysqlConnection))
+	{
+		die ('Error: ' . mysql_error());
+	}
+		
+	$users_uiucDB = "assignments_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
 	
 	mysql_close($mysqlConnection);
 	

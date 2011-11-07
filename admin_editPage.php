@@ -515,6 +515,20 @@ if ($table == "instructor")
 	$phone2 = substr($phoneNumber, 3, 3);
 	$phone3 = substr($phoneNumber, 6, 4);
 	
+	$users_uiucDB = "assignments_users_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+		
+	$query = "SELECT * FROM `users` WHERE Username = '$rowID'";
+	$result = mysql_query($query);
+	while($row = mysql_fetch_array($result))
+	{
+		$username = $row['Username'];	
+	}
+	
+	$users_uiucDB = "assignments_uiuc";	
+	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
+	
+	
 	?>
 	<h3><u>EDIT ROW IN 'instructor' TABLE</h3></u>
 	
@@ -524,9 +538,9 @@ if ($table == "instructor")
 		<table border="2">
 		<tr>
 			<td align="center"><label for="assNameLabel"><b>* Instructor ID:</b></label></td>
-			<td align="center"><input type="text" name="instructorID" id="assnNameId" size="10" maxlength="10" value="<?php echo $rowID; ?>"/></td>
+			<td align="center"><label for="instructorID"><?php print($rowID); ?></label></td>  
 			<td align="center"><label for="assnNameType">varchar(20)</label></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td align="center"><label for="maxMarkLabel"><b>* First Name:</b></label></td>
 			<td align="center"><input type="text" name="firstName" size="50" maxlength="100" value="<?php echo $firstName; ?>"/></td>
@@ -552,6 +566,12 @@ if ($table == "instructor")
 			<td align="center"><input type="text" name="email" size="50" maxlength="100" value="<?php echo $email; ?>"/></td>
 			<td align="center"><label for="avgMarkType">varchar(100)</label></td>
 		</tr>
+		<tr>
+			<td align="center"><label for="assNameLabel"><b>Username:</b></label></td>
+			<td align="center"><label for="instructorID"><?php print($rowID); ?></label></td>  
+		</tr>
+		
+		
 		
 		</table>
 		
@@ -787,7 +807,7 @@ if ($table == "student")
 		<table border="2">
 		<tr>
 			<td align="center"><label for="sampleSolnLabel"><b>* Student ID:</b></label></td>
-			<td align="center"><input type="text" name="studentID" id="sampleSolnId" size="20" maxlength="20" value="<?php echo $rowID; ?>"/></td>
+			<td align="center"><label for="studentID"><?php print($rowID); ?></label></td>  
 			<td align="center"><label for="sampleSolnType">varchar(20)</label></td>
 		</tr>
 		<tr>
@@ -804,6 +824,10 @@ if ($table == "student")
 			<td align="center"><label for="sampleSolnLabel"><b>* First Name:</b></label></td>
 			<td align="center"><input type="text" name="firstName" id="sampleSolnId" size="50" maxlength="100" value="<?php echo $firstName; ?>"/></td>
 			<td align="center"><label for="sampleSolnType">varchar(100)</label></td>
+		</tr>
+		<tr>
+			<td align="center"><label for="assNameLabel"><b>Username:</b></label></td>
+			<td align="center"><label for="instructorID"><?php print($rowID); ?></label></td>  
 		</tr>
 		</table>
 		
@@ -1090,8 +1114,8 @@ if ($table == "users")
 	<form name="insertCourseForm" id="insertAssnFormId" action="" method="GET">
 		<table border="2">
 		<tr>
-			<td align="center"><label for="sampleSolnLabel"><b>* Username:</b></label></td>
-			<td align="center"><input type="text" name="username" id="sampleSolnId" size="20" maxlength="20" value="<?php echo $rowID; ?>"/></td>
+			<td align="center"><label for="sampleSolnLabel"><b>Username:</b></label></td>
+			<td align="center"><label for="username"><?php print($rowID); ?></label></td>  
 			<td align="center"><label for="sampleSolnType">varchar(20)</label></td>
 		</tr>
 		<tr>
@@ -1105,26 +1129,21 @@ if ($table == "users")
 			<td align="center"><label for="sampleSolnType">varchar(50)</label></td>
 		</tr>
 		<tr>
-			<td align="center"><label for="sampleSolnLabel"><b>* User Type:</b></label></td>
+			<td align="center"><label for="sampleSolnLabel"><b>Grant Admin Permission:</b></label></td>
 			<td align="center">
-				<select name="userType">
-					<option value=""></option>
+				<select name="adminPerm">
 				<?php
-				if ($userType == 3){ ?>
-					<option value="student" selected="selected">Student</option>
+				$isAdmin = $userType & 1;
+				
+				if ($isAdmin == 0){ ?>
+					<option value="no" selected="selected">No</option>
 				<?php }else{ ?>
-					<option value="student">Student</option>
+					<option value="no">No</option>
 				<?php	}
-				if ($userType == 2){ ?>
-					<option value="instructor" selected="selected">Instructor</option>
+				if ($isAdmin == 1){ ?>
+					<option value="yes" selected="selected">Yes</option>
 				<?php }else{ ?>
-					<option value="instructor">Instructor</option>
-				<?php	}
-				if ($userType == 1){ ?>
-					<option value="administrator" selected="selected">Administrator</option>
-				<?php }else{ ?>
-					<option value="administrator">Administrator</option>
-				<?php	} ?>
+					<option value="yes">Yes</option> <?php } ?>
 				</select>
 			</td>
 		</tr>

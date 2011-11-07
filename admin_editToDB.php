@@ -103,7 +103,6 @@ if ($table == "group")
 
 if ($table == "instructor")
 {
-	$oldInstructorID=$_GET["OldInstructorID"];
 	$instructorID=$_GET["InstructorID"];
 	$firstName=$_GET["FirstName"];
 	$lastName=$_GET["LastName"];
@@ -111,7 +110,7 @@ if ($table == "instructor")
 	$officeLocation=$_GET["OfficeLocation"];
 	$email=$_GET["Email"];
 	
-	$query = "UPDATE `instructor` SET InstructorID='$instructorID', FirstName='$firstName', LastName='$lastName', PhoneNumber='$phoneNumber', OfficeLocation='$officeLocation', Email='$email' WHERE InstructorID='$oldInstructorID'";
+	$query = "UPDATE `instructor` SET FirstName='$firstName', LastName='$lastName', PhoneNumber='$phoneNumber', OfficeLocation='$officeLocation', Email='$email' WHERE InstructorID='$instructorID'";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{
@@ -173,13 +172,12 @@ if ($table == "questions")
 
 if ($table == "student")
 {
-	$oldStudentID=$_GET["OldStudentID"];
 	$studentID=$_GET["StudentID"];
 	$major=$_GET["Major"];
 	$lastName=$_GET["LastName"];
 	$firstName=$_GET["FirstName"];
 	
-	$query = "UPDATE `student` SET StudentID='$studentID', Major='$major', FirstName='$firstName', LastName='$lastName' WHERE StudentID='$oldStudentID'";
+	$query = "UPDATE `student` SET Major='$major', FirstName='$firstName', LastName='$lastName' WHERE StudentID='$studentID'";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{
@@ -253,35 +251,43 @@ if ($table == "users")
 	$users_uiucDB = "assignments_users_uiuc";	
 	mysql_select_db($users_uiucDB) or die("Cannot connect to assignments_uiuc database.");
 
-	$oldUsername = $_GET['OldUsername'];
 	$username=$_GET["Username"];
 	$password=$_GET["Password"];
-	$userType=$_GET["UserType"];
+	$isAdmin=$_GET["AdminPerm"];
 	$passwordChange=$_GET["PasswordChange"];
 	
-	if ($userType == "administrator")
-		$userType=1;
-	else if ($userType == "instructor")
-		$userType=2;
-	else
-		$userType=3;
+	$query = "SELECT * FROM `users` WHERE Username='$username'";
+	$result = mysql_query($query);
+
+	$row = mysql_fetch_array($result);
+	$userType = $row['UserType'];
+	
+	if ($isAdmin == "no")
+	{
+		if ($userType%2 == 1)
+			$userType=$userType-1;
+	}
+	else if ($isAdmin == "yes")
+		$userType=($userType | 1);
 		
 	if ($passwordChange == "")	
 		$encryptedPassword = md5($password);
 	else
 		$encryptedPassword = $password;
 		
-	$query = "UPDATE `users` SET Username='$username', Password='$encryptedPassword', UserType='$userType' WHERE UserName='$oldUsername'";
+	$query = "UPDATE `users` SET Password='$encryptedPassword', UserType='$userType' WHERE UserName='$username'";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{
 		die ('Error: ' . mysql_error());
 	}
 	
+	
 	mysql_close($mysqlConnection);	
 	?>
 	<script src="admin_functions.js"></script>
 	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=12">
 	<?php
+	
 }
 ?>
