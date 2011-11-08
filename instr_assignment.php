@@ -9,26 +9,26 @@
     a.CourseID=c.courseID AND
     t.courseID=c.courseID";
     $result = mysql_query($query);
-    if (mysql_errno()) print(mysql_error());
+    if (mysql_errno()) die(mysql_error());
     $row = mysql_fetch_array($result);
     if(!empty($row['AssnID'])){
         if (htmlspecialchars($_GET['q'] == "GetAssessments")){
             $query = "SELECT AssnName FROM Assignment WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
             $result = mysql_query($query);
-            if (mysql_errno()) print(mysql_error());
+            if (mysql_errno()) die(mysql_error());
             $row = mysql_fetch_array($result);
             $assnName = $row['AssnName'];
 
             $query = "SELECT CourseName FROM Course, Assignment Where AssnID=".htmlspecialchars($_GET['AssnID']) . " AND 
             Assignment.CourseID=Course.CourseID";
             $result = mysql_query($query);
-            if (mysql_errno()) print(mysql_error());
+            if (mysql_errno()) die(mysql_error());
             $row = mysql_fetch_array($result);
             $courseName = $row['CourseName'];
 
             $query = "SELECT * FROM Assignment WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
             $result = mysql_query($query);
-            if (mysql_errno()) print(mysql_error());
+            if (mysql_errno()) die(mysql_error());
             $row = mysql_fetch_array($result); 
             print("<table border=0 width=400>");
             print("<tr><td height=50>$assnName - $courseName</td></tr>");
@@ -44,7 +44,7 @@
         } else if (htmlspecialchars($_GET['q'] == "GetQuestions")){
             $query = "SELECT * FROM Questions WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
             $result = mysql_query($query);
-            if (mysql_errno()) print(mysql_error());
+            if (mysql_errno()) die(mysql_error());
             print("<table width=800 border=0>");
             while ($row = mysql_fetch_array($result)){
 

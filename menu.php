@@ -22,11 +22,25 @@
     }
 
     if ($userType | INSTRUCTOR){
+        
+        print("<tr>");
+        print("<td>");
+        print("<a href=\"instructor.html\" target=\"_parent\">Instructor overview</a>");
+        print("</td>");
+        print("</tr>");
         print("<tr>");
         print("<td>");
         print("<a href=\"instr_viewCourses.html\" target=\"_parent\">View Courses</a>");
         print("</td>");
         print("</tr>");
+        print("<tr>");
+        print("<td>");
+        print("<a href=\"instr_viewAssns.html\" target=\"_parent\">View Assignments</a>");
+        print("</td>");
+        print("</tr>");
+
+
+        
         
     }
 
