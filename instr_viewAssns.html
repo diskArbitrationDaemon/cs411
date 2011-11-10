@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+
+<script type="text/javascript">
+        function getAllAssns (){//TODO: rename this to something descriptive or useful. NOW!
+            if(window.XMLHttpRequest){
+                xmlhttpAssns = new XMLHttpRequest(); //TODO: need one per AJAX request
+            }
+            xmlhttpAssns.onreadystatechange=function()//TODO need a copy of this for each request
+            {
+                if (xmlhttpAssns.readyState == 4 && xmlhttpAssns.status == 200){
+                    document.getElementById("assignments").innerHTML=xmlhttpAssns.responseText;
+                }
+            }
+
+            xmlhttpAssns.open("GET", "instr_viewAssns.php", true); //TODO: fill in php filename and any arguments 
+            xmlhttpAssns.send();
+        }
+    </script>
+    
+<head>
+
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<!TODO Remember to call the javascript function somewhere>
+</head>
+<body>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <table width="100%" border="0">
+
+                        <tr valign="top">
+							<td width=250>
+                                <iframe width=250 frameBorder="0" src="menu.php">
+                                </iframe>
+                            </td>
+                            <td align="left">
+                                <div id="assignments">
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <script>
+                    getAllAssns();
+                   </script>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

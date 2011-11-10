@@ -1,7 +1,14 @@
+<script src="instr_addQuestion.js">
+</script>
+
 <?php
     include ('includes/mysqlInstrLogin.php');
     include ('includes/auth.php');
     session_start();
+	$spaceBetweenCols = 60;
+	$spaceBetweenTR = 35;
+	$widthCol1 = 135;
+    
 
     $query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
     i.InstructorID='$_SESSION[username]' AND
@@ -31,15 +38,15 @@
             if (mysql_errno()) die(mysql_error());
             $row = mysql_fetch_array($result); 
             print("<table border=0 width=400>");
-            print("<tr><td height=50>$assnName - $courseName</td></tr>");
+            print("<tr><td height=50>$assnName - $courseName</td</tr>");
             print("<tr><td>");
                 print("<table border=0>");
-                    print("<tr><td height=30 width=150>Maximum Mark:</td><td>$row[MaxMark]</td></tr>");
-                    print("<tr><td height=30 width=150>Median Mark: </td><td>$row[MedianMark]</td></tr>");
-                    print("<tr><td height=30 width=150>Average Mark: </td><td>$row[AvgMark]</td></tr>");
-                    print("<tr><td height=30 width=150><a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a></td><td></td></tr>");
+                    print("<tr><td height=30 width=150>Maximum Mark:</td<td>$row[MaxMark]</td</tr>");
+                    print("<tr><td height=30 width=150>Median Mark: </td<td>$row[MedianMark]</td</tr>");
+                    print("<tr><td height=30 width=150>Average Mark: </td<td>$row[AvgMark]</td</tr>");
+                    print("<tr><td height=30 width=150<a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a</td<td</td</tr>");
                 print("</table>");
-            print("</td></tr>");
+            print("</td</tr>");
             print("</table>");
         } else if (htmlspecialchars($_GET['q'] == "GetQuestions")){
             $query = "SELECT * FROM Questions WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
@@ -50,20 +57,154 @@
 
                 print("<tr><td width=200 height=35>");
                 print("$row[QuestionName]");
-                print("</td><td>");
+                print("</td<td>");
                 print("$row[FullMark]");
-                print("</td></tr>");
+                print("</td</tr>");
             }
 
             print("</table>");
+
+        } else if ($_GET['q'] == "CreateAssessment"){
+            
+            print ("<table border=0>");
+                print("<tr>");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
+                        print("Assignment Name");
+                    print("</td>");
+                    print ("<td width=$spaceBetweenCols>");
+                    print("</td>");
+                    print("<td align=left>");
+                        print("<input type=text name=AssnName>");
+                    print("</td>");
+                print("</tr>");
+                
+                print("<tr>");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
+                        print("Max group members");
+                    print("</td>");
+                    print ("<td width=$spaceBetweenCols>");
+                    print("</td>");
+                    print("<td align=left>");
+                        print("<input type=text name=MaxGroupMembers>");
+                    print("</td>");
+                print("</tr>");
+
+                print("<tr>");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
+                        print("Maximum Mark");
+                    print("</td>");
+                    print ("<td width=$spaceBetweenCols>");
+                    print("</td>");
+                    print("<td align=left>");
+                        print("<input type=text name=MaxMark>");
+                    print("</td>");
+                print("</tr>");
+
+                print("<tr>");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
+                        print("Course");
+                    print("</td>");
+                    print ("<td width=$spaceBetweenCols>");
+                    print("</td>");
+                    print("<td align=left>");
+                        print("<select name=CourseList>");
+                        $query = "SELECT CourseID, CourseName, SemesterName FROM Course ORDER BY CourseID Desc";
+                        $result = mysql_query($query);
+                        while ($row = mysql_fetch_array($result)){
+                            print("<option value=$row[CourseID]>$row[CourseName] | $row[SemesterName]</option>");
+                        }
+                        print("</select>");
+                    print("</td>");
+                print("</tr>");
+
+               print("<tr>");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
+                        print("Due Time");
+                    print("</td>");
+                    print ("<td width=$spaceBetweenCols>");
+                    print("</td>");
+                    print("<td align=left>");
+                        print("<select name=Month>");
+                        for($i = 1; $i <= 12; $i++){
+                            print("<option value=$i>$i</option>");
+                        }
+                        print("</select>");
+
+                        print("<select name=Date>");
+                        for($i = 1; $i <= 31; $i++){
+                            print("<option value=$i>$i</option>");
+                        }
+                        print("</select>");
+                        
+                        print("<select name=Year>");
+                            print("<option value=".date('Y').">".date('Y')."</option>");
+                            print("<option value=". (date('Y') + 1).">".(date('Y') + 1)."</option>");
+                        print("</select>");
+                        
+                        print("<select name=Hour>");
+                        for($i = 0; $i < 24; $i++){
+                            print("<option value=$i>$i</option>");
+                        }
+                        print("</select>");
+
+                        print("<select name=Minute>");
+                        for($i = 0; $i < 60; $i++){
+                            print("<option value=$i>$i</option>");
+                        }
+                        print("</select>");
+
+                    print("</td>");
+                print("</tr>");
+            print("</table>");
+
+        } else if ($_GET['q'] == "CreateQuestions"){
+            print("<span id=Questions>");
+            print("<table id=QuestionsTable border=0>");
+            ?><tr><td><input type="button" value="Add Question" onClick="addQuestion();"></td></tr><?php
+            print("</table>");
+            print("</span>");
+            ?><input type="submit" value="Add Assignment"><?php
+        } else if ($_GET['q'] == "Submit"){
+            $assnName = $_POST['AssnName'];
+            $maxGroupMembers = $_POST['MaxGroupMembers'];
+            $maxMark = $_POST['MaxMark'];
+            $month = $_POST['Month'];
+            $day = $_POST['Date'];
+            $year = $_POST['Year'];
+            $hour = $_POST['Hour'];
+            $minute = $_POST['Minute'];
+            $course = $_POST['CourseList'];
+            //print("AssnName: $assnName <br> Course:$course MaxGroupMembers: $maxGroupMembers <br> MaxMark: $maxMark <br> month: $month <br> day: $day <br> year: $year <br> hour: $hour <br> minute: $minute <br><br>");
+            $questionNames = $_POST['QuestionName'];
+            $questionMarks = $_POST['QuestionMark'];
+            //print_r($questionNames);
+            //print("<br>");
+            //print_r($questionMarks);
+
+            //Insert Assignment
+            $mysqlDate = "$year-$month-$day $hour:$minute:00";
+            $query = "INSERT into Assignment VALUES (NULL, '$assnName', '$maxGroupMembers', '$maxMark', NULL, NULL, '$course', '$mysqlDate')";
+            
+            $resultInsertAssn = mysql_query($query);
+            if (mysql_errno()) die("Cannot add into database.");
+            $assnID = mysql_insert_id();
+
+            for ($i = 0; $i < sizeof($questionNames); $i++){
+
+                $query = "INSERT into Questions VALUES (NULL, '$questionNames[$i]', '$questionMarks[$i]', '$assnID')";
+                print ($query);
+                $result = mysql_query($query);
+                if (mysql_errno()) die ("Cannot add question $i");
+            }
         } else {
-            print("OHSHIT");
+            print("Invalid parameter.");
         }
     } else {
 
-        if (htmlspecialchars($_GET['q'] == "GetAssessments")){
-            print("You are not authorised to view this assignment. Please contact the database administrator");
+        if (htmlspecialchars($_GET['q'] == "GetAssessments") | htmlspecialchars($_GET['q'] == "CreateAssessment")){
+            print("You are not authorised to view or modify this assignment. Please contact the database administrator");
         }
+
     }
     
 ?>
