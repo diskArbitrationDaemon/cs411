@@ -16,24 +16,25 @@
                 course.CourseID = ANY (
                 SELECT t.CourseID FROM takes As t, student WHERE 
                     student.StudentID = '" . $_SESSION['username'] . "' AND
-                    t.StudentID = student.StudentID) AND
+                    t.StudentID = student.StudentID) AND DueTime >= NOW() AND
                 DueTime < DATE_ADD( NOW( ) , INTERVAL 7 DAY)";
             $result = mysql_query($assignmentsQuery);
             if (mysql_errno()) print(mysql_error());
+            print("<br><br>\n");
+            print("<br><br>\n");
             print("Assignments Due this week:\n");
             print("<br><br>\n");
      
             while ($row = mysql_fetch_array($result)){
                 print("<a href=\"stu_assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>". "<br>");
             }
-            $todays_date= date("Y-m-d");
             $assignmentsQuery2 = "SELECT AssnName, AssnID FROM assignment, course WHERE 
                 assignment.CourseID = course.CourseID AND
                 course.CourseID = ANY (
                 SELECT t.CourseID FROM takes As t, student WHERE 
                     student.StudentID = '" . $_SESSION['username'] . "' AND
                     t.StudentID = student.StudentID) AND
-                DueTime >= $todays_date";
+                DueTime >= NOW()";
                     
             $result1 = mysql_query($assignmentsQuery2);
             if (mysql_errno()) print(mysql_error());
@@ -54,6 +55,25 @@
             while ($row = mysql_fetch_array($result)){
                 print("<a href=\"stu_course.html?CourseID=$row[CourseID]\">$row[CourseName]</a>" . "<br>");
             }
+      
+        } else if (htmlspecialchars($_GET["q"]) == "GetPrassn"){
+            $assignmentsQuery2 = "SELECT AssnName, AssnID FROM assignment, course WHERE 
+                assignment.CourseID = course.CourseID AND
+                course.CourseID = ANY (
+                SELECT t.CourseID FROM takes As t, student WHERE 
+                    student.StudentID = '" . $_SESSION['username'] . "' AND
+                    t.StudentID = student.StudentID) AND
+                DueTime < NOW()";
+                    
+            $result1 = mysql_query($assignmentsQuery2);
+            if (mysql_errno()) print(mysql_error());
+            print("Previous Assignments:\n");
+            print("<br><br>\n");
+     
+            while ($row2 = mysql_fetch_array($result1)){
+                print("<a href=\"stu_pre_assn.html?AssnID=$row2[AssnID]\">$row2[AssnName]</a>". "<br>");
+            }
+                     
       
         }
 
