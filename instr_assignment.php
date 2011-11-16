@@ -9,202 +9,309 @@
 	$spaceBetweenTR = 35;
 	$widthCol1 = 135;
     
-
-    $query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
-    i.InstructorID='$_SESSION[username]' AND
-    t.InstructorID=i.InstructorID AND
-    a.CourseID=c.courseID AND
-    t.courseID=c.courseID";
-    $result = mysql_query($query);
-    if (mysql_errno()) die(mysql_error());
-    $row = mysql_fetch_array($result);
-    if(!empty($row['AssnID'])){
-        if (htmlspecialchars($_GET['q'] == "GetAssessments")){
-            $query = "SELECT AssnName FROM Assignment WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
-            $result = mysql_query($query);
-            if (mysql_errno()) die(mysql_error());
-            $row = mysql_fetch_array($result);
-            $assnName = $row['AssnName'];
-
-            $query = "SELECT CourseName FROM Course, Assignment Where AssnID=".htmlspecialchars($_GET['AssnID']) . " AND 
-            Assignment.CourseID=Course.CourseID";
-            $result = mysql_query($query);
-            if (mysql_errno()) die(mysql_error());
-            $row = mysql_fetch_array($result);
-            $courseName = $row['CourseName'];
-
-            $query = "SELECT * FROM Assignment WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
-            $result = mysql_query($query);
-            if (mysql_errno()) die(mysql_error());
-            $row = mysql_fetch_array($result); 
-            print("<table border=0 width=400>");
-            print("<tr><td height=50>$assnName - $courseName</td</tr>");
-            print("<tr><td>");
-                print("<table border=0>");
-                    print("<tr><td height=30 width=150>Maximum Mark:</td<td>$row[MaxMark]</td</tr>");
-                    print("<tr><td height=30 width=150>Median Mark: </td<td>$row[MedianMark]</td</tr>");
-                    print("<tr><td height=30 width=150>Average Mark: </td<td>$row[AvgMark]</td</tr>");
-                    print("<tr><td height=30 width=150<a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a</td<td</td</tr>");
-                print("</table>");
-            print("</td</tr>");
-            print("</table>");
-        } else if (htmlspecialchars($_GET['q'] == "GetQuestions")){
-            $query = "SELECT * FROM Questions WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
-            $result = mysql_query($query);
-            if (mysql_errno()) die(mysql_error());
-            print("<table width=800 border=0>");
-            while ($row = mysql_fetch_array($result)){
-
-                print("<tr><td width=200 height=35>");
-                print("$row[QuestionName]");
-                print("</td<td>");
-                print("$row[FullMark]");
-                print("</td</tr>");
+	//display
+	if ($_GET['q'] == "GetAssessments" || $_GET['q'] == "GetQuestions"){
+	    $query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
+	    i.InstructorID='$_SESSION[username]' AND
+	    t.InstructorID=i.InstructorID AND
+	    a.CourseID=c.courseID AND
+	    t.courseID=c.courseID";
+	    $result = mysql_query($query);
+	    if (mysql_errno()) die(mysql_error());
+	    $row = mysql_fetch_array($result);
+	    if(!empty($row['AssnID'])){
+	        if (htmlspecialchars($_GET['q'] == "GetAssessments")){
+	            $query = "SELECT AssnName FROM Assignment WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
+	            $result = mysql_query($query);
+	            if (mysql_errno()) die(mysql_error());
+	            $row = mysql_fetch_array($result);
+	            $assnName = $row['AssnName'];
+	
+	            $query = "SELECT CourseName FROM Course, Assignment Where AssnID=".htmlspecialchars($_GET['AssnID']) . " AND 
+	            Assignment.CourseID=Course.CourseID";
+	            $result = mysql_query($query);
+	            if (mysql_errno()) die(mysql_error());
+	            $row = mysql_fetch_array($result);
+	            $courseName = $row['CourseName'];
+	
+	            $query = "SELECT * FROM Assignment WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
+	            $result = mysql_query($query);
+	            if (mysql_errno()) die(mysql_error());
+	            $row = mysql_fetch_array($result); 
+	            print("<table border=0 width=400>");
+	            print("<tr><td height=50>$assnName - $courseName</td</tr>");
+	            print("<tr><td>");
+	                print("<table border=0>");
+	                    print("<tr><td height=30 width=150>Maximum Mark:</td<td>$row[MaxMark]</td</tr>");
+	                    print("<tr><td height=30 width=150>Median Mark: </td<td>$row[MedianMark]</td</tr>");
+	                    print("<tr><td height=30 width=150>Average Mark: </td<td>$row[AvgMark]</td</tr>");
+	                    print("<tr><td height=30 width=150<a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a</td<td</td</tr>");
+	                print("</table>");
+	            print("</td</tr>");
+	            print("</table>");
+	        } else if (htmlspecialchars($_GET['q'] == "GetQuestions")){
+	            $query = "SELECT * FROM Questions WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
+	            $result = mysql_query($query);
+	            if (mysql_errno()) die(mysql_error());
+	            print("<table width=800 border=0>");
+	            while ($row = mysql_fetch_array($result)){
+	
+	                print("<tr><td width=200 height=35>");
+	                print("$row[QuestionName]");
+	                print("</td<td>");
+	                print("$row[FullMark]");
+	                print("</td</tr>");
+	            }
+	
+	            print("</table>");
+	
+	        } else {
+	            print("Invalid parameter.");
+	        }
+	    } else {
+	
+	        if (htmlspecialchars($_GET['q'] == "GetAssessments")){
+	            print("You are not authorised to view or modify this assignment. Please contact the database administrator");
+	        }
+	
+	    }
+	
+	//create/edit
+	} else if ($_GET['q'] == "CreateAssessment" || $_GET['q'] == "EditAssessment"){
+		
+            
+            $edit = 0;
+            if ($_GET['q'] == "EditAssessment") $edit = 1;
+            if ($edit){
+                $assnID = $_GET['AssnID'];
+                if (empty($assnID)) die ("Invalid Assignment");
+                //populate ASSN fields
+                $query = "SELECT * FROM Assignment WHERE AssnID='$assnID'";
+                $result = mysql_query($query);
+                $row = mysql_fetch_array($result);
+                if (mysql_errno()) die ("Cannot find assignment in database");
+                $assnName = $row['AssnName'];
+                $groupWork = $row['GroupWork'];
+                $maxMark = $row['MaxMark'];
+                $courseID = $row['CourseID'];
+                $dueDate = $row['DueTime'];
+                //YYYY-mm-dd HH:MM:SS
+                list($year, $month, $date, $hour, $min) = preg_split('/[-\ :]/', $dueDate);
             }
 
-            print("</table>");
-
-        } else if ($_GET['q'] == "CreateAssessment"){
-            
-            print ("<table border=0>");
-                print("<tr>");
-                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
-                        print("Assignment Name");
-                    print("</td>");
-                    print ("<td width=$spaceBetweenCols>");
-                    print("</td>");
-                    print("<td align=left>");
-                        print("<input type=text name=AssnName>");
-                    print("</td>");
-                print("</tr>");
+            print ("<table border=0>\n");
+                print("<tr>\n");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>\n");
+                        print("Assignment Name\n");
+                    print("</td>\n");
+                    print ("<td width=$spaceBetweenCols>\n");
+                    print("</td>\n");
+                    print("<td align=left>\n");
+                        print("<input type=text name=AssnName value=$assnName>\n");
+                    print("</td>\n");
+                print("</tr>\n");
                 
-                print("<tr>");
-                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
-                        print("Max group members");
-                    print("</td>");
-                    print ("<td width=$spaceBetweenCols>");
-                    print("</td>");
-                    print("<td align=left>");
-                        print("<input type=text name=MaxGroupMembers>");
-                    print("</td>");
-                print("</tr>");
+                print("<tr>\n");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>\n");
+                        print("Max group members\n");
+                    print("</td>\n");
+                    print ("<td width=$spaceBetweenCols>\n");
+                    print("</td>\n");
+                    print("<td align=left>\n");
+                        print("<input type=text name=MaxGroupMembers value=$groupWork>\n");
+                    print("</td>\n");
+                print("</tr>\n");
 
-                print("<tr>");
-                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
-                        print("Maximum Mark");
-                    print("</td>");
-                    print ("<td width=$spaceBetweenCols>");
-                    print("</td>");
-                    print("<td align=left>");
-                        print("<input type=text name=MaxMark>");
-                    print("</td>");
-                print("</tr>");
+                print("<tr>\n");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>\n");
+                        print("Maximum Mark\n");
+                    print("</td>\n");
+                    print ("<td width=$spaceBetweenCols>\n");
+                    print("</td>\n");
+                    print("<td align=left>\n");
+                        print("<input type=text name=MaxMark value=$maxMark>\n");
+                    print("</td>\n");
+                print("</tr>\n");
 
-                print("<tr>");
-                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
-                        print("Course");
-                    print("</td>");
-                    print ("<td width=$spaceBetweenCols>");
-                    print("</td>");
-                    print("<td align=left>");
-                        print("<select name=CourseList>");
+                print("<tr>\n");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>\n");
+                        print("Course\n");
+                    print("</td>\n");
+                    print ("<td width=$spaceBetweenCols>\n");
+                    print("</td>\n");
+                    print("<td align=left>\n");
+                        print("<select name=CourseList>\n");
                         $query = "SELECT CourseID, CourseName, SemesterName FROM Course ORDER BY CourseID Desc";
                         $result = mysql_query($query);
                         while ($row = mysql_fetch_array($result)){
-                            print("<option value=$row[CourseID]>$row[CourseName] | $row[SemesterName]</option>");
+                        	if ($row[CourseID] == $courseID){
+                        		print("<option value=$row[CourseID] selected=\"selected\">$row[CourseName] | $row[SemesterName]</option>\n");
+                        	}
+                            print("<option value=$row[CourseID]>$row[CourseName] | $row[SemesterName]</option>\n");
                         }
-                        print("</select>");
-                    print("</td>");
-                print("</tr>");
+                        print("</select>\n");
+                    print("</td>\n");
+                print("</tr>\n");
 
-               print("<tr>");
-                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>");
-                        print("Due Time");
-                    print("</td>");
-                    print ("<td width=$spaceBetweenCols>");
-                    print("</td>");
-                    print("<td align=left>");
-                        print("<select name=Month>");
+               print("<tr>\n");
+                    print("<td align=right height=$spaceBetweenTR width=$widthCol1>\n");
+                        print("Due Time\n");
+                    print("</td>\n");
+                    print ("<td width=$spaceBetweenCols>\n");
+                    print("</td>\n");
+                    print("<td align=left>\n");
+                        print("<select name=Month>\n");
                         for($i = 1; $i <= 12; $i++){
-                            print("<option value=$i>$i</option>");
+                        	if ($i == $month){
+                        	    print("<option value=$i selected=\"selected\">$i</option>\n");
+                        	} else {
+                            	print("<option value=$i>$i</option>\n");
+                        	}
                         }
-                        print("</select>");
+                        print("</select>\n");
 
-                        print("<select name=Date>");
+                        print("<select name=Date>\n");
                         for($i = 1; $i <= 31; $i++){
-                            print("<option value=$i>$i</option>");
+                        	if ($i == $date){
+                        		print("<option value=$i selected=\"selected\">$i</option>\n");
+                        	} else {
+                        		print("<option value=$i>$i</option>\n");
+                        	
+                        	}
                         }
-                        print("</select>");
+                        print("</select>\n");
                         
-                        print("<select name=Year>");
-                            print("<option value=".date('Y').">".date('Y')."</option>");
-                            print("<option value=". (date('Y') + 1).">".(date('Y') + 1)."</option>");
-                        print("</select>");
+                        print("<select name=Year>\n");
+                        	$currentYear = date('Y');
+                            print("<option value=".date('Y')." selected=\"selected\">".date('Y')."</option>\n");
+                            print("<option value=". (date('Y') + 1).">".(date('Y') + 1)."</option>\n");
+                        	
+                        print("</select>\n");
                         
-                        print("<select name=Hour>");
+                        print("<select name=Hour>\n");
                         for($i = 0; $i < 24; $i++){
-                            print("<option value=$i>$i</option>");
+                        	if ($i == $hour){
+                            	printf('<option value=%d selected=\"selected\">%02d</option>\n', $i, $i);
+                        	} else {
+                            	printf('<option value=%d>%02d</option>\n', $i, $i);
+                        	}
                         }
-                        print("</select>");
+                        print("</select>\n");
 
-                        print("<select name=Minute>");
+                        print("<select name=Minute>\n");
                         for($i = 0; $i < 60; $i++){
-                            print("<option value=$i>$i</option>");
+                        	if ($i == $minute){
+                        		printf('<option value=%d selected=\"selected\">%02d</option>\n', $i, $i);
+                        	} else {
+                            	printf('<option value=%d>%02d</option>\n', $i, $i);
+                        	}
                         }
-                        print("</select>");
+                        print("</select>\n");
 
-                    print("</td>");
-                print("</tr>");
-            print("</table>");
+                    print("</td>\n");
+                print("</tr>\n");
+            print("</table>\n");
+            if (!empty($assnID)) print("<input type=hidden name=AssnID value=$assnID> <br> <input type=hidden name=Edit value=true>");
+		 
+	} else if ($_GET['q'] == "CreateQuestions" || $_GET['q'] == "EditQuestions"){
+		$edit = 0;
+		if ($_GET['q'] == "EditQuestions"){
+			$edit = 1;
+			$assnID = $_GET['AssnID'];
+			$query = "SELECT * FROM Questions WHERE AssnID='$assnID'";
+			$result = mysql_query($query);
+			
+			while ($row = mysql_fetch_array($result)){
+				print("<script src=\"instr_addQuestion.js\">\n");
+				print("addQuestion($row[QuestionID], \"$row[QuestionName]\", $row[FullMark]);");
+				print("</script>");
+			}
+		}
+        
+		
+		print("<span id=Questions>");
+        print("<table id=QuestionsTable border=0>");
+        ?><tr><td><input type="button" value="Add Question" onClick="addQuestion();"></td></tr><?php
+        print("</table>");
+        print("</span>");
+        ?><input type="submit" value="Add Assignment"><?php
+        
+    } else if ($_GET['q'] == "Submit"){
+    	
+    	//TODO: separate update from submit!
+    	
+        $assnName = $_POST['AssnName'];
+        $maxGroupMembers = $_POST['MaxGroupMembers'];
+        $maxMark = $_POST['MaxMark'];
+        $month = $_POST['Month'];
+        $date = $_POST['Date'];
+        $year = $_POST['Year'];
+        $hour = $_POST['Hour'];
+        $minute = $_POST['Minute'];
+        $courseID = $_POST['CourseList'];
+        
+        print("AssnName: $assnName <br> Course:$courseID MaxGroupMembers: $maxGroupMembers <br> MaxMark: $maxMark <br> month: $month <br> day: $date <br> year: $year <br> hour: $hour <br> minute: $minute <br><br>");
+        $questionNames = $_POST['QuestionName'];
+        $questionMarks = $_POST['QuestionMark'];
+        $updateQuestions = $_POST['UpdateQuestion'];
+        /*print_r($questionNames);
+        print("<br>");
+        print_r($questionMarks);
+        print("<br>|");
+        print_r($updateQuestions);*/
 
-        } else if ($_GET['q'] == "CreateQuestions"){
-            print("<span id=Questions>");
-            print("<table id=QuestionsTable border=0>");
-            ?><tr><td><input type="button" value="Add Question" onClick="addQuestion();"></td></tr><?php
-            print("</table>");
-            print("</span>");
-            ?><input type="submit" value="Add Assignment"><?php
-        } else if ($_GET['q'] == "Submit"){
-            $assnName = $_POST['AssnName'];
-            $maxGroupMembers = $_POST['MaxGroupMembers'];
-            $maxMark = $_POST['MaxMark'];
-            $month = $_POST['Month'];
-            $day = $_POST['Date'];
-            $year = $_POST['Year'];
-            $hour = $_POST['Hour'];
-            $minute = $_POST['Minute'];
-            $course = $_POST['CourseList'];
-            //print("AssnName: $assnName <br> Course:$course MaxGroupMembers: $maxGroupMembers <br> MaxMark: $maxMark <br> month: $month <br> day: $day <br> year: $year <br> hour: $hour <br> minute: $minute <br><br>");
-            $questionNames = $_POST['QuestionName'];
-            $questionMarks = $_POST['QuestionMark'];
-            //print_r($questionNames);
-            //print("<br>");
-            //print_r($questionMarks);
-
-            //Insert Assignment
-            $mysqlDate = "$year-$month-$day $hour:$minute:00";
-            $query = "INSERT into Assignment VALUES (NULL, '$assnName', '$maxGroupMembers', '$maxMark', NULL, NULL, '$course', '$mysqlDate')";
-            
-            $resultInsertAssn = mysql_query($query);
-            if (mysql_errno()) die("Cannot add into database.");
-            $assnID = mysql_insert_id();
-
-            for ($i = 0; $i < sizeof($questionNames); $i++){
-
-                $query = "INSERT into Questions VALUES (NULL, '$questionNames[$i]', '$questionMarks[$i]', '$assnID')";
-                print ($query);
-                $result = mysql_query($query);
-                if (mysql_errno()) die ("Cannot add question $i");
-            }
+		$mysqlDate = sprintf("%04d-%02d-%02d %02d:%02d:00", $year, $month, $date, $hour,$minute);
+        //Insert or update Assignment
+        if ($_POST['Edit'] != "true"){
+	        $query = "INSERT into Assignment VALUES (NULL, '$assnName', '$maxGroupMembers', '$maxMark', NULL, NULL, '$courseID', '$mysqlDate')";
+	        //print("Made a new assignment with query: $query<br>");
+	        $resultInsertAssn = mysql_query($query);
+	        //print $query;
+	        if (mysql_errno()) die("Cannot add into database." . mysql_error());
+	        $assnID = mysql_insert_id();
+	        
+	        //when creating an assignment, create all the submissions
+	        $submQuery = "SELECT Course.SemesterName, Course.CourseName, Assignment.AssnID, Assignment.AssnName, Takes.StudentID FROM Takes, Course, Assignment WHERE
+					Assignment.AssnID='$assnID' AND
+					Course.CourseID=Assignment.CourseID AND
+					Takes.CourseID = Course.CourseID ";
+	        $submResult = mysql_query($submQuery);
+	        print("All students: $submQuery <br>");
+	        $timeNow = date('Y-m-d H:i:s');
+	        while ($row = mysql_fetch_array($submResult)){
+	        	$submAssnID = $row['AssnID'];
+	        	$submStudentID = $row['StudentID'];
+	        	$submFiles = "$row[SemesterName]/$row[CourseName]/$row[AssnName]/$row[StudentID]";
+	        	$insQuery = "INSERT into Submission VALUES ('$submAssnID', '$submStudentID', '$submFiles', NULL, '$timeNow')";
+	        	mysql_query($insQuery);
+	        	print "Inserted into submission: $submStudentID:  $insQuery<br>";
+	        	if (mysql_errno()) die ("$query <br>" . mysql_error());
+	        }
         } else {
-            print("Invalid parameter.");
-        }
-    } else {
+        	$assnID = $_POST['AssnID'];
+        	$query = "UPDATE Assignment SET AssnName='$assnName', GroupWork='$maxGroupMembers', MaxMark='$maxMark', CourseID=$courseID, DueTime='$mysqlDate' WHERE
+        		AssnID=$assnID";
+        	        $resultInsertAssn = mysql_query($query);
+        	//print $query;
+        	if (mysql_errno()) die("Cannot add into database." . mysql_error());
+        	
+        }      
 
-        if (htmlspecialchars($_GET['q'] == "GetAssessments") | htmlspecialchars($_GET['q'] == "CreateAssessment")){
-            print("You are not authorised to view or modify this assignment. Please contact the database administrator");
+        
+        //updateQuestions contains a list of questions (by QuestionID) to update. Therefore the difference in update/insert is implicit, i.e.
+        //an insertion is done _all the time_ unless exempted by the updateQuestionsList.
+        //With updating an Assignment, however, there requires an edit flag.
+        foreach ($questionNames as $key => $value){
+			if (in_array($key, $updateQuestions)){
+				$query = "UPDATE Questions SET QuestionName='$questionNames[$key]', FullMark='$questionMarks[$key]' WHERE QuestionID='$key'";
+			} else {
+            	$query = "INSERT into Questions VALUES (NULL, '$questionNames[$key]', '$questionMarks[$key]', '$assnID')";
+			}
+			print("<br>$query<br>");
+            $result = mysql_query($query);
+            if (mysql_errno()) die ("Cannot add question $i" . mysql_error());
         }
-
     }
+
     
 ?>

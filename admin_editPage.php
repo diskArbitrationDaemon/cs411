@@ -94,6 +94,7 @@ if ($table == "assignment")
 			<td align="center"><input type="text" name="medianMark" size="30" maxlength="30" value=<?php print($medianMark) ?> /></td>
 			<td align="center"><label for="medianMarkType">double</label></td>
 		</tr>
+		<tr>
 		<td align="center"><label for="courseNameLabel"><b>Distributing Course ID:</b></label></td>
 		<td align="center">	
 			<select name="courseID">
@@ -116,6 +117,7 @@ if ($table == "assignment")
 			</select>
 		</td>
 		</tr>
+		<tr>
 		<td align="center"><label for="dateLabel"><b>Date Due:</b></label></td>
 		<td><label for="monthNameLabel"><b>Month:</b></label>
 			<select name="monthName">
@@ -176,6 +178,7 @@ if ($table == "assignment")
 			</select>
 		</td>
 		</tr>
+		<tr>
 		<td align="center"><label for="timeLabel"><b>Time Due:</b></label></td>
 		<td><label for="hourLabel"><b>Hour:</b></label>
 		<select name="hour">
@@ -286,6 +289,7 @@ $rowID=$_GET["rowID"];
 			<td align="center"><textarea name="configs" cols="40" rows="10" ><?php print($configs); ?></textarea></td>
 			<td align="center"><label for="configsType">text</label></td>
 		</tr>
+		<tr>
 		<td align="center"><label for="assnIDLabel"><b>AssnID:</b></label></td>
 		<td align="center">	
 			<select name="assnID">

@@ -38,7 +38,11 @@
         print("<a href=\"instr_viewAssns.html\" target=\"_parent\">View Assignments</a>");
         print("</td>");
         print("</tr>");
-
+        print("<tr>");
+        print("<td>");
+        print("<a href=\"instr_assignment.html?create=true\" target=\"_parent\">Create New Assignment</a>");
+        print("</td>");
+        print("</tr>");
 
         
         
