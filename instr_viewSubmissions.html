@@ -12,8 +12,13 @@
                     document.getElementById("submission").innerHTML=xmlhttpSubmission.responseText;
                 }
             }
-
-            xmlhttpSubmission.open("GET", "instr_viewSubmissions.php?AssnID=" + getQueryVariable("AssnID"), true); //TODO: fill in php filename and any arguments 
+            var linkString;
+            if (getQueryVariable("StudentID")){
+            	linkString ="instr_viewSubmissions.php?mode=ListFiles&AssnID=" + getQueryVariable("AssnID") + "&StudentID=" + getQueryVariable("StudentID");
+            } else {
+            	linkString = "instr_viewSubmissions.php?mode=ListAllSubmissions&AssnID=" + getQueryVariable("AssnID");
+            }
+            xmlhttpSubmission.open("GET", linkString , true); //TODO: fill in php filename and any arguments 
             xmlhttpSubmission.send();
         }
     </script>
@@ -22,7 +27,6 @@
 <script> viewSubmissions();</script>
 <title>Illinois CS Submission system</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!TODO Remember to call the javascript function somewherie
 </head>
 <body>
     <table width="100%" border="0">
@@ -36,13 +40,15 @@
                     <table width="100%" border="0">
 
                         <tr>
-							<td width=250>
+							<td width=250 valign=top>
                                 <iframe width=250 frameBorder="0" src="menu.php">
                                 </iframe>
                             </td>
                             <td align="left">
+                                <form name=submissions action="instr_viewSubmissions.php" method=POST>
                                 <div id="submission">
                                 </div>
+                                </form>
                             </td>
                         </tr>
                     </table>

@@ -1,0 +1,23 @@
+####################################################
+
+Submissions/Spring12/CS 173/AutoSubmit/cwu19/diary.txt
+
+####################################################
+
+
+#0	this is a diary
+
+
+
+
+
+####################################################
+
+Submissions/Spring12/CS 173/AutoSubmit/cwu19/submission.txt
+
+####################################################
+
+
+#0	submit.txt
+
+Some comments here and there.

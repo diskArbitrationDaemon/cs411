@@ -1,10 +1,99 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
+
+    
+<head>
+
+
+
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+</head>
+
 	<script src="instr_getQueryVar.js">
 	</script>
+
+    <script src="instr_addQuestion.js">
+    </script>
     <script type="text/javascript">
-        
+       
+        function createAssessment(){
+
+            if(window.XMLHttpRequest){
+                xmlhttpAssn = new XMLHttpRequest();
+                xmlhttpQuestion = new XMLHttpRequest();
+                //xmlhttpSubmit = new XMLHttpRequest();
+            }
+            xmlhttpAssn.onreadystatechange=function()
+            {
+                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                    document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
+                }
+            }
+            
+            xmlhttpQuestion.onreadystatechange=function()
+            {
+                if (xmlhttpQuestion.readyState == 4 && xmlhttpQuestion.status == 200){
+                    document.getElementById("QuestionDetails").innerHTML=xmlhttpQuestion.responseText;
+                }
+            }
+            
+            /*xmlhttpSubmit.onreadystatechange=function()
+            {
+                if (xmlhttpSubmit.readyState == 4 && xmlhttpSubmit.status == 200){
+                    document.getElementById("Submit").innerHTML=xmlhttpSubmit.responseText;
+                }
+            }*/
+            xmlhttpAssn.open("GET", "instr_assignment.php?q=CreateAssessment", true);
+            xmlhttpAssn.send();
+            xmlhttpQuestion.open("GET", "instr_assignment.php?q=CreateQuestions", true);
+            xmlhttpQuestion.send();
+            /*xmlhttpSubmit.open("GET", "instr_assignment.php?q=Submit", true);
+            xmlhttpSubmit.send();*/
+        }
+
+         function editAssessment(){
+
+            if(window.XMLHttpRequest){
+                xmlhttpAssn = new XMLHttpRequest();
+                xmlhttpQuestion = new XMLHttpRequest();
+                //xmlhttpSubmit = new XMLHttpRequest();
+            }
+            xmlhttpAssn.onreadystatechange=function()
+            {
+                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+                    document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
+                }
+            }
+            
+            xmlhttpQuestion.onreadystatechange=function()
+            {
+                if (xmlhttpQuestion.readyState == 4 && xmlhttpQuestion.status == 200){
+                    document.getElementById("QuestionDetails").innerHTML=xmlhttpQuestion.responseText;
+                    var x = document.getElementById("QuestionDetails").getElementsByTagName("script"); 
+                    for(var i=0;i<x.length;i++)
+                    {
+                        eval(x[i].text);
+                    }
+
+                }
+            }
+            
+            /*xmlhttpSubmit.onreadystatechange=function()
+            {
+                if (xmlhttpSubmit.readyState == 4 && xmlhttpSubmit.status == 200){
+                    document.getElementById("Submit").innerHTML=xmlhttpSubmit.responseText;
+                }
+            }*/
+            xmlhttpAssn.open("GET", "instr_assignment.php?q=EditAssessment&AssnID=" + getQueryVariable("AssnID"), true);
+            xmlhttpAssn.send();
+            xmlhttpQuestion.open("GET", "instr_assignment.php?q=EditQuestions&AssnID=" + getQueryVariable("AssnID"), true);
+            xmlhttpQuestion.send();
+            /*xmlhttpSubmit.open("GET", "instr_assignment.php?q=Submit", true);
+            xmlhttpSubmit.send();*/
+        }
 
         function getAssessment (){
             if(window.XMLHttpRequest){
@@ -40,12 +129,6 @@
 
     </script>
     
-<head>
-
-<title>Illinois CS Submission system</title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!TODO Remember to call the javascript function somewhere>
-</head>
 <body>
     <table width="100%" border="0">
         <tr>
@@ -63,28 +146,35 @@
                                 </iframe>
                             </td>
                             <td align="left">
-                                <table width="100%" border="0">
-                        			<tr>
-                            			<td align="left">
-                                			<div id=AssessmentDetails>
-                                			</div>
-                            			</td>
-                        			</tr>
-                        			
-                        			<tr>
-                            			<td align="left">
-                                			<div id=QuestionDetails>
-                                			</div>
-                            			</td>
-                        			</tr>
-                         			
-                    			</table>
+                                <form name="assignmentDetails" method="post" action="instr_assignment.php?q=Submit">
+                                    <table width="100%" border="0" name="contents">
+                                        <tr>
+                                            <td align="left">
+                                                <div id=AssessmentDetails>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td align="left">
+                                                <div id=QuestionDetails>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                   </table>
+                                </form>
                             </td>
                         </tr>
                     </table>
 
                     <script>
-                        getAssessment ();
+                        if (getQueryVariable("create") == "true"){
+                            createAssessment();
+                        } else if (getQueryVariable("edit") == "true"){
+                            editAssessment();
+                        } else {
+                            getAssessment();
+                        }
                    </script>
             </td>
         </tr>

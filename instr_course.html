@@ -6,7 +6,7 @@
         if(window.XMLHttpRequest){
             xmlhttpAssn = new XMLHttpRequest();
             xmlhttpCourse = new XMLHttpRequest();
-            xmlhttpInstr = new XMLHttpRequest();
+            xmlhttpInstrStu = new XMLHttpRequest();
         } 
         xmlhttpAssn.onreadystatechange=function()
         {
@@ -20,18 +20,18 @@
                 document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
             }                                                                       
         }
-        xmlhttpInstr.onreadystatechange=function()
+        xmlhttpInstrStu.onreadystatechange=function()
         {
-            if(xmlhttpInstr.readyState == 4 && xmlhttpInstr.status == 200){
-                document.getElementById("Instructors").innerHTML=xmlhttpInstr.responseText;
+            if(xmlhttpInstrStu.readyState == 4 && xmlhttpInstrStu.status == 200){
+                document.getElementById("Instructors").innerHTML=xmlhttpInstrStu.responseText;
             }                                                                       
         }    
         xmlhttpAssn.open("GET", "instr_course.php?q=GetAssignments&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpAssn.send();                                 
         xmlhttpCourse.open("GET", "instr_course.php?q=GetCourses&CourseID=" + getQueryVariable("CourseID"), true);
         xmlhttpCourse.send();
-    	xmlhttpInstr.open("GET", "instr_course.php?q=GetInstructors&CourseID=" + getQueryVariable("CourseID"), true);
-        xmlhttpInstr.send();   
+    	xmlhttpInstrStu.open("GET", "instr_course.php?q=GetInstrStudent&CourseID=" + getQueryVariable("CourseID"), true);
+        xmlhttpInstrStu.send();   
     }                                                       
 </script>     	
 
@@ -55,8 +55,9 @@
                 <table width="100%" border="0">
 
                     <tr>
-                        <td width=300>
-                            <h2>Menu Here</h2>
+                        <td width=300 valign="top">
+                                <iframe width=250 frameBorder="0" src="menu.php">
+                                </iframe>
                         </td>
                         <td align="left">
                             <table width= 100% border="0">
@@ -84,7 +85,6 @@
                                             <tr>
 
                                                 <td align="left">
-                                                    <h4>Instructors</h4>
                                                     <div id="Instructors">
                                                     </div>
                                                 </td>

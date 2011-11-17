@@ -29,17 +29,35 @@
             }
 
         } else  if (htmlspecialchars($_GET['q'] == "GetAssignments")){
-            $query = "SELECT * FROM $assignmentTable WHERE CourseID = $courseID";
-            $result = mysql_query($query);
-            print("<table border=0 width=800>\n");
-            while ($row = mysql_fetch_array($result)){
-                print("<tr><td width=50%>\n");
-                print("<a href=\"stu_assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>");
-                print("</td><td width=50%>");
-                print("$row[DueTime]");
-                print("</td></tr>");
+            
+            $assignmentsQuery2 = "SELECT DISTINCT AssnName, AssnID FROM assignment, course WHERE 
+                assignment.CourseID = $courseID AND
+                DueTime >= NOW()";
+                    
+            $result1 = mysql_query($assignmentsQuery2);
+            if (mysql_errno()) print(mysql_error());
+            print("All Assignments Due:\n");
+            print("<br><br>\n");
+     
+            while ($row2 = mysql_fetch_array($result1)){
+                print("<a href=\"stu_assignment.html?AssnID=$row2[AssnID]\">$row2[AssnName]</a>". "<br>");
             }
-            print("</table>");
+                     
+            $assignmentsQuery2 = "SELECT DISTINCT AssnName, AssnID FROM assignment, course WHERE 
+                assignment.CourseID = $courseID AND
+                DueTime < NOW()";
+                    
+            $result1 = mysql_query($assignmentsQuery2);
+            if (mysql_errno()) print(mysql_error());
+            print("<br><br>\n");
+            print("Previous Assignments:\n");
+            print("<br><br>\n");
+     
+            while ($row2 = mysql_fetch_array($result1)){
+                print("<a href=\"stu_pre_assn.html?AssnID=$row2[AssnID]\">$row2[AssnName]</a>". "<br>");
+            }
+                     
+                     
         } else if (htmlspecialchars($_GET['q'] == "GetInstructors")){
             $query = "SELECT * FROM `Teaches`, Instructor WHERE 
             Teaches.CourseID=1 AND

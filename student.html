@@ -5,6 +5,7 @@
             if(window.XMLHttpRequest){
                 xmlhttpAssn = new XMLHttpRequest();
                 xmlhttpCourse = new XMLHttpRequest();
+                xmlhttpPrassn = new XMLHttpRequest();
             }
             xmlhttpAssn.onreadystatechange=function()
             {
@@ -19,10 +20,18 @@
                     document.getElementById("CourseDetails").innerHTML=xmlhttpCourse.responseText;
                 }
             }
+             xmlhttpPrassn.onreadystatechange=function()
+            {
+                if(xmlhttpPrassn.readyState == 4 && xmlhttpPrassn.status == 200){
+                    document.getElementById("PreviousAssignment").innerHTML=xmlhttpPrassn.responseText;
+                }
+            }
             xmlhttpAssn.open("GET", "student.php?q=GetAssessments", true);
             xmlhttpAssn.send();
             xmlhttpCourse.open("GET", "student.php?q=GetCourses", true);
             xmlhttpCourse.send();
+             xmlhttpPrassn.open("GET", "student.php?q=GetPrassn", true);
+            xmlhttpPrassn.send();
         }
     </script>
 <head>
@@ -47,10 +56,12 @@
                                 <iframe width=250 frameBorder="0" src="menu.php">
                                 </iframe>
                             </td>
+                    			
                             <td align="left">
 
 								<table id="loginInfoTable" width="100%" border="0">
 
+                        			
                         			<tr>
                             
                             			<td align="left">
@@ -59,10 +70,6 @@
                                 			</div>    
                             			</td>
                             
-                        			</tr>
-                        			<tr>
-                           			 	<td height=30>
-                            			</td>
                         			</tr>
                         			<tr>
                             
@@ -74,6 +81,16 @@
                     			</table>
 
                             </td>
+                            <td align="left">
+								<table id="login" width="50%" border="0">
+	                            <tr>
+	                            	<td align="left">
+                    					<div id="PreviousAssignment">
+                    					</div>
+                    				</td>
+                    			</tr>
+                    		</table>
+                    		</td>
                         </tr>
                     </table>
 

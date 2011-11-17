@@ -5,7 +5,7 @@
     
 
     session_start();
-    $courseID= htmlspecialchars($_GET['CourseID']);
+    $courseID = htmlspecialchars($_GET['CourseID']);
 
     //check to see if this instructor actually teaches this course. If not, error is displayed.
 
@@ -23,7 +23,9 @@
             $row = mysql_fetch_array($result);
             if (!empty($row['CourseName'])){
                 print ("<h3>".$row['CourseName']." ".$row['SemesterName']."</h3>");
-                print ("There are ".$row['NumStudents']." students enrolled.<br>\n");
+                $query = "SELECT * FROM `takes` WHERE CourseID='$courseID'";
+                $result = mysql_query($query);
+                print ("There are ".mysql_num_rows($result)." students enrolled.<br>\n");
             } else {
                 print "<h3> Invalid course selected. </h3>";
             }
@@ -40,12 +42,33 @@
                 print("</td></tr>");
             }
             print("</table>");
-        } else if (htmlspecialchars($_GET['q'] == "GetInstructors")){
+        } else if (htmlspecialchars($_GET['q'] == "GetInstrStudent")){
+			$query = "SELECT S.FirstName, S.LastName, S.StudentID FROM takes as T, student as S WHERE t.CourseID='$courseID' AND
+			T.StudentID=S.StudentID";
+            $result = mysql_query($query);
+            print("<table border=0 width=800>\n");
+			print("<tr><td height=20></td></tr>");
+
+            print("<tr><td width=20%><h4>Students</h4></td></tr>");
+            while ($row = mysql_fetch_array($result)){
+                print("<tr><td width=20%>");
+                print("$row[FirstName] ");
+                print("$row[LastName]");
+                print("<td width=40%>");
+                print("<a href=\"instr_mark.html?StudentID=$row[StudentID]&CourseID=$courseID\">$row[StudentID]</a>");
+                print("</td>");
+                print("</td></tr>");
+            }
+            print("</table>");
+            
             $query = "SELECT * FROM `Teaches`, Instructor WHERE 
             Teaches.CourseID=$courseID AND
             Teaches.InstructorID=Instructor.InstructorID";
             $result = mysql_query($query);
             print("<table border=0 width=800>\n");
+            print("<tr><td height=20></td></tr>");
+           
+			print("<tr><td width=20%><h4>Instructors</h4></td></tr>");
             while ($row = mysql_fetch_array($result)){
                 print("<tr><td width=20%>");
                 print("$row[FirstName] ");
@@ -54,7 +77,7 @@
                 print("$row[PhoneNumber]");
                 print("</td><td width=40%>");
                 print("$row[Email]");
-                print("</td>");
+                print("</td></tr>");
             }
             print("</table>");
 
