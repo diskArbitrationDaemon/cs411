@@ -7,8 +7,9 @@ include ('includes/auth.php');
 if (empty($_POST['stage'])){
 	
     //GET vars required:
-    //AssnID, StudentID
-    $query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
+
+	//checks if instructor has access
+	$query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
         i.InstructorID='$_SESSION[username]' AND
         t.InstructorID=i.InstructorID AND
         a.CourseID=c.courseID AND
@@ -18,19 +19,21 @@ if (empty($_POST['stage'])){
     if(mysql_num_rows($result)){
 
         //get questions
-        $query = "SELECT CourseID, CourseName, Assignment.AssnID, AssnName, QuestionName, Questions.QuestionID FROM Questions, Assignment, Course, Takes, Teaches WHERE
+        $query = "SELECT Course.CourseID, CourseName, Assignment.AssnID, AssnName, QuestionName, Questions.QuestionID FROM Questions, Assignment, Course, Takes, Teaches WHERE
         Takes.CourseID = Course.CourseID AND
         Takes.StudentID = '".htmlspecialchars($_GET['StudentID'])."' AND
+        Course.CourseID = '".$_GET['CourseID']."' AND
         Assignment.CourseID = Course.CourseID AND
         Questions.AssnID = Assignment.AssnID AND
         Teaches.CourseID = Course.CourseID AND
-        Teaches.InstructorID = '" . $_SESSION[username] ."'"; 
-
+        Teaches.InstructorID = '" . $_SESSION[username] ."'";
+		
+        $courseID = $_GET['CourseID'];
 
         $result = mysql_query($query);
         if (mysql_errno()) print(mysql_error());
         if (mysql_num_rows($result) == 0){
-            print ("There are no questions for this assignment");
+            print ("There are no records available for you to view.");
         } else {
             print("<table border=0 width=900>\n");
             $i = 0;
@@ -38,8 +41,6 @@ if (empty($_POST['stage'])){
             $assnName = $row['AssnName'];
             $assnID = $row['AssnID'];
             $courseName = $row['CourseName'];
-            $courseID = $row['CourseID'];
-            //TODO: Same thing with assignment: check when courseID changes
             mysql_data_seek($result, 0);
             while ($row = mysql_fetch_array($result)){
 				
@@ -63,18 +64,24 @@ if (empty($_POST['stage'])){
 
                 print("<tr><td width=200> $row[QuestionName] </td><td width=300></td><td><input type=text name=Question[$row[QuestionID]]" ." length=5 value=\"".$mark."\"></td></tr>\n");
             }
-            
             $assnQuery = "SELECT AssnFinalMark FROM Submission WHERE AssnID=$row[AssnID] AND StudentID='".$_GET['StudentID']."'";
             $assnResult = mysql_query($assnQuery);
             $assnRow = mysql_fetch_array($assnResult);
             $assnFinalMark = $assnRow['AssnFinalMark'];
-            print("<tr><td width=200> $assnName </td><td width=300> Assignment Total </td><td><input type=text name=Assn[$row[AssnID]] length=5 value=\"$assnFinalMark\"></td></tr>\n");
+            print("<tr><td width=200> $assnName </td><td width=300> Assignment Total </td><td><input type=text name=assnMark length=5 value=\"$assnFinalMark\"></td></tr>\n");
             print("<tr><td height=10></td></tr>");
-            
+            $finalMarkQuery = "SELECT FinalMark FROM takes WHERE StudentID='".$_GET['StudentID']."' AND CourseID=$courseID";
+            $finalMarkRes = mysql_query($finalMarkQuery);
+            $finalMarkRow = mysql_fetch_array($finalMarkRes);
+            print("<tr><td width=200> Course Grade: </td><td width=300></td><td><input type=text name=finalMark length=5 value=\"$finalMarkRow[FinalMark]\"></td></tr>\n");
+			
+            print("<tr><td height=10></td></tr>");
             print("<input type=hidden name=stage value=1>\n");
+            print("<input type=hidden name=courseID value=".$courseID.">");
             print("<input type=hidden name=redirect value=".$_GET['redirect'].">\n");
             print("<input type=hidden name=student value=".$_GET['StudentID'].">\n");
-            print("<input type=hidden name=AssnID value=".$_GET['AssnID'].">\n");
+            print("<input type=hidden name=assnID value=".$assnID.">\n");
+            //print ("assnID: $assnID courseID: $courseID");
             print("<tr><td><input type=\"submit\"  value=\"Save Grades\"></td><td></td></tr>\n");
             print("</table>\n");
 
@@ -85,20 +92,31 @@ if (empty($_POST['stage'])){
 } else if ($_POST['stage'] == 1){
     $studentID = $_POST['student'];
     foreach ($_POST['Question'] as $key => $value){ 
+		
+    	$query = "INSERT into Results VALUES ('$studentID', '$key', '$value')
 
-        if (!empty($value)) mysql_query("INSERT into Results VALUES ('$studentID', '$key', '$value')
-
-        ON DUPLICATE KEY UPDATE mark='$value'");
+        ON DUPLICATE KEY UPDATE mark='$value'";
+        if (!empty($value)) mysql_query($query);
+        
         if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
     }
     
-    foreach($_POST['Assn'] as $key => $value){
-    	$query = "UPDATE Submission SET AssnFinalMark='$value' WHERE StudentID='$studentID' AND AssnID='$key'";
-    	print $query ."<br><br>";
-    	mysql_query($query);
-    	if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
-    	
-    }
-    //print("<meta http-equiv=\"REFRESH\" content=\"0;url=instr_mark.html?StudentID=$studentID\">");
+    $assnID = $_POST['assnID'];
+    print("AssnMark: ".$_POST['assnMark']);
+    
+    $query = "UPDATE Submission SET AssnFinalMark='$assnMark' WHERE StudentID='$studentID' AND AssnID='$assnID'";
+    print $query ."<br><br>";
+    mysql_query($query);
+    if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
+    
+    $finalMark = $_POST['finalMark'];
+    $courseID = $_POST['courseID'];
+    $query = "UPDATE takes SET FinalMark='$finalMark' WHERE StudentID='$studentID' AND CourseID='$courseID'";
+    print $query ."<br><br>";
+    mysql_query($query);
+    if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
+    print("Results saved!\n");
+    
+    print("<meta http-equiv=\"REFRESH\" content=\"2;url=instr_mark.html?StudentID=$studentID&CourseID=$courseID\">");
 }
 ?>

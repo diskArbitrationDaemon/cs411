@@ -15,43 +15,11 @@
                 }
             }
 
-            xmlhttpQn.open("GET", "instr_mark.php?&AssnID="+getQueryVariable("AssnID") + "&StudentID="+getQueryVariable("StudentID"), true); //TODO: fill in php filename and any arguments
+            xmlhttpQn.open("GET", "instr_mark.php?&StudentID="+getQueryVariable("StudentID")+"&CourseID=" + getQueryVariable("CourseID"), true); //TODO: fill in php filename and any arguments
             xmlhttpQn.send();
         }
         
-    function submitMarks(form){
-        var studentID = form.student.value;
-        var numQuestions = form.numQuestions.value;
-        var i = 0;
-        var questions = new Array();
-        var marks = new Array();
-        var assnID = form.AssnID.value;
-        var params = "stage=1&StudentID=" + studentID + "&AssnID=" + assnID;
-        for (i = 0; i < numQuestions; i++){
-            //get all the question fields
-            questions[i] = form.elements["Question"+i].value;
-            marks[i] = form.elements["Q" + questions[i]].value;
-            params += "&Question[" + questions[i] + "]="+marks[i];
-            //alert("questions[" + i + "] = " + questions[i] + "\n" + "marks[" + i + "] = " + marks[i]);
-        }
 
-
-        var url = "instr_mark.php";
-        var http = new XMLHttpRequest();
-        alert(params);
-        http.open("POST", url, true);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.setRequestHeader("Content-length", params.length);
-        http.setRequestHeader("Connection", "close");
-        http.onreadystatechange = function() {//Call a function when the state changes.
-            if(http.readyState == 4 && http.status == 200) {
-            
-                    document.getElementById("Questions").innerHTML=http.responseText;
-            }
-        }
-        http.send(params);
-       
-	}
 </script>
     
 <head>

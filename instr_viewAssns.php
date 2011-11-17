@@ -2,7 +2,7 @@
 
     include ('includes/mysqlInstrLogin.php');
     include ('includes/auth.php');
-
+	
     $query = "SELECT * FROM Assignment, Course, Teaches  WHERE
     Assignment.CourseID = Course.CourseID AND
     Teaches.CourseID = Course.CourseID AND
@@ -18,7 +18,11 @@
             print("<tr><td width=50>");
             print("</td><td>");
             print("<a href=\"instr_assignment.html?AssnID=$row[AssnID]\">$row[AssnName]</a>");
-            print("</tr><td>");
+            print("</td><td width=80></td><td>");
+            print("<input type=button value=Edit OnClick=\"window.location.href=
+            	'instr_assignment.html?edit=true&AssnID=$row[AssnID]'\">");
+            print("</td></tr>");
+            
         }
 
         print("</table>");

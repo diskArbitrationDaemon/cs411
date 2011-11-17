@@ -3,6 +3,7 @@
     include ('includes/mysqlInstrLogin.php');
     include ('includes/auth.php');
 
+    //select courses taught by this instructor
     $query = "SELECT courseName, SemesterName, teaches.courseID
     FROM  `teaches` , course
     WHERE teaches.courseID = course.CourseID

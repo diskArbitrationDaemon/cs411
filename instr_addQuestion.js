@@ -51,7 +51,6 @@ function addQuestion(questionID, questionName, questionMark){
     } else {
         element.setAttribute("name", "QuestionMark[]");
     }
-    alert(element.getAttribute("name"));
     cell2.appendChild(element); 
     
     if (typeof(questionName) != "undefined" && typeof(questionMark) != "undefined" && typeof(questionID) != "undefined"){

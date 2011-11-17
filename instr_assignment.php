@@ -4,7 +4,6 @@
 <?php
     include ('includes/mysqlInstrLogin.php');
     include ('includes/auth.php');
-    session_start();
 	$spaceBetweenCols = 60;
 	$spaceBetweenTR = 35;
 	$widthCol1 = 135;
@@ -45,7 +44,7 @@
 	                    print("<tr><td height=30 width=150>Maximum Mark:</td<td>$row[MaxMark]</td</tr>");
 	                    print("<tr><td height=30 width=150>Median Mark: </td<td>$row[MedianMark]</td</tr>");
 	                    print("<tr><td height=30 width=150>Average Mark: </td<td>$row[AvgMark]</td</tr>");
-	                    print("<tr><td height=30 width=150<a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a</td<td</td</tr>");
+	                    print("<tr><td height=30 width=150><a href=\"instr_viewSubmissions.html?AssnID=$_GET[AssnID]\">View Submissions</a</td<td</td</tr>");
 	                print("</table>");
 	            print("</td</tr>");
 	            print("</table>");
@@ -281,7 +280,8 @@
 	        while ($row = mysql_fetch_array($submResult)){
 	        	$submAssnID = $row['AssnID'];
 	        	$submStudentID = $row['StudentID'];
-	        	$submFiles = "$row[SemesterName]/$row[CourseName]/$row[AssnName]/$row[StudentID]";
+	        	$submFiles = "Submissions/$row[SemesterName]/$row[CourseName]/$row[AssnName]/$row[StudentID]";
+	        	if (!mkdir($submFiles, 0, true)) die ("Cannot make directory $submFiles");
 	        	$insQuery = "INSERT into Submission VALUES ('$submAssnID', '$submStudentID', '$submFiles', NULL, '$timeNow')";
 	        	mysql_query($insQuery);
 	        	print "Inserted into submission: $submStudentID:  $insQuery<br>";

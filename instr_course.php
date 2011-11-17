@@ -55,7 +55,7 @@
                 print("$row[FirstName] ");
                 print("$row[LastName]");
                 print("<td width=40%>");
-                print("<a href=\"instr_mark.html?StudentID=$row[StudentID]\">$row[StudentID]</a>");
+                print("<a href=\"instr_mark.html?StudentID=$row[StudentID]&CourseID=$courseID\">$row[StudentID]</a>");
                 print("</td>");
                 print("</td></tr>");
             }
