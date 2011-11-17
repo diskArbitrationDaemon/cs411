@@ -188,7 +188,6 @@ else if ($table == "course")
 	<tr>
 	<th>CourseID</th>
 	<th>CourseName</th>
-	<th>NumStudents</th>
 	<th>SemesterName</th>
 	</tr>";
 
@@ -197,7 +196,6 @@ else if ($table == "course")
 	  echo "<tr>";
 	  echo "<td>" . $row['CourseID'] . "</td>";
 	  echo "<td>" . $row['CourseName'] . "</td>";
-	  echo "<td>" . $row['NumStudents'] . "</td>";
 	  echo "<td>" . $row['SemesterName'] . "</td>";
 	  
 	  ?>

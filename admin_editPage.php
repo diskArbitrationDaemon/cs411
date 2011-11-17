@@ -241,7 +241,7 @@ if ($table == "assignment")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditAssnButton" value="Confirm Changes" onclick="submitAssignment(this.form, '<?php print($rowID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('1');" />
 	</form>
 	
 	<br />
@@ -316,7 +316,7 @@ $rowID=$_GET["rowID"];
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditAutomarkButton" value="Confirm Changes" onclick="submitAutomark(this.form, '<?php print($rowID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('2');" />
 	</form>
 	
 	<br />
@@ -337,7 +337,6 @@ $rowID=$_GET["rowID"];
 
 	$row = mysql_fetch_array($result);
     $courseName = $row['CourseName'];
-	$numStudents = $row['NumStudents'];
 	$semesterName = $row['SemesterName'];
 		
 	$season = substr($semesterName, 0, -2);
@@ -359,14 +358,10 @@ $rowID=$_GET["rowID"];
 		</tr>
 		<tr>
 			<td align="center"><label for="courseNameLabel"><b>* Course Name:</b></label></td>
-			<td align="center"><input type="text" name="courseName" id="courseNameId" size="10" maxlength="10" value="<?php echo $courseName; ?>"/></td>
-			<td align="center"><label for="courseNameType">varchar(10)</label></td>
+			<td align="center"><input type="text" name="courseName" id="courseNameId" size="50" maxlength="100" value="<?php echo $courseName; ?>"/></td>
+			<td align="center"><label for="courseNameType">varchar(100)</label></td>
 		</tr>
-		<tr>
-			<td align="center"><label for="numStudentsLabel"><b>* Number of Students:</b></label></td>
-			<td align="center"><input type="text" name="numStudents" id="numSutdentsId" size="4" maxlength="4" value="<?php echo $numStudents; ?>"/></td>
-			<td align="center"><label for="courseNameType">int(4)</label></td>
-		</tr>
+		
 		<tr>
 		<td align="center"><label for="semesterNameLabel"><b>Semester Name:</b></label></td>
 		<td>
@@ -415,7 +410,7 @@ $rowID=$_GET["rowID"];
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditCourseButton" value="Confirm Changes" onclick="submitCourse(this.form, '<?php print($rowID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('3');" />
 	</form>
 	
 	<br />
@@ -486,7 +481,7 @@ if ($table == "group")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditButton" value="Confirm Changes" onclick="submitGroup(this.form, '<?php print($groupName) ?>', '<?php print($assnID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('4');" />
 	</form>
 	
 	<br />
@@ -580,7 +575,7 @@ if ($table == "instructor")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditInstructorButton" value="Confirm Changes" onclick="submitInstructor(this.form, '<?php print($rowID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('5');" />
 	</form>
 	
 	<br />
@@ -699,7 +694,7 @@ if ($table == "memberof")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditButton" value="Confirm Changes" onclick="submitMemberof(this.form, '<?php print($groupName) ?>', '<?php print($studentID) ?>', '<?php print($assnID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('6');" />
 	</form>
 	
 	<br />
@@ -774,7 +769,7 @@ if ($table == "questions")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditAutomarkButton" value="Confirm Changes" onclick="submitQuestion(this.form, '<?php print($rowID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('7');" />
 	</form>
 	
 	<br />
@@ -834,7 +829,7 @@ if ($table == "student")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditAutomarkButton" value="Confirm Changes" onclick="submitStudent(this.form, '<?php print($rowID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('8');" />
 	</form>
 	
 	<br />
@@ -998,7 +993,7 @@ if ($table == "takes")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditButton" value="Confirm Changes" onclick="submitTakes(this.form, '<?php print($studentID) ?>', '<?php print($courseID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('10');" />
 	</form>
 	
 	<br />
@@ -1081,7 +1076,7 @@ if ($table == "teaches")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditButton" value="Confirm Changes" onclick="submitTeaches(this.form, '<?php print($instructorID) ?>', '<?php print($courseID) ?>', 'edit');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('11');" />
 	</form>
 	
 	<br />
@@ -1151,7 +1146,7 @@ if ($table == "users")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitEditCourseButton" value="Confirm Changes" onclick="submitUser(this.form, '<?php print($rowID) ?>', 'edit', '<?php print($password) ?>');" />		
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('12');" />
 	</form>
 	
 	<br />

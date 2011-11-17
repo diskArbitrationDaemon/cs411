@@ -169,7 +169,6 @@
 		function submitCourse (form, courseID, type){ 
 			
 			var courseName = form.courseName.value;
-			var numStudents = form.numStudents.value;
 			var season = form.season.options[form.season.selectedIndex].value;
 			var year = form.year.options[form.year.selectedIndex].value;
 				
@@ -181,18 +180,14 @@
 				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter a 'Course Name'</font>";
 			}
 			
-			else if (numStudents == "")
+			else if (courseName.indexOf("&") != -1)
 			{
-				document.getElementById("errorSpot").innerHTML="<font color=red>* You must enter the 'Number of Students'</font>";
-			}
-			
-			else if (isNaN(numStudents))
-			{
-				document.getElementById("errorSpot").innerHTML="<font color=red>* Invalid input for 'Number of Students'</font>";
+				document.getElementById("errorSpot").innerHTML="<font color=red>* 'Course Name' must not have a &</font>";
 			}
 			
 			else
 			{
+				
 				document.getElementById('errorSpot').innerHTML="";
 				
 				if(window.XMLHttpRequest)
@@ -219,7 +214,6 @@
 				xmlhttpAssn.open("GET", url+"?table="+"course"+
 								"&CourseID="+courseID+
 								"&CourseName="+courseName+
-								"&NumStudents="+numStudents+
 								"&SemesterName="+semesterName, true);
 				xmlhttpAssn.send();
 			}
@@ -764,3 +758,49 @@
         }
 		
 		
+		// Function for updating the course table with the web crawler results
+		function updateCourseTable (str){
+			document.getElementById('updateArea').innerHTML="";
+			
+			if (str == "")
+				return;
+				
+			var alertBox = confirm("Are you sure you want to add this course data into the database?");
+
+			if (alertBox == true)
+			{
+				if(window.XMLHttpRequest){
+					xmlhttpAssn = new XMLHttpRequest();
+				}
+				xmlhttpAssn.onreadystatechange=function()
+				{
+					if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+						document.getElementById("updateArea").innerHTML=xmlhttpAssn.responseText;
+					}
+				}
+				
+				xmlhttpAssn.open("GET", "admin_getWebCrawlerCourses.php?SemesterName="+str, true);
+				xmlhttpAssn.send();
+			}
+        }
+		
+		
+		// Function for go back button
+		function goBack (str){
+			document.getElementById('area2').innerHTML="";
+			
+			
+			if(window.XMLHttpRequest){
+				xmlhttpAssn = new XMLHttpRequest();
+			}
+			xmlhttpAssn.onreadystatechange=function()
+			{
+				if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
+					document.getElementById("area2").innerHTML=xmlhttpAssn.responseText;
+				}
+			}
+				
+			xmlhttpAssn.open("GET", "admin_goBack.php?queryVar="+str, true);
+			xmlhttpAssn.send();
+		}
+    

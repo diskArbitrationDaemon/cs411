@@ -164,7 +164,8 @@ if ($table == "assignment")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitAssnButton" value="Insert New Assignment" onclick="submitAssignment(this.form, '<?php print($newID) ?>', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('1');" />
+		
 	</form>
 	
 	
@@ -232,7 +233,8 @@ if ($table == "automarking")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitAutomarkButton" value="Insert New Automark" onclick="submitAutomark(this.form, '<?php print($newID) ?>', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('2');" />
+		
 	</form>
 	
 	
@@ -268,13 +270,8 @@ if ($table == "course")
 		</tr>
 		<tr>
 			<td align="center"><label for="courseNameLabel"><b>* Course Name:</b></label></td>
-			<td align="center"><input type="text" name="courseName" id="courseNameId" size="10" maxlength="10" /></td>
-			<td align="center"><label for="courseNameType">varchar(10)</label></td>
-		</tr>
-		<tr>
-			<td align="center"><label for="numStudentsLabel"><b>* Number of Students:</b></label></td>
-			<td align="center"><input type="text" name="numStudents" id="numSutdentsId" size="4" maxlength="4" /></td>
-			<td align="center"><label for="courseNameType">int(4)</label></td>
+			<td align="center"><input type="text" name="courseName" id="courseNameId" size="50" maxlength="100" /></td>
+			<td align="center"><label for="courseNameType">varchar(100)</label></td>
 		</tr>
 		<tr>
 		<td align="center"><label for="semesterNameLabel"><b>Semester Name:</b></label></td>
@@ -306,7 +303,7 @@ if ($table == "course")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitCourseButton" value="Insert New Course" onclick="submitCourse(this.form, '<?php print($newID) ?>', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('3');" />
 	</form>
 	
 	
@@ -353,7 +350,7 @@ if ($table == "group")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitGroupButton" value="Insert New Group" onclick="submitGroup(this.form, '0', '0', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('4');" />
 	</form>
 	
 	
@@ -435,7 +432,7 @@ if ($table == "instructor")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitInstructorButton" value="Insert New Instructor" onclick="submitInstructor(this.form, '0', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('5');" />
 	</form>
 	
 	
@@ -517,7 +514,7 @@ if ($table == "memberof")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitMemberofButton" value="Insert New Group Member" onclick="submitMemberof(this.form, '0', '0', '0', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('6');" />
 	</form>
 	
 	
@@ -585,7 +582,7 @@ if ($table == "questions")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitAutomarkButton" value="Insert New Question" onclick="submitQuestion(this.form, '<?php print($newID) ?>', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('7');" />
 	</form>
 	
 	
@@ -655,7 +652,7 @@ if ($table == "student")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitAutomarkButton" value="Insert New Student" onclick="submitStudent(this.form, '0', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('8');" />
 	</form>
 	
 	
@@ -733,7 +730,7 @@ if ($table == "takes")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitGroupButton" value="Insert New Takes Relation" onclick="submitTakes(this.form, '0', '0', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('10');" />
 	</form>
 	
 	
@@ -787,7 +784,7 @@ if ($table == "teaches")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitGroupButton" value="Insert New Group" onclick="submitTeaches(this.form, '0', '0', 'insert');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('11');" />
 	</form>
 	
 	
@@ -833,7 +830,7 @@ if ($table == "users")
 		<br />
 		<script src="admin_functions.js"></script>
 		<input type="button" name="submitAutomarkButton" value="Insert New User" onclick="submitUser(this.form, '0', 'insert', '0');" />
-
+		<input type="button" name="goBackButton" value="Go Back" onclick="goBack('12');" />
 	</form>
 	
 	
