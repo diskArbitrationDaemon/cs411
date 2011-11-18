@@ -2,7 +2,6 @@
     include ('includes/mysqlstudentLogin.php');
     include ('includes/auth.php');
     session_start();
-	ini_set( "display_errors", 0);
     $query = "SELECT * FROM assignment as a, course as c, takes as t, student as s WHERE
     s.StudentID='$_SESSION[username]' AND
     t.StudentID=s.StudentID AND
@@ -34,8 +33,9 @@
             print("<tr><td height=50>$assnName - $courseName</td></tr>");
             print("<tr><td>");
             print("<table border=0>");
-            print("<tr><td height=30 width=150>Maximum Mark:</td><td>$row[MaxMark]</td></tr>");
-            print("<a href=\"stu_assn_sub.html?AssnID=$row[AssnID]\">$row[AssnName]</a>");
+            print("<tr><td height=30 width=250>Due Date: $row[DueTime]</td></tr>");
+            print("<tr><td height=30 width=250>Maximum Mark:  $row[MaxMark]</td></tr>");  
+            print("<tr><td height=30 width=250>Submit Assignment:  <a href=\"stu_assn_sub.html?AssnID=$row[AssnID]\">$row[AssnName]</a></td></tr>");
             print("</table>");
             print("</td></tr>");
             print("</table>");
