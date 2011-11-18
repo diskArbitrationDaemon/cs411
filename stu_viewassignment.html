@@ -1,26 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
-	<script src="stu_getQueryVar.js">
-	</script>
-    <script type="text/javascript">
-        
-
-        function getAssessment (){
+<script type="text/javascript">
+        function getAllAssns (){//TODO: rename this to something descriptive or useful. NOW!
             if(window.XMLHttpRequest){
-                xmlhttpAssn = new XMLHttpRequest();
+                xmlhttpAssns = new XMLHttpRequest(); //TODO: need one per AJAX request
             }
-            xmlhttpAssn.onreadystatechange=function()
+            xmlhttpAssns.onreadystatechange=function()//TODO need a copy of this for each request
             {
-                if (xmlhttpAssn.readyState == 4 && xmlhttpAssn.status == 200){
-                    document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
+                if (xmlhttpAssns.readyState == 4 && xmlhttpAssns.status == 200){
+                    document.getElementById("assignments").innerHTML=xmlhttpAssns.responseText;
                 }
             }
 
-            xmlhttpAssn.open("GET", "stu_assignment.php?q=GetAssessments&AssnID=" + getQueryVariable("AssnID"), true);
-            xmlhttpAssn.send();
+            xmlhttpAssns.open("GET", "stu_viewAssns.php", true); //TODO: fill in php filename and any arguments 
+            xmlhttpAssns.send();
         }
-
     </script>
     
 <head>
@@ -40,26 +35,21 @@
             <td>
                     <table width="100%" border="0">
 
-                        <tr>
+                        <tr valign="top">
 							<td width=250>
                                 <iframe width=250 frameBorder="0" src="menu.php">
                                 </iframe>
                             </td>
                             <td align="left">
-                                <table width="100%" border="0">
-                        			<tr>
-                            			<td align="left">
-                                			<div id=AssessmentDetails>
-                                			</div>
-                            			</td>
-                        			</tr>
-                    			</table>
+                                <div id="assignments">
+
+                                </div>
                             </td>
                         </tr>
                     </table>
 
                     <script>
-                        getAssessment ();
+                    getAllAssns();
                    </script>
             </td>
         </tr>

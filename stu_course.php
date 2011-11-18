@@ -18,7 +18,6 @@
 
         if (htmlspecialchars($_GET['q'] == "GetCourses")){
             $query = "SELECT * FROM $courseTable WHERE CourseID = $courseID";
-            //only returns 1 row or our database has primary key issues
             $result = mysql_query($query);
             $row = mysql_fetch_array($result);
             if (!empty($row['CourseName'])){
