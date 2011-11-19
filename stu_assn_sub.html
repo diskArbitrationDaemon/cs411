@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Illinois CS Submission system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<!TODO Remember to call the javascript function somewhere>
+</head>
+<body>
+    <table width="100%" border="0">
+        <tr>
+            <td height="100" align="center">
+            Illinois Submission System
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <table width="100%" border="0">
+
+                        <tr>
+                            <td width=250>
+                                <iframe width=250 frameBorder="0" src="menu.php">
+                                </iframe>
+                            </td>
+                            <td align="left">
+                                <table width="100%" border="0">
+                        			<tr>
+                            			<td align="left">
+                                			<h3>Assignment Submission</h3>
+                                		
+											<form action="stu_assn_sub.php" method="post"
+											enctype="multipart/form-data">
+											<label for="file">Filename:</label>
+											<input type="file" name="file" id="file" /> 
+											<br />
+											<input type="submit" name="submit" value="Submit" />
+											</form>
+										
+                            			</td>
+                        			</tr>
+                         			
+                    			</table>
+                            </td>
+                        </tr>
+                    </table>    
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
