@@ -17,11 +17,11 @@
     $userType = $row['UserType'];
 
     print("<table border=\"0\">");
-    if ($userType | ADMINISTRATOR){
+    if ($userType & ADMINISTRATOR){
         
     }
 
-    if ($userType | INSTRUCTOR){
+    if ($userType & INSTRUCTOR){
         
         print("<tr>");
         print("<td>");
@@ -48,7 +48,7 @@
         
     }
 
-    if ($userType | STUDENT){
+    if ($userType & STUDENT){
 
     }
 
