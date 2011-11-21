@@ -3,8 +3,8 @@
     include ('includes/auth.php');
 
     
-
-    session_start();
+	//likewise here
+    //session_start();
     $courseID= htmlspecialchars($_GET['CourseID']);
 
       //check to see if this student actually takes this course. If not, error is displayed.
