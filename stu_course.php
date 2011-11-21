@@ -18,7 +18,6 @@
 
         if (htmlspecialchars($_GET['q'] == "GetCourses")){
             $query = "SELECT * FROM $courseTable WHERE CourseID = $courseID";
-            //only returns 1 row or our database has primary key issues
             $result = mysql_query($query);
             $row = mysql_fetch_array($result);
             if (!empty($row['CourseName'])){
@@ -100,7 +99,16 @@
             }
             print("</table>");
 
-
+			$query = "SELECT * FROM takes as t WHERE t.StudentID='".$_SESSION['username'] ."' AND t.CourseID='$courseID'";
+                      
+            $result = mysql_query($query);       
+            print("<table border=0 width=800>\n");
+            while ($row = mysql_fetch_array($result)){
+                print("<tr><td width=40%>");
+                print("Course Final Grade: $row[FinalMark] ");
+                print("<tr></td>");
+            }
+            print("</table>");
         } 
         
     } else {

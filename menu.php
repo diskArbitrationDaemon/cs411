@@ -49,7 +49,21 @@
     }
 
     if ($userType & STUDENT){
-
+    	print("<tr>");
+        print("<td>");
+        print("<a href=\"student.html\" target=\"_parent\">Home</a>");
+        print("</td>");
+        print("</tr>");
+        print("<tr>");
+        print("<td>");
+        print("<a href=\"stu_viewcourse.html\" target=\"_parent\">View Courses</a>");
+        print("</td>");
+        print("</tr>");
+        print("<tr>");
+        print("<td>");
+        print("<a href=\"stu_viewassignment.html\" target=\"_parent\">View Assignments</a>");
+        print("</td>");
+        print("</tr>");
     }
 
 ?>

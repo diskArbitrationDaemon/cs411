@@ -2,7 +2,7 @@
     include ('includes/mysqlstudentLogin.php');
     include ('includes/auth.php');
     session_start();
-
+    $_SESSION['assignmentID']=htmlspecialchars($_GET['AssnID']);
     $query = "SELECT * FROM assignment as a, course as c, takes as t, student as s WHERE
     s.StudentID='$_SESSION[username]' AND
     t.StudentID=s.StudentID AND
@@ -34,24 +34,11 @@
             print("<tr><td height=50>$assnName - $courseName</td></tr>");
             print("<tr><td>");
             print("<table border=0>");
-            print("<tr><td height=30 width=150>Maximum Mark:</td><td>$row[MaxMark]</td></tr>");
+            print("<tr><td height=30 width=250>Due Date: $row[DueTime]</td></tr>");
+            print("<tr><td height=30 width=250>Maximum Mark:  $row[MaxMark]</td></tr>");  
+            print("<tr><td height=30 width=250>Submit Assignment:  <a href=\"stu_assn_sub.html?AssnID=$row[AssnID]\">$row[AssnName]</a></td></tr>");
             print("</table>");
             print("</td></tr>");
-            print("</table>");
-        } else if (htmlspecialchars($_GET['q'] == "GetQuestions")){
-            $query = "SELECT * FROM questions WHERE AssnID=" . htmlspecialchars($_GET['AssnID']);
-            $result = mysql_query($query);
-            if (mysql_errno()) print(mysql_error());
-            print("<table width=800 border=0>");
-            while ($row = mysql_fetch_array($result)){
-
-                print("<tr><td width=200 height=35>");
-                print("<a href=\"stu_assn_sub.html?QeustionID=$row[QuestionID]\">$row[QuestionName]</a>");
-                print("</td><td>");
-                print("$row[FullMark]");
-                print("</td></tr>");
-            }
-
             print("</table>");
         } 
     } else {

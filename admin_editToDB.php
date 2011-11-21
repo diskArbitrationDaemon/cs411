@@ -62,10 +62,18 @@ if ($table == "course")
 {
 	$courseID=$_GET["CourseID"];
 	$courseName=$_GET["CourseName"];
-	$numStudents=$_GET["NumStudents"];
 	$semesterName=$_GET["SemesterName"];
 		
-	$query = "UPDATE course SET CourseName='$courseName', NumStudents='$numStudents', SemesterName='$semesterName' WHERE CourseID='$courseID'";
+	$query = "SELECT * FROM `course` WHERE CourseName = '$courseName' AND SemesterName = '$semesterName '";
+	$result = mysql_query($query) or die(mysql_error());
+	if($row = mysql_fetch_array($result))    //if we did return a record
+	{ 
+		echo "This course already exists in the database!";
+		return;
+	}	
+		
+		
+	$query = "UPDATE course SET CourseName='$courseName', SemesterName='$semesterName' WHERE CourseID='$courseID'";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{

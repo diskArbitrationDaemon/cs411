@@ -67,10 +67,18 @@ if ($table == "course")
 {
 	$courseID=$_GET["CourseID"];
 	$courseName=$_GET["CourseName"];
-	$numStudents=$_GET["NumStudents"];
 	$semesterName=$_GET["SemesterName"];		
+	
+
+	$query = "SELECT * FROM `course` WHERE CourseName = '$courseName' AND SemesterName = '$semesterName '";
+	$result = mysql_query($query) or die(mysql_error());
+	if($row = mysql_fetch_array($result))    //if we did return a record
+	{ 
+		echo "This course already exists in the database!";
+		return;
+	}	
 		
-	$query = "INSERT INTO course (CourseID, CourseName, NumStudents, SemesterName) VALUES ('$courseID', '$courseName', '$numStudents', '$semesterName')";
+	$query = "INSERT INTO course (CourseID, CourseName, SemesterName) VALUES ('$courseID', '$courseName', '$semesterName')";
 	
 	if (!mysql_query($query, $mysqlConnection))
 	{
@@ -83,7 +91,6 @@ if ($table == "course")
 	
 	<meta http-equiv="refresh" content="0;url=admin.html?displayTable=3">
 	<?php
-	
 }
 
 

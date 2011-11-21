@@ -29,10 +29,34 @@
                             <td align="left">
 							
 								<!--The Admin Content table-->
+								<table width="10%" border = "1">
+								<tr>
+									<td width=200 align="center">
+										Update Course Table with Web Extraction:
+										<form>
+										<select name="courseUpdate" onchange="updateCourseTable(this.value)">
+											<option value=""> </option>
+											<?php 
+											if (file_exists("parserApp/UIUCcourses_Fall11.txt")
+												?> <option value="Fall11">Fall 2011</option>
+											<?php if (file_exists("parserApp/UIUCcourses_Spring12.txt")
+												?> <option value="Spring12">Spring 2012</option>
+										</select>
+										<!-- <button type="button" onclick="updateCourseTable()">Update Course Table with Web Extraction</button> -->
+										</form>
+										<div id="updateArea"></div>
+										
+									</td>
+								</tr>
+								</table>
+								
 								<table width="100%" border="1">
 								<tr>
 									<td width=500 align="center">
 										<h2>Admin Page</h2>
+										
+										
+										
 										
 										<b>Select table:</b>
 										<form>
@@ -77,10 +101,6 @@
 										if (getQueryVariable("displayTable") == 5)
 										{									
 											showTable('instructor');
-										}
-										if (getQueryVariable("displayTable") == 6)
-										{									
-											showTable('memberof');
 										}
 										if (getQueryVariable("displayTable") == 6)
 										{									

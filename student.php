@@ -17,7 +17,7 @@
                 SELECT t.CourseID FROM takes As t, student WHERE 
                     student.StudentID = '" . $_SESSION['username'] . "' AND
                     t.StudentID = student.StudentID) AND DueTime >= NOW() AND
-                DueTime < DATE_ADD( NOW( ) , INTERVAL 7 DAY)";
+                DueTime <= DATE_ADD( NOW( ) , INTERVAL 7 DAY)";
             $result = mysql_query($assignmentsQuery);
             if (mysql_errno()) print(mysql_error());
             print("<br><br>\n");

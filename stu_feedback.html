@@ -9,7 +9,6 @@
         function getAssessment (){
             if(window.XMLHttpRequest){
                 xmlhttpAssn = new XMLHttpRequest();
-                xmlhttpQuestion = new XMLHttpRequest();
             }
             xmlhttpAssn.onreadystatechange=function()
             {
@@ -17,17 +16,8 @@
                     document.getElementById("AssessmentDetails").innerHTML=xmlhttpAssn.responseText;
                 }
             }
-            xmlhttpQuestion.onreadystatechange=function()
-            {
-                if (xmlhttpQuestion.readyState == 4 && xmlhttpQuestion.status == 200){
-                    document.getElementById("QuestionDetails").innerHTML=xmlhttpQuestion.responseText;
-                }
-            }
-
-            xmlhttpAssn.open("GET", "stu_pre_assn.php?q=GetAssessments&AssnID=" + getQueryVariable("AssnID"), true);
+            xmlhttpAssn.open("GET", "stu_feedback.php?q=GetFeedback&AssnID=" + getQueryVariable("AssnID"), true);
             xmlhttpAssn.send();
-            xmlhttpQuestion.open("GET", "stu_pre_assn.php?q=GetQuestions&AssnID=" + getQueryVariable("AssnID"), true);
-            xmlhttpQuestion.send();
         }
 
     </script>
@@ -58,19 +48,12 @@
                                 <table width="100%" border="0">
                         			<tr>
                             			<td align="left">
-                            			<h2>Assignment Details</h2>
+                            			<h2>Instructor Comments</h2>
                                 			<div id=AssessmentDetails>
                                 			</div>
                             			</td>
                         			</tr>
                         			
-                        			<tr>
-                            			<td align="left">
-                            			<h3>Grades and Comments</h3>
-                                			<div id=QuestionDetails>
-                                			</div>
-                            			</td>
-                        			</tr>
                          			
                     			</table>
                             </td>
