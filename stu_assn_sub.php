@@ -30,7 +30,6 @@
                                 			ini_set( "display_errors", 0);
     										include ('includes/mysqlstudentLogin.php');
    											include ('includes/auth.php');
-	  										session_start();
 										    
 									   		$assignmentID=$_SESSION['assignmentID'];
 										    echo "Submission Details";

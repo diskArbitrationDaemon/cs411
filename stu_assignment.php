@@ -1,7 +1,7 @@
 <?php
     include ('includes/mysqlstudentLogin.php');
     include ('includes/auth.php');
-    session_start();
+    
     $_SESSION['assignmentID']=htmlspecialchars($_GET['AssnID']);
     $query = "SELECT * FROM assignment as a, course as c, takes as t, student as s WHERE
     s.StudentID='$_SESSION[username]' AND

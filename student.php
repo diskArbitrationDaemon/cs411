@@ -2,8 +2,8 @@
     include ('includes/mysqlstudentLogin.php');
     include ('includes/auth.php');
     $redirect_pauseTime = 0;
-    //why is there a session_start here? There is already one in 'auth.php'
-    //session_start();
+
+
     if(empty($_SESSION['username'])){
         print("<meta http-equiv=\"REFRESH\" content=\"". $redirect_pauseTime . ";url=login.html?notLoggedIn=1\">");
     } else {
