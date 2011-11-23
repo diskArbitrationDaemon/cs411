@@ -2,10 +2,6 @@
     include ('includes/mysqlstudentLogin.php');
     include ('includes/auth.php');
 
-    
-
-    session_start();
-  
     if (htmlspecialchars($_GET['q'] == "GetFeedback"))
     {
 		$StudentID=$_SESSION[username];
