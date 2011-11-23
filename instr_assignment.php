@@ -14,7 +14,8 @@
 	    i.InstructorID='$_SESSION[username]' AND
 	    t.InstructorID=i.InstructorID AND
 	    a.CourseID=c.courseID AND
-	    t.courseID=c.courseID";
+	    t.courseID=c.courseID AND
+	    a.AssnID='$_GET[AssnID]'";
 	    $result = mysql_query($query);
 	    if (mysql_errno()) die(mysql_error());
 	    $row = mysql_fetch_array($result);
@@ -70,14 +71,32 @@
 	    } else {
 	
 	        if (htmlspecialchars($_GET['q'] == "GetAssessments")){
-	            print("You are not authorised to view or modify this assignment. Please contact the database administrator");
+	            die("You are not authorised to view or modify this assignment. Please contact the database administrator");
 	        }
 	
 	    }
 	
 	//create/edit
 	} else if ($_GET['q'] == "CreateAssessment" || $_GET['q'] == "EditAssessment"){
-		
+	    if ($_GET['q'] == "CreateAssessment") {
+	    	$query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
+	    			    i.InstructorID='$_SESSION[username]' AND
+		    t.InstructorID=i.InstructorID AND
+		    a.CourseID=c.courseID AND
+		    t.courseID=c.courseID";
+	    } else if ($_GET['q'] == "EditAssessment"){
+	    		    	$query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
+	    			    i.InstructorID='$_SESSION[username]' AND
+		    t.InstructorID=i.InstructorID AND
+		    a.CourseID=c.courseID AND
+		    t.courseID=c.courseID AND
+		    a.assnID='$_GET[AssnID]'";
+	    }
+
+		    $result = mysql_query($query);
+		    if (mysql_errno()) die(mysql_error());
+		    $row = mysql_fetch_array($result);
+	    if(!empty($row['AssnID'])){
             
             $edit = 0;
             if ($_GET['q'] == "EditAssessment") $edit = 1;
@@ -106,7 +125,8 @@
                     print ("<td width=$spaceBetweenCols>\n");
                     print("</td>\n");
                     print("<td align=left>\n");
-                        print("<input type=text name=AssnName value=$assnName>\n");
+                    	if (!isset($assnName)) $assnName = "";
+                        print("<input type=text name=AssnName value=".$assnName.">\n");
                     print("</td>\n");
                 print("</tr>\n");
                 
@@ -117,6 +137,7 @@
                     print ("<td width=$spaceBetweenCols>\n");
                     print("</td>\n");
                     print("<td align=left>\n");
+                    	if (!isset ($groupWork)) $groupWork = "";
                         print("<input type=text name=MaxGroupMembers value=$groupWork>\n");
                     print("</td>\n");
                 print("</tr>\n");
@@ -128,6 +149,7 @@
                     print ("<td width=$spaceBetweenCols>\n");
                     print("</td>\n");
                     print("<td align=left>\n");
+                    	if (!isset($maxMark)) $maxMark = "";
                         print("<input type=text name=MaxMark value=$maxMark>\n");
                     print("</td>\n");
                 print("</tr>\n");
@@ -211,8 +233,22 @@
                 print("</tr>\n");
             print("</table>\n");
             if (!empty($assnID)) print("<input type=hidden name=AssnID value=$assnID> <br> <input type=hidden name=Edit value=true>");
-		 
+	   	} else {
+	            die("You are not authorised to view or modify this assignment. Please contact the database administrator");
+   		}
+			
 	} else if ($_GET['q'] == "CreateQuestions" || $_GET['q'] == "EditQuestions"){
+		 $query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
+		    i.InstructorID='$_SESSION[username]' AND
+		    t.InstructorID=i.InstructorID AND
+		    a.CourseID=c.courseID AND
+		    t.courseID=c.courseID";
+		 if ($_GET['q'] == "EditQuestions") $query = $query."a.AssnID='$_GET[AssnID]'";
+		 
+		    $result = mysql_query($query);
+		    if (mysql_errno()) die(mysql_error());
+		    $row = mysql_fetch_array($result);
+	    if(empty($row['AssnID'])) die();
 		$edit = 0;
 		if ($_GET['q'] == "EditQuestions"){
 			$edit = 1;
@@ -237,7 +273,6 @@
         
     } else if ($_GET['q'] == "Submit"){
     	
-    	//TODO: separate update from submit!
     	
         $assnName = $_POST['AssnName'];
         $maxGroupMembers = $_POST['MaxGroupMembers'];
@@ -252,7 +287,9 @@
         print("AssnName: $assnName <br> Course:$courseID MaxGroupMembers: $maxGroupMembers <br> MaxMark: $maxMark <br> month: $month <br> day: $date <br> year: $year <br> hour: $hour <br> minute: $minute <br><br>");
         $questionNames = $_POST['QuestionName'];
         $questionMarks = $_POST['QuestionMark'];
-        $updateQuestions = $_POST['UpdateQuestion'];
+        if (isset($_POST['UpdateQuestion'])){
+        	$updateQuestions = $_POST['UpdateQuestion'];
+        }
         /*print_r($questionNames);
         print("<br>");
         print_r($questionMarks);
@@ -260,8 +297,9 @@
         print_r($updateQuestions);*/
 
 		$mysqlDate = sprintf("%04d-%02d-%02d %02d:%02d:00", $year, $month, $date, $hour,$minute);
-        //Insert or update Assignment
-        if ($_POST['Edit'] != "true"){
+        
+		//Insert or update Assignment
+        if (!isset($_POST['edit'])){
 	        $query = "INSERT into Assignment VALUES (NULL, '$assnName', '$maxGroupMembers', '$maxMark', NULL, NULL, '$courseID', '$mysqlDate')";
 	        //print("Made a new assignment with query: $query<br>");
 	        $resultInsertAssn = mysql_query($query);
@@ -281,12 +319,15 @@
 	        	$submAssnID = $row['AssnID'];
 	        	$submStudentID = $row['StudentID'];
 	        	$submFiles = "Submissions/$row[SemesterName]/$row[CourseName]/$row[AssnName]/$row[StudentID]";
-	        	if (!mkdir($submFiles, 0, true)) die ("Cannot make directory $submFiles");
+	        	echo dirname( __FILE__ );
+	        	
+	        	if (!mkdir($submFiles, 0777, true)) die ("Cannot make directory $submFiles");
 	        	$insQuery = "INSERT into Submission VALUES ('$submAssnID', '$submStudentID', '$submFiles', NULL, '$timeNow')";
 	        	mysql_query($insQuery);
 	        	print "Inserted into submission: $submStudentID:  $insQuery<br>";
 	        	if (mysql_errno()) die ("$query <br>" . mysql_error());
 	        }
+	    //edit assignment
         } else {
         	$assnID = $_POST['AssnID'];
         	$query = "UPDATE Assignment SET AssnName='$assnName', GroupWork='$maxGroupMembers', MaxMark='$maxMark', CourseID=$courseID, DueTime='$mysqlDate' WHERE
