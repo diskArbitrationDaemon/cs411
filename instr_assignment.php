@@ -319,7 +319,6 @@
 	        	$submAssnID = $row['AssnID'];
 	        	$submStudentID = $row['StudentID'];
 	        	$submFiles = "Submissions/$row[SemesterName]/$row[CourseName]/$row[AssnName]/$row[StudentID]";
-	        	echo dirname( __FILE__ );
 	        	
 	        	if (!mkdir($submFiles, 0777, true)) die ("Cannot make directory $submFiles");
 	        	$insQuery = "INSERT into Submission VALUES ('$submAssnID', '$submStudentID', '$submFiles', NULL, '$timeNow')";
@@ -343,7 +342,7 @@
         //an insertion is done _all the time_ unless exempted by the updateQuestionsList.
         //With updating an Assignment, however, there requires an edit flag.
         foreach ($questionNames as $key => $value){
-			if (in_array($key, $updateQuestions)){
+			if (isset($updateQuestions) && in_array($key, $updateQuestions)){
 				$query = "UPDATE Questions SET QuestionName='$questionNames[$key]', FullMark='$questionMarks[$key]' WHERE QuestionID='$key'";
 			} else {
             	$query = "INSERT into Questions VALUES (NULL, '$questionNames[$key]', '$questionMarks[$key]', '$assnID')";
