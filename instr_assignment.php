@@ -232,7 +232,7 @@
                     print("</td>\n");
                 print("</tr>\n");
             print("</table>\n");
-            if (!empty($assnID)) print("<input type=hidden name=AssnID value=$assnID> <br> <input type=hidden name=Edit value=true>");
+            if (!empty($assnID)) print("<input type=hidden name=AssnID value=$assnID> <br> <input type=hidden name=edit value=true>");
 	   	} else {
 	            die("You are not authorised to view or modify this assignment. Please contact the database administrator");
    		}
@@ -243,10 +243,10 @@
 		    t.InstructorID=i.InstructorID AND
 		    a.CourseID=c.courseID AND
 		    t.courseID=c.courseID";
-		 if ($_GET['q'] == "EditQuestions") $query = $query."a.AssnID='$_GET[AssnID]'";
+		 if ($_GET['q'] == "EditQuestions") $query = $query." AND a.AssnID='$_GET[AssnID]'";
 		 
 		    $result = mysql_query($query);
-		    if (mysql_errno()) die(mysql_error());
+		    if (mysql_errno()) die( "Cannot get questions. Query:<br> $query<br>" . mysql_error());
 		    $row = mysql_fetch_array($result);
 	    if(empty($row['AssnID'])) die();
 		$edit = 0;
@@ -269,7 +269,7 @@
         ?><tr><td><input type="button" value="Add Question" onClick="addQuestion();"></td></tr><?php
         print("</table>");
         print("</span>");
-        ?><input type="submit" value="Add Assignment"><?php
+        ?><input type="submit" value="Add/Edit Assignment"><?php
         
     } else if ($_GET['q'] == "Submit"){
     	

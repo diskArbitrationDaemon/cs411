@@ -2,9 +2,6 @@
     include ('includes/mysqlInstrLogin.php');
     include ('includes/auth.php');
 
-    
-
-    session_start();
     $courseID = htmlspecialchars($_GET['CourseID']);
 
     //check to see if this instructor actually teaches this course. If not, error is displayed.

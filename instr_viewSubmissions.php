@@ -1,8 +1,7 @@
 <?php
 
-
-    include('includes/auth.php');
-    include('includes/mysqlInstrLogin.php');
+    include ('includes/mysqlInstrLogin.php');
+    include ('includes/auth.php');
 	
     if (!empty($_GET['AssnID'])){
     	$assnID = $_GET['AssnID'];
@@ -54,7 +53,9 @@
     		}
     		for ($i = 0; $i < count($files); $i++){
     			//don't display the feedback file
-    			if ($files[$i] != "Feedback.txt") print ("<tr><td width=300><input type=checkbox name=files[] value=\"$directory/$files[$i]\">$files[$i] </td></tr>");
+    			//escape files with __
+    			if ($files[$i] != "Feedback.txt" || preg_match("\\^__", $files[$i], $matches)) print ("<tr><td width=300><input type=checkbox name=files[] value=\"$directory/$files[$i]\">$files[$i] </td></tr>");
+    			
     		}
     		print ("<tr><td><input type=submit value=submit></td></tr>");
     		print("<input type=hidden name=mode value=viewFiles>");

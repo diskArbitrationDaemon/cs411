@@ -1,7 +1,7 @@
 <?php
 
-include('includes/auth.php');
-    include('includes/mysqlInstrLogin.php');
+    include ('includes/mysqlInstrLogin.php');
+    include ('includes/auth.php');
 	
     if ($_GET['action'] == "DownloadFile"){
 	    
