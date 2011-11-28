@@ -2,7 +2,6 @@
     include ('includes/mysqlInstrLogin.php');
     include ('includes/auth.php');
     $redirect_pauseTime = 0;
-    session_start();
     if(empty($_SESSION['username'])){
         print("<meta http-equiv=\"REFRESH\" content=\"". $redirect_pauseTime . ";url=login.html?notLoggedIn=1\">");
     } else {
