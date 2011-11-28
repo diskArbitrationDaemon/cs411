@@ -16,8 +16,9 @@
                 Course.CourseID = ANY (
                 SELECT CourseID FROM Teaches, Instructor WHERE 
                     Instructor.InstructorID = '" . $_SESSION['username'] . "' AND
-                    Teaches.InstructorID = Instructor.InstructorID) AND
-                DueTime < DATE_ADD( NOW( ) , INTERVAL 7 DAY)";
+                    Teaches.InstructorID = Instructor.InstructorID) AND 
+                    DueTime >= NOW() AND 
+                    DueTime <= DATE_ADD( NOW( ) , INTERVAL 7 DAY)";
             $result = mysql_query($assignmentsQuery);
             if (mysql_errno()) print(mysql_error());
             print("Assignments Due this week:\n");
