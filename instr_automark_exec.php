@@ -56,6 +56,7 @@
 		$row = mysql_fetch_array($result);
 		$sampleSolution = getcwd() . "/" . $row['SampleSolnFile'];
 		$scriptFile = getcwd(). "/". $row['ScriptFile'];
+		$marksLostPerDiff = $row['MarksLostPerDiff'];
 		
 		//foreach submission and question, run the shell script, then save output, and then diff
 		foreach ($submissions as $key=>$submission){
@@ -69,7 +70,7 @@
 			$handle = fopen($fileName, 'w');
 			fwrite($handle, $output);
 			fclose($handle);
-			$marksLost = numMarksLost($questionID, $studentID, $sampleSolution, $fileName, $submissionDir, 5);
+			$marksLost = numMarksLost($questionID, $studentID, $sampleSolution, $fileName, $submissionDir,$marksLostPerDiff);
 			
 			print ("Number of marks lost for $studentID is $marksLost<br>");
 			

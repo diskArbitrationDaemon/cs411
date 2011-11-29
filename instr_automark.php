@@ -73,8 +73,9 @@
 			foreach ($questions as $key=>$value){
 				//two dialogue boxes with upload
 				print("<tr><td>$_POST[$value]</td></tr>");
-				print ("<tr><td width=140>Script file:</td><td><input name=\"shellScriptFile[]\" type=\"file\"></td></tr>");
-				print ("<tr><td width=140>Sample solution:</td><td><input name=\"sampleAnswers[]\" type=\"file\"></td></tr>");
+				print ("<tr><td width=250>Script file:</td><td><input name=\"shellScriptFile[]\" type=\"file\"></td></tr>");
+				print ("<tr><td width=250>Sample solution:</td><td><input name=\"sampleAnswers[]\" type=\"file\"></td></tr>");
+				print ("<tr><td width=250>Marks Lost Per Difference: </td><td><input name=marksLostPerDiff[] type=text></td></tr>");
 				print("<tr><td height=20><input type=hidden name=\"questionIDs[]\" value=$value></td></tr>");
 				
 			}
@@ -175,9 +176,11 @@
 		    //chmod so script is executable
 			chmod($scriptLocation, 0755);
 		    //insert into database
-		    $newAutomarkQuery = "INSERT into automarking VALUES ('$sampleAnswerLocation','$scriptLocation','$questions[$key]')
-		    			ON DUPLICATE KEY Update SampleSolnFile='$sampleAnswerLocation', ScriptFile='$scriptLocation'";
+		    $marksLost = $_POST['marksLostPerDiff'][$key];
+		    $newAutomarkQuery = "INSERT into automarking VALUES ('$sampleAnswerLocation','$scriptLocation','$questions[$key]', '$marksLost')
+		    			ON DUPLICATE KEY Update SampleSolnFile='$sampleAnswerLocation', ScriptFile='$scriptLocation', MarksLostPerDiff='$marksLost'";
 		    $newAutomarkResult = mysql_query($newAutomarkQuery);
+		    print ("<br>$newAutomarkQuery</br>");
 		    if (mysql_errno()) die ("Error inserting automark into table. " . mysql_error());
 		    
 		    

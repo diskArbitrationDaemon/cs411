@@ -1,5 +1,6 @@
 <?php
 		include('includes/common.php');
+		include('includes/login_header.php');
     	session_start();
 		if (isset ($_SESSION['username'])){
 			
@@ -16,7 +17,6 @@
 			if (mysql_errno()) die ("ERROR: ".mysql_error());
 	        $row = mysql_fetch_array($result);
 			$userType = $row['UserType'];
-			
 			if ($userType != ADMINISTRATOR){
 				die ("Not admin. Permission denied. Please notify the database administrator
 				of this error.");
