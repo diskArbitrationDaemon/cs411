@@ -78,7 +78,9 @@
 	
 	//create/edit
 	} else if ($_GET['q'] == "CreateAssessment" || $_GET['q'] == "EditAssessment"){
-	    if ($_GET['q'] == "CreateAssessment") {
+	    
+		
+		if ($_GET['q'] == "CreateAssessment") {
 	    	$query = "SELECT * FROM Assignment as a, Course as c, Teaches as t, Instructor as i WHERE
 	    			    i.InstructorID='$_SESSION[username]' AND
 		    t.InstructorID=i.InstructorID AND
@@ -161,10 +163,16 @@
                     print ("<td width=$spaceBetweenCols>\n");
                     print("</td>\n");
                     print("<td align=left>\n");
-                        print("<select name=CourseList>\n");
-                        $query = "SELECT CourseID, CourseName, SemesterName FROM Course ORDER BY CourseID Desc";
-                        $result = mysql_query($query);
-                        while ($row = mysql_fetch_array($result)){
+                     $query = "SELECT Course.CourseID, CourseName, SemesterName FROM Course, Teaches
+                        			WHERE Course.CourseID=Teaches.CourseID AND
+                        			Teaches.InstructorID='".$_SESSION['username']."'
+                        			
+                        		 ORDER BY CourseID Desc";
+					$result = mysql_query($query);
+                    if (mysql_errno()) die ("Error finding courses taught by this instructor. " . mysql_error());
+                    print("<select name=CourseList>\n");
+                    
+                    	while ($row = mysql_fetch_array($result)){
                         	if ($row[CourseID] == $courseID){
                         		print("<option value=$row[CourseID] selected=\"selected\">$row[CourseName] | $row[SemesterName]</option>\n");
                         	}

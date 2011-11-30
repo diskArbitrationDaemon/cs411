@@ -1,5 +1,4 @@
 <?php
-$stage = htmlspecialchars($_POST['stage']);
 
 include ('includes/mysqlInstrLogin.php');
 include ('includes/auth.php');
@@ -26,8 +25,8 @@ if (empty($_POST['stage'])){
         Assignment.CourseID = Course.CourseID AND
         Questions.AssnID = Assignment.AssnID AND
         Teaches.CourseID = Course.CourseID AND
-        Teaches.InstructorID = '" . $_SESSION[username] ."'";
-		
+        Teaches.InstructorID = '" . $_SESSION['username'] ."'";
+        		
         $courseID = $_GET['CourseID'];
 
         $result = mysql_query($query);
@@ -64,11 +63,14 @@ if (empty($_POST['stage'])){
 
                 print("<tr><td width=200> $row[QuestionName] </td><td width=300></td><td><input type=text name=Question[$row[QuestionID]]" ." length=5 value=\"".$mark."\"></td></tr>\n");
             }
-            $assnQuery = "SELECT AssnFinalMark FROM Submission WHERE AssnID=$row[AssnID] AND StudentID='".$_GET['StudentID']."'";
+            
+            //get finalmark for this assignment
+            $assnQuery = "SELECT AssnFinalMark FROM Submission WHERE AssnID=$assnID AND StudentID='".$_GET['StudentID']."'";
             $assnResult = mysql_query($assnQuery);
+            if (mysql_errno()) die ("Cannot find assignment marks" . mysql_error());
             $assnRow = mysql_fetch_array($assnResult);
             $assnFinalMark = $assnRow['AssnFinalMark'];
-            print("<tr><td width=200> $assnName </td><td width=300> Assignment Total </td><td><input type=text name=assnMark length=5 value=\"$assnFinalMark\"></td></tr>\n");
+            print("<tr><td width=200> $assnName </td><td width=300> Assignment Total </td><td><input type=text name=Assn[$assnID] length=5 value=\"$assnFinalMark\"></td></tr>\n");
             print("<tr><td height=10></td></tr>");
             $finalMarkQuery = "SELECT FinalMark FROM takes WHERE StudentID='".$_GET['StudentID']."' AND CourseID=$courseID";
             $finalMarkRes = mysql_query($finalMarkQuery);
@@ -78,7 +80,6 @@ if (empty($_POST['stage'])){
             print("<tr><td height=10></td></tr>");
             print("<input type=hidden name=stage value=1>\n");
             print("<input type=hidden name=courseID value=".$courseID.">");
-            print("<input type=hidden name=redirect value=".$_GET['redirect'].">\n");
             print("<input type=hidden name=student value=".$_GET['StudentID'].">\n");
             print("<input type=hidden name=assnID value=".$assnID.">\n");
             //print ("assnID: $assnID courseID: $courseID");
@@ -100,14 +101,15 @@ if (empty($_POST['stage'])){
         
         if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
     }
+    foreach ($_POST['Assn'] as $assnID => $assnMark){
+		$query = "UPDATE Submission SET AssnFinalMark='$assnMark' WHERE StudentID='$studentID' AND AssnID='$assnID'";
+	    print $query ."<br><br>";
+	    mysql_query($query);
+	    if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
+    }
+    //$assnID = $_POST['assnID'];
+    //print("AssnMark: ".$_POST['assnMark']);
     
-    $assnID = $_POST['assnID'];
-    print("AssnMark: ".$_POST['assnMark']);
-    
-    $query = "UPDATE Submission SET AssnFinalMark='$assnMark' WHERE StudentID='$studentID' AND AssnID='$assnID'";
-    print $query ."<br><br>";
-    mysql_query($query);
-    if (mysql_errno() > 0) die("error: " . mysql_error() . "<br> Query: " . $query);
     
     $finalMark = $_POST['finalMark'];
     $courseID = $_POST['courseID'];
